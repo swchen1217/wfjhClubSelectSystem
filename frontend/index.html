@@ -153,7 +153,20 @@
         </div>
 
         <div id="Content_Announcement">H</div>
-        <div id="Content_ClubSelect">1</div>
+        <div id="Content_ClubSelect">
+
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active">101</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">102</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">103</a>
+                </li>
+            </ul>
+        </div>
         <div id="Content_SelectResult">2</div>
         <div id="Content_SelectManage">3</div>
         <div id="Content_ClubManage">4</div>
@@ -320,7 +333,7 @@
     $(document).ready(function () {
         init();
         OnHashchangeListener();
-        $(".nav a").on("click", function () {
+        $(".navbar .nav a").on("click", function () {
             $(".nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
             $("#navbarToggler").collapse('hide');
