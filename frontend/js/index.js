@@ -5,7 +5,7 @@ function init() {
 function OnHashchangeListener() {
     var hash = location.hash;
     if (hash != '') {
-        $(".nav").find(".active").removeClass("active");
+        $(".navbar .nav").find(".active").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass('active');
     }
     $("div[id^='Content_']").hide();
