@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統登入|儀管系統</title>
+
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+
+    <!--  jQuery -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <!-- Popper.js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/bootstrap.js"></script>
+    <!-- jQuery-confirm -->
+    <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <script src="js/jquery-confirm.min.js"></script>
+    <!-- jQuery-cookie -->
+    <script src="js/jquery.cookie.js"></script>
+    <!-- FontAwesome -->
+    <link href="css/all.css" rel="stylesheet">
+    <!-- md5 -->
+    <script src="js/md5.js"></script>
+    <!-- Moment -->
+    <script src="js/moment.js"></script>
+    <!-- Google Font APIs -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:400&display=swap&subset=chinese-traditional" rel="stylesheet">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="css/login.css">
+    <!-- My js -->
+    <script src="js/alert.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/WebSql.js"></script>
+
+</head>
+<body>
+<div class="jumbotron text-center" style="margin-bottom:0;padding-top: 20px;padding-bottom: 20px;">
+    <div class="container">
+        <h1>NTUH.YL 醫療儀器管理系統</h1>
+        <h4>NTUH.YL Medical Device Manage System</h4>
+    </div>
+</div>
+<div id="middle">
+    <div class="container">
+
+        <div id="alert">
+            <div class="alert alert-primary" role="alert" style="display: none;margin-top: 16px"
+                 id="alert-primary"></div>
+            <div class="alert alert-success" role="alert" style="display: none;margin-top: 16px" id="alert-success">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-check fa-2x" style="margin:0px 5px"></i><strong>成功：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-success-in"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-danger" role="alert" style="display: none;margin-top: 16px" id="alert-danger">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-times fa-2x" style="padding:0px 5px;margin:0px 5px"></i><strong>錯誤：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-danger-in"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning" role="alert" style="display: none;margin-top: 16px" id="alert-warning">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-exclamation-circle fa-2x" style="margin:0px 5px"></i><strong>警告：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-warning-in"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info" role="alert" style="display: none;margin-top: 16px" id="alert-info">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-info fa-2x" style="padding:0px 10px;margin:0px 5px"></i><strong>資訊：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-info-in"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dialog_ProgressBar_Sync" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title ">
+                            資料同步中...
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                 style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form role="form" class="form-signin" id="form-login">
+            <h2 class="form-signin-heading" style="margin-bottom: 16px;">系統登入 <a href="index.html"
+                                                                                 style="color: black;float: right;margin-right: 15px"><i
+                    class="fas fa-home"></i></a></h2>
+            <div class="form-group">
+                <label for="InputAcc">員工編號</label>
+                <input type="text" class="form-control" id="InputAcc" placeholder="請輸入帳號" required>
+            </div>
+            <div class="form-group">
+                <label for="InputPw">密碼</label>
+                <input type="password" class="form-control" id="InputPw" placeholder="請輸入密碼" required>
+            </div>
+            <div class="container">
+                <input type="checkbox" value="" id="RemMe" style="width: 20px;height: 20px"><span
+                    style="font-size: 20px">記住我</span>
+                <a href="./index.html#ChangePw" style="font-size: 20px;float: right">忘記密碼</a>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-primary btn-block" style="margin-top: 8px">登入</button>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if ($.cookie('LoginInfoAcc')) {
+            ShowAlart('alert-success', '你已登出!!', false, true);
+
+            $.cookie("LoginInfoAcc", '', {expires: -1});
+            $.cookie("LoginInfoPw", '', {expires: -1});
+            $.cookie("LoginInfoPermission", '', {expires: -1});
+            $.cookie("LoginInfoName", '', {expires: -1});
+            $.cookie("AllUserData",'',{expires: -1});
+        }
+        if ($.cookie('acc')) {
+            var rem_acc = $.cookie('acc');
+            var rem_pw = $.cookie('pw');
+            $('#InputAcc').val(rem_acc);
+            $('#InputPw').val(rem_pw);
+            $('#RemMe').attr('checked', true);
+        }
+        $('#form-login').submit(function () {
+            HideAlert();
+            var input_acc = $('#InputAcc').val();
+            var input_pw = $('#InputPw').val();
+            if (input_acc == "" || input_pw == "") {
+                $.alert({
+                    title: '錯誤',
+                    content: '帳號或密碼未輸入!!請再試一次',
+                    type: 'red',
+                    typeAnimated: true
+                });
+                return false;
+            }
+            //console.log(input_acc + ',' + input_pw);
+            $.ajax({
+                url: "../ntuh_yl_RT_mdms_api/user.php",
+                data: "mode=get_create_time&acc=" + input_acc,
+                type: "POST",
+                success: function (msg_st) {
+                    console.log('ajax su');
+                    if (msg_st == 'no_acc') {
+                        console.log('no_acc');
+                        $('#InputAcc').val('');
+                        $('#InputPw').val('');
+                        ShowAlart('alert-danger', '員工編號錯誤!!,此員工編號尚未註冊', false, true);
+                    } else {
+                        var mMd5 = md5(msg_st + input_pw);
+                        console.log(mMd5);
+                        $.ajax({
+                            url: "../ntuh_yl_RT_mdms_api/user.php",
+                            data: "mode=login_check&acc=" + input_acc + "&pw=" + mMd5,
+                            type: "POST",
+                            success: function (msg_nd) {
+                                console.log('ajax su');
+                                if (msg_nd == 'no_enable') {
+                                    console.log('no_enable');
+                                    $('#InputAcc').val('');
+                                    $('#InputPw').val('');
+                                    ShowAlart('alert-danger', '此帳號尚未啟用,請聯繫管理員!!', false, true);
+                                }
+                                if (msg_nd.substring(0, 2) == 'ok') {
+                                    console.log('ok');
+                                    if (document.getElementById("RemMe").checked) {
+                                        $.cookie('acc', input_acc, {expires: 1});
+                                        $.cookie('pw', input_pw, {expires: 1});
+                                    } else {
+                                        $.cookie("acc", '', {expires: -1});
+                                        $.cookie("pw", '', {expires: -1});
+                                    }
+                                    var split_OkData = msg_nd.split(',');
+                                    $.cookie('LoginInfoAcc', input_acc);
+                                    $.cookie('LoginInfoPw', mMd5);
+                                    $.cookie('LoginInfoPermission', split_OkData[2]);
+                                    $.cookie('LoginInfoName', split_OkData[1]);
+                                    console.log('ok');
+                                    ShowAlart('alert-success', split_OkData[1] + ',歡迎回來', false, true);
+                                    SyncDeviceTable(false);
+                                    setTimeout(function () {
+                                        location.replace("./index.html")
+                                    }, 1000);
+                                }
+                                if (msg_nd == 'pw_error') {
+                                    console.log('pw_error');
+                                    $('#InputAcc').val('');
+                                    $('#InputPw').val('');
+                                    ShowAlart('alert-danger', '密碼錯誤!!', false, true);
+                                }
+                            },
+                            error: function (xhr) {
+                                console.log('ajax er');
+                                $.alert({
+                                    title: '錯誤',
+                                    content: 'Ajax 發生錯誤',
+                                    type: 'red',
+                                    typeAnimated: true
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    console.log('ajax er');
+                    $.alert({
+                        title: '錯誤',
+                        content: 'Ajax 發生錯誤',
+                        type: 'red',
+                        typeAnimated: true
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
