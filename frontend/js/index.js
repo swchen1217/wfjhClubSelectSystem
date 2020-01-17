@@ -12,23 +12,27 @@ function OnHashchangeListener() {
     $("#title_bar").show();
     HideAlert();
 
-    if (hash == '' && login_check() && PermissionCheck(1, true)) {
+    if (hash == '' && login_check()) {
         $('#Content_Announcement').show();
     }
-    if (hash == '#ClubSelect' && login_check() && PermissionCheck(2, true)) {
+    if (hash == '#ClubSelect' && login_check() && PermissionCheck(false, true)) {
         $('#Content_ClubSelect').show();
         $("#title_bar").hide();
     }
-    if (hash == '#SelectManage' && login_check() && PermissionCheck(1, true)) {
+    if (hash == '#SelectResult' && login_check() && PermissionCheck(false, true)) {
+        $('#Content_SelectResult').show();
+        $("#title_bar").hide();
+    }
+    if (hash == '#SelectManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_SelectManage').show();
         $("#title_bar").hide();
     }
-    if (hash == '#ClubManage' && login_check() && PermissionCheck(3, true)) {
+    if (hash == '#ClubManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_ClubManage').show();
         $("#title_bar").hide();
     }
 
-    if (hash == '#UserManage' && login_check() && PermissionCheck(5, true)) {
+    if (hash == '#UserManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_User_manage').show();
         $("#title_bar").hide();
 
@@ -734,13 +738,13 @@ function ButtonOnClickListener() {
 function PermissionCheck(needAdmin, isAlert) {
     HideAlert();
     var hasAdmin = $.cookie("LoginInfoAdmin");
-    if((needAdmin && hasAdmin=='true') || !needAdmin){
+    if((needAdmin && hasAdmin=='1') || needAdmin!=true){
         console.log("Pass");
         return true;
     }else{
         console.log("NoPass");
         if (isAlert) {
-            ShowAlart('alert-warning', "您的權限不足!!<br>您的權限：" + LIP + "<br>所需權限：" + NeedPermission, true, false);
+            ShowAlart('alert-warning', "您的權限不足!!", false, false);
         }
         return false;
     }
