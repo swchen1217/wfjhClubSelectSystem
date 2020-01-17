@@ -32,20 +32,3 @@ body{
     padding: 10px;
     margin: 10px auto;
 }
-
-#table_position input[type=checkbox]{
-    width: 25px;
-    height: 25px;
-}
-
-@media screen and (min-width: 470px) {
-    #btn_DM{
-        position:absolute;
-        z-index:5;
-    }
-}
-@media screen and (min-width: 260px){
-    #btn_del_position{
-        top: -50px;
-    }
-}
