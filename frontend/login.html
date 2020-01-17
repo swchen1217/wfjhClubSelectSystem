@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系統登入|儀管系統</title>
+    <title>系統登入|選社系統</title>
 
-    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="./wufulogo.png" type="image/x-icon"/>
 
     <!--  jQuery -->
     <script src="js/jquery-3.4.1.js"></script>
@@ -32,15 +32,13 @@
     <link rel="stylesheet" href="css/login.css">
     <!-- My js -->
     <script src="js/alert.js"></script>
-    <script src="js/db.js"></script>
-    <script src="js/WebSql.js"></script>
 
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0;padding-top: 20px;padding-bottom: 20px;">
     <div class="container">
-        <h1>NTUH.YL 醫療儀器管理系統</h1>
-        <h4>NTUH.YL Medical Device Manage System</h4>
+        <h1>五福國中線上選社系統</h1>
+        <h4>WFJH Online Club Select System</h4>
     </div>
 </div>
 <div id="middle">
@@ -123,19 +121,15 @@
                                                                                  style="color: black;float: right;margin-right: 15px"><i
                     class="fas fa-home"></i></a></h2>
             <div class="form-group">
-                <label for="InputAcc">員工編號</label>
+                <label for="InputAcc">帳號</label>
                 <input type="text" class="form-control" id="InputAcc" placeholder="請輸入帳號" required>
             </div>
             <div class="form-group">
                 <label for="InputPw">密碼</label>
                 <input type="password" class="form-control" id="InputPw" placeholder="請輸入密碼" required>
             </div>
-            <div class="container">
-                <input type="checkbox" value="" id="RemMe" style="width: 20px;height: 20px"><span
-                    style="font-size: 20px">記住我</span>
-                <a href="./index.html#ChangePw" style="font-size: 20px;float: right">忘記密碼</a>
-            </div>
-
+            <input type="checkbox" value="" id="RemMe" style="width: 20px;height: 20px;margin-left: 18px"><span
+                style="font-size: 20px">記住我</span>
             <button type="submit" class="btn btn-default btn-primary btn-block" style="margin-top: 8px">登入</button>
         </form>
     </div>
@@ -147,7 +141,7 @@
 
             $.cookie("LoginInfoAcc", '', {expires: -1});
             $.cookie("LoginInfoPw", '', {expires: -1});
-            $.cookie("LoginInfoPermission", '', {expires: -1});
+            $.cookie("LoginInfoAdmin", '', {expires: -1});
             $.cookie("LoginInfoName", '', {expires: -1});
             $.cookie("AllUserData",'',{expires: -1});
         }
@@ -171,7 +165,7 @@
                 });
                 return false;
             }
-            //console.log(input_acc + ',' + input_pw);
+            // TODO
             $.ajax({
                 url: "../ntuh_yl_RT_mdms_api/user.php",
                 data: "mode=get_create_time&acc=" + input_acc,
@@ -182,7 +176,7 @@
                         console.log('no_acc');
                         $('#InputAcc').val('');
                         $('#InputPw').val('');
-                        ShowAlart('alert-danger', '員工編號錯誤!!,此員工編號尚未註冊', false, true);
+                        ShowAlart('alert-danger', '帳號錯誤!!,此員工編號尚未註冊', false, true);
                     } else {
                         var mMd5 = md5(msg_st + input_pw);
                         console.log(mMd5);
