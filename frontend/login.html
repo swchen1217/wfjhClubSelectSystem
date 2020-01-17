@@ -141,8 +141,10 @@
 
             $.cookie("LoginInfoAcc", '', {expires: -1});
             $.cookie("LoginInfoPw", '', {expires: -1});
-            $.cookie("LoginInfoAdmin", '', {expires: -1});
             $.cookie("LoginInfoName", '', {expires: -1});
+            $.cookie("LoginInfoAdmin", '', {expires: -1});
+            $.cookie("LoginInfoClass", '', {expires: -1});
+
             $.cookie("AllUserData",'',{expires: -1});
         }
         if ($.cookie('acc')) {
@@ -167,7 +169,7 @@
             }
             // TODO
             $.ajax({
-                url: "../ntuh_yl_RT_mdms_api/user.php",
+                url: "../backend/user.php",
                 data: "mode=get_create_time&acc=" + input_acc,
                 type: "POST",
                 success: function (msg_st) {
@@ -181,17 +183,11 @@
                         var mMd5 = md5(msg_st + input_pw);
                         console.log(mMd5);
                         $.ajax({
-                            url: "../ntuh_yl_RT_mdms_api/user.php",
+                            url: "../backend/user.php",
                             data: "mode=login_check&acc=" + input_acc + "&pw=" + mMd5,
                             type: "POST",
                             success: function (msg_nd) {
                                 console.log('ajax su');
-                                if (msg_nd == 'no_enable') {
-                                    console.log('no_enable');
-                                    $('#InputAcc').val('');
-                                    $('#InputPw').val('');
-                                    ShowAlart('alert-danger', '此帳號尚未啟用,請聯繫管理員!!', false, true);
-                                }
                                 if (msg_nd.substring(0, 2) == 'ok') {
                                     console.log('ok');
                                     if (document.getElementById("RemMe").checked) {
@@ -204,11 +200,11 @@
                                     var split_OkData = msg_nd.split(',');
                                     $.cookie('LoginInfoAcc', input_acc);
                                     $.cookie('LoginInfoPw', mMd5);
-                                    $.cookie('LoginInfoPermission', split_OkData[2]);
                                     $.cookie('LoginInfoName', split_OkData[1]);
+                                    $.cookie('LoginInfoAdmin', split_OkData[2]);
+                                    $.cookie('LoginInfoClass', split_OkData[3]);
                                     console.log('ok');
                                     ShowAlart('alert-success', split_OkData[1] + ',歡迎回來', false, true);
-                                    SyncDeviceTable(false);
                                     setTimeout(function () {
                                         location.replace("./index.html")
                                     }, 1000);
