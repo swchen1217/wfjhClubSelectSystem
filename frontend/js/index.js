@@ -248,7 +248,7 @@ function login_check() {
     if ($.cookie('LoginInfoAcc')) {
         return true;
     } else if (location.hash == '') {
-        ShowAlart('alert-warning', "請先<a href='login.html' class='alert-link'>登入</a>", true, false);
+        ShowAlart('alert-info', "請先<a href='login.html' class='alert-link'>登入</a>", true, false);
     } else {
         ShowAlart('alert-danger', '尚未登入!!', false, false);
         return false;
