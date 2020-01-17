@@ -59,6 +59,9 @@
                 <a class="nav-link" href="#ClubSelect">社團選填</a>
             </li>
             <li>
+                <a class="nav-link" href="#SelectResult">選社結果</a>
+            </li>
+            <li>
                 <a class="nav-link" href="#SelectManage">選社管理</a>
             </li>
             <li>
@@ -70,7 +73,7 @@
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li>
-                <a id="btn_logio" class="nav-link" onclick="location.replace('login.html')">登入/登出</a>
+                <a id="btn_login" class="nav-link" onclick="location.replace('login.html')">登入/登出</a>
             </li>
         </ul>
     </div>
@@ -151,8 +154,9 @@
 
         <div id="Content_Announcement">H</div>
         <div id="Content_ClubSelect">1</div>
-        <div id="Content_SelectManage">2</div>
-        <div id="Content_ClubManage">3</div>
+        <div id="Content_SelectResult">2</div>
+        <div id="Content_SelectManage">3</div>
+        <div id="Content_ClubManage">4</div>
 
         <div id="Content_User_manage">
             <div class="row" id="row-user-list">
@@ -323,9 +327,9 @@
         });
 
         if ($.cookie('LoginInfoPw') == undefined)
-            $('#btn_logio').text("登入");
+            $('#btn_login').text("登入");
         else
-            $('#btn_logio').text($.cookie('LoginInfoName') + "/登出");
+            $('#btn_login').text($.cookie('LoginInfoName') + "/登出");
 
         FormSubmitListener();
         ButtonOnClickListener();
