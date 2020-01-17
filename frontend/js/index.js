@@ -1,113 +1,32 @@
 function init() {
-    StatusStr = ["無狀態", "使用中", "倉庫", "維修中", "保養中"];
-    PermissionStr = ["未啟用", "狀態查詢", "狀態登錄", "紀錄查看", "裝置管理", "使用者管理", "*", "*", "*", "管理員"];
+
 }
 
 function OnHashchangeListener() {
-    var hash = location.hash;
-    console.log(hash);
     if (hash != '') {
         $(".nav").find(".active").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass('active');
     }
-
     $("div[id^='Content_']").hide();
     $("#title_bar").show();
     HideAlert();
 
     if (hash == '' && login_check() && PermissionCheck(1, true)) {
-        $('#Content_Dashboard').show();
+        $('#Content_Announcement').show();
     }
-    if (hash == '#UpdateStatus' && login_check() && PermissionCheck(2, true)) {
-        $('#Content_Enter_status').show();
+    if (hash == '#ClubSelect' && login_check() && PermissionCheck(2, true)) {
+        $('#Content_ClubSelect').show();
         $("#title_bar").hide();
     }
-    if (hash == '#InquireStatus' && login_check() && PermissionCheck(1, true)) {
-        $('#Content_Inquire_status').show();
+    if (hash == '#SelectManage' && login_check() && PermissionCheck(1, true)) {
+        $('#Content_SelectManage').show();
         $("#title_bar").hide();
+    }
+    if (hash == '#ClubManage' && login_check() && PermissionCheck(3, true)) {
+        $('#Content_ClubManage').show();
+        $("#title_bar").hide();
+    }
 
-        SyncDeviceTable(false);
-
-        var sql = new WebSql();
-        sql.select("device_tb", "*", "where 1", function (result) {
-            var jsonA = [];
-            for (let i = 0; i < result.length; i++) {
-                var tmp = result[i];
-                tmp['status'] = StatusStr[tmp['status']];
-                jsonA.push(tmp);
-            }
-            console.log(jsonA);
-            $('#table_device').bootstrapTable({
-                data: jsonA,
-                dataType: "json",
-                classes: "table table-bordered table-striped table-sm",
-                striped: true,
-                pagination: true,
-                uniqueId: 'DID',
-                pageNumber: 1,
-                pageSize: 10,
-                pageList: [10, 25, 50, 100],
-                search: true,
-                sortName: 'DID',
-                showColumns: true,
-                showToggle: true,
-                showPaginationSwitch: true,
-                showFullscreen: true,
-                columns: [{
-                    field: 'DID',
-                    title: '設備ID'
-                }, {
-                    field: 'category',
-                    title: '分類'
-                }, {
-                    field: 'model',
-                    title: '型號'
-                }, {
-                    field: 'number',
-                    title: '編號'
-                }, {
-                    field: 'user',
-                    title: '使用者',
-                    //align:'center'
-                }, {
-                    field: 'position',
-                    title: '位置'
-                }, {
-                    field: 'status',
-                    title: '狀態'
-                }, {
-                    field: 'LastModified',
-                    title: '最後修改時間'
-                }, {
-                    field: 'operating',
-                    title: '操作',
-                    width: 135,
-                    formatter: '<button id="device_table_update" class="btn btn-info">登錄</button>' +
-                        '&nbsp;<button id="device_table_manage" class="btn btn-success">管理</button>',
-                    events: operateEvents
-                }]
-            });
-        });
-    }
-    if (hash == '#Log' && login_check() && PermissionCheck(3, true)) {
-        $('#Content_Log').show();
-        $("#title_bar").hide();
-    }
-    if (hash == '#Repair' && login_check() && PermissionCheck(2, true)) {
-        $('#Content_Fix').show();
-        $("#title_bar").hide();
-    }
-    if (hash == '#MaintenanceCheck' && login_check() && PermissionCheck(2, true)) {
-        $('#Content_Maintenance_check').show();
-        $("#title_bar").hide();
-    }
-    if (hash == '#DeviceManage' && login_check() && PermissionCheck(4, true)) {
-        $('#Content_Device_manage').show();
-        $("#title_bar").hide();
-
-        DM_Switch();
-
-    }
     if (hash == '#UserManage' && login_check() && PermissionCheck(5, true)) {
         $('#Content_User_manage').show();
         $("#title_bar").hide();
@@ -196,51 +115,6 @@ function OnHashchangeListener() {
                 $('#chguser-ShowEmail').val(userinfo['email']);
             }
         }
-    }
-    if (hash == '#ChangePw') {
-        $('#Content_Change_pw').show();
-        console.log(location.href);
-        var getURl = new URL(location.href);
-        token = getURl.searchParams.get('token');
-        if (getURl.searchParams.has('token')) {
-            $('#row-fgtpw').show();
-            $('#row-chgpw').hide();
-            $.ajax({
-                url: "../ntuh_yl_RT_mdms_api/user.php",
-                data: "mode=rstpw_check&token=" + token,
-                type: "POST",
-                success: function (msg) {
-                    smsg = msg.split(',');
-                    if (smsg[0] == "token_ok") {
-                        $('#ShowAcc').val(smsg[1]);
-                    }
-                    if (smsg[0] == "token_timeout") {
-                        ShowAlart('alert-danger', "連結已過期,請重新<a href='index.html#ChangePw' class='alert-link'>申請</a>!!", true, false);
-                    }
-                    if (smsg[0] == "hasnot_token") {
-                        ShowAlart('alert-danger', "此連結無效,請重新<a href='index.html#ChangePw' class='alert-link'>申請</a>!!", true, false);
-                    }
-                },
-                error: function (xhr) {
-                    console.log('ajax er');
-                    $.alert({
-                        title: '錯誤',
-                        content: 'Ajax 發生錯誤',
-                        type: 'red',
-                        typeAnimated: true
-                    });
-                }
-            });
-        } else {
-            $('#row-fgtpw').hide();
-            $('#row-chgpw').show();
-        }
-
-        /*$('#alert-primary').show();
-        $('#alert-success').show();
-        $('#alert-danger').show();
-        $('#alert-warning').show();
-        $('#alert-info').show();*/
     }
 }
 
@@ -856,15 +730,13 @@ function ButtonOnClickListener() {
     });
 }
 
-function PermissionCheck(NeedPermission, isAlert) {
+function PermissionCheck(needAdmin, isAlert) {
     HideAlert();
-    var LIP = $.cookie("LoginInfoPermission");
-    console.log("LPT:" + LIP);
-    console.log("NeedPermission:" + NeedPermission);
-    if (LIP >= NeedPermission) {
+    var hasAdmin = $.cookie("LoginInfoAdmin");
+    if((needAdmin && hasAdmin=='true') || !needAdmin){
         console.log("Pass");
         return true;
-    } else {
+    }else{
         console.log("NoPass");
         if (isAlert) {
             ShowAlart('alert-warning', "您的權限不足!!<br>您的權限：" + LIP + "<br>所需權限：" + NeedPermission, true, false);
@@ -947,178 +819,5 @@ window.operateEvents = {
 
 function LinkFormatterUM(value, row, index) {
     return "<a href='?acc=" + value + "#UserManage'>" + value + "</a>";
-}
-
-function LinkFormatterDM(value, row, index) {
-    return "<a href='?DID=" + value + "#DeviceManage'>" + value + "</a>";
-}
-
-function DM_Switch() {
-    setTimeout(function () {
-        console.log('DSok');
-        $('#DM_DM').hide();
-        $('#DM_PM').hide();
-
-        if ($('#lb_DM_DM').is('.active')) {
-            $('#DM_DM').show();
-
-            SyncDeviceTable(false);
-
-            var sql = new WebSql();
-            sql.select("device_tb", "*", "where 1", function (result) {
-                var jsonA = [];
-                for (let i = 0; i < result.length; i++) {
-                    var tmp = result[i];
-                    tmp['status'] = StatusStr[tmp['status']];
-                    jsonA.push(tmp);
-                }
-                console.log(jsonA);
-                $('#table_device_mng').bootstrapTable({
-                    data: jsonA,
-                    dataType: "json",
-                    classes: "table table-bordered table-striped table-sm",
-                    striped: true,
-                    pagination: true,
-                    uniqueId: 'DID',
-                    sortName: 'DID',
-                    pageNumber: 1,
-                    pageSize: 5,
-                    search: true,
-                    showPaginationSwitch: true,
-                    pageList: [5, 10, 15, 20],
-                    //toolbar : "#toolbar_del_position",
-                    columns: [{
-                        field: 'DID',
-                        title: '設備ID',
-                        formatter: LinkFormatterDM
-                    }, {
-                        field: 'category',
-                        title: '分類'
-                    }, {
-                        field: 'model',
-                        title: '型號'
-                    }, {
-                        field: 'number',
-                        title: '編號'
-                    }, {
-                        field: 'user',
-                        title: '使用者',
-                    }, {
-                        field: 'position',
-                        title: '位置'
-                    }, {
-                        field: 'status',
-                        title: '狀態'
-                    }, {
-                        field: 'LastModified',
-                        title: '最後修改時間'
-                    }, {
-                        field: 'mkqr',
-                        title: 'QR Code',
-                        width: 75,
-                        formatter: '<button id="device_table_mkqr" class="btn btn-info">產生</button>',
-                        events: operateEvents
-                    }]
-                });
-            });
-
-            var getURl = new URL(location.href);
-            if (getURl.searchParams.has('DID')) {
-                var DID = getURl.searchParams.get('DID');
-                console.log(DID);
-            }
-        } else {
-            $('#DM_PM').show();
-
-            $('#table_position').bootstrapTable({
-                data: getPositionData(),
-                dataType: "json",
-                classes: "table table-bordered table-striped table-sm",
-                striped: true,
-                pagination: true,
-                uniqueId: 'type',
-                pageNumber: 1,
-                pageSize: 10,
-                pageList: [10, 25, 50, 100],
-                search: true,
-                sortName: 'type',
-                showPaginationSwitch: true,
-                columns: [{
-                    field: 'checkbox',
-                    checkbox: true,
-                    //formatter: '<input type="checkbox" style="width:25px;height:25px">'
-                }, {
-                    field: 'type',
-                    title: '分類'
-                }, {
-                    field: 'item',
-                    title: '編號'
-                }/*, {
-                    field: 'operating',
-                    title: '操作',
-                    formatter: '<button id="position_table_del" class="btn btn-danger">刪除</button>',
-                    events: operateEvents
-                }*/]
-            });
-        }
-    }, 0);
-}
-
-function getPositionData() {
-    var data = 0;
-    $.ajax({
-        url: "../ntuh_yl_RT_mdms_api/db.php",
-        data: "mode=sync_position_item_tb_download" +
-            "&acc=" + $.cookie("LoginInfoAcc") +
-            "&pw=" + $.cookie("LoginInfoPw"),
-        type: "POST",
-        async: false,
-        success: function (msg) {
-            console.log(msg);
-            var jsonA = JSON.parse(msg);
-            console.log(jsonA);
-            data = jsonA;
-        },
-        error: function (xhr) {
-            console.log('ajax er');
-            $.alert({
-                title: '錯誤',
-                content: 'Ajax 發生錯誤',
-                type: 'red',
-                typeAnimated: true
-            });
-        }
-    });
-    console.log(data);
-    return data;
-}
-
-var maxNewPositionRow = 0;
-
-function addNewPositionRow() {
-    maxNewPositionRow++;
-    var new_row = document.createElement("div");
-    new_row.className = "form-row";
-    new_row.style.marginTop="5px";
-    var new_col_1 = document.createElement("div");
-    new_col_1.className = "col";
-    var new_col_2 = document.createElement("div");
-    new_col_2.className = "col";
-    var new_input_type = document.createElement("input");
-    new_input_type.type = "text";
-    new_input_type.className = "form-control";
-    new_input_type.id = "inputType_" + maxNewPositionRow;
-    new_input_type.placeholder = "type";
-    var new_input_item = document.createElement("input");
-    new_input_item.type = "text";
-    new_input_item.className = "form-control";
-    new_input_item.id = "inputItem_" + maxNewPositionRow;
-    new_input_item.placeholder = "item";
-    new_col_1.appendChild(new_input_type);
-    new_col_2.appendChild(new_input_item);
-    new_row.appendChild(new_col_1);
-    new_row.appendChild(new_col_2);
-    var div=document.getElementById("NewPositionRow");
-    div.appendChild(new_row);
 }
 
