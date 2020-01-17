@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>醫療儀器管理系統</title>
+
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+
+    <!--  jQuery -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <!-- Popper.js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/bootstrap.js"></script>
+    <!-- jQuery-confirm -->
+    <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <script src="js/jquery-confirm.min.js"></script>
+    <!-- jQuery-cookie -->
+    <script src="js/jquery.cookie.js"></script>
+    <!-- FontAwesome -->
+    <link href="css/all.css" rel="stylesheet">
+    <!-- md5 -->
+    <script src="js/md5.js"></script>
+    <!-- Moment -->
+    <script src="js/moment.js"></script>
+    <!-- Bootstrap Table -->
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <script src="js/bootstrap-table.js"></script>
+    <script src="js/bootstrap-table-zh-TW.js"></script>
+    <!-- Google Font APIs -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:400&display=swap&subset=chinese-traditional"
+          rel="stylesheet">
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- My js -->
+    <script src="js/alert.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/WebSql.js"></script>
+</head>
+<body>
+<div class="jumbotron text-center" id="title_bar" style="margin-bottom:0;padding-top: 20px;padding-bottom: 20px;">
+    <div class="container">
+        <h1>NTUH.YL 醫療儀器管理系統</h1>
+        <h4>NTUH.YL Medical Device Manage System</h4>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 0px">
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggler" style="margin-left: 16px">
+        <span class="navbar-toggler-icon">
+        </span>
+    </button>
+    <a class="navbar-brand" href="index.html" style="margin-right: 16px;margin-left: 16px">MDMS</a>
+
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="nav navbar-nav mr-auto">
+            <li>
+                <a class="nav-link" href="#UpdateStatus">現況登錄</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#InquireStatus">狀態查詢</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#Log">歷史紀錄</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#Repair">維修項目</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#MaintenanceCheck">儀器保養</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#DeviceManage">設備管理</a>
+            </li>
+            <!--<li class="dropdown" data-toggle="dropdown">
+                <a class="nav-link" href="#DeviceManage">設備管理</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#DeviceManage">設備管理</a></li>
+                    <li><a href="#PositionManage">床位管理</a></li>
+                </ul>
+            </li>-->
+            <li>
+                <a class="nav-link" href="#UserManage">帳號管理</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#ChangePw">更改密碼</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li>
+                <a id="btn_logio" class="nav-link" onclick="location.replace('login.html')">登入/登出</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="middle">
+    <div class="container">
+
+        <div id="alert">
+            <div class="alert alert-primary" role="alert" style="display: none;margin-top: 16px"
+                 id="alert-primary"></div>
+            <div class="alert alert-success" role="alert" style="display: none;margin-top: 16px" id="alert-success">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-check fa-2x" style="margin:0px 5px"></i><strong>成功：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-success-in"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-danger" role="alert" style="display: none;margin-top: 16px" id="alert-danger">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-times fa-2x" style="padding:0px 5px;margin:0px 5px"></i><strong>錯誤：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-danger-in"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning" role="alert" style="display: none;margin-top: 16px" id="alert-warning">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-exclamation-circle fa-2x" style="margin:0px 5px"></i><strong>警告：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-warning-in"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info" role="alert" style="display: none;margin-top: 16px" id="alert-info">
+                <div class="row">
+                    <div class="col-0">
+                        <div class="row" style="margin: 0px">
+                            <i class="fa fa-info fa-2x" style="padding:0px 10px;margin:0px 5px"></i><strong>資訊：</strong>
+                        </div>
+                    </div>
+                    <div class="col" style="padding-left: 0px">
+                        <div id="alert-info-in"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dialog_ProgressBar_Sync" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title ">
+                            資料同步中...
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                 style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Content_Dashboard">
+
+        </div>
+        <div id="Content_Enter_status">2</div>
+        <div id="Content_Inquire_status">
+            <table id="table_device"></table>
+        </div>
+        <div id="Content_Log">4</div>
+        <div id="Content_Fix">5</div>
+        <div id="Content_Maintenance_check">6</div>
+        <div id="Content_Device_manage">
+            <div class="modal fade" id="QRModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="QRModalTitle"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="display: flex">
+                            <div class="col" id="QRModalContext1" style="text-align: center"></div>
+                            <div class="col" id="QRModalContext2" style="text-align: center"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group btn-group-toggle" id="btn_DM" data-toggle="buttons" style="margin-top: 10px;">
+                <label class="btn btn-secondary active" id="lb_DM_DM">
+                    <input type="radio" checked onchange="DM_Switch();"> 設備管理
+                </label>
+                <label class="btn btn-secondary" id="lb_DM_PM">
+                    <input type="radio" onchange="DM_Switch();"> 床位管理
+                </label>
+            </div>
+            <div id="DM_DM">
+                <div class="row" id="row-device-list2">
+                    <div class="container">
+                        <table id="table_device_mng"></table>
+                    </div>
+                </div>
+                <div class="row" id="row-device-operate">
+                    <div class="col-md-6">
+                        <div class="card" id="card-device-change">
+                            <div class="card-header">
+                                <h3 class="card-title">修改裝置</h3>
+                            </div>
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" id="card-device-new">
+                            <div class="card-header">
+                                <h3 class="card-title">新增裝置</h3>
+                            </div>
+                            <div class="card-body">
+                                <!--<form role="form" class="form-my" id="form-newdevice">
+                                    <div class="form-group">
+                                        <label for="newuser-InputAcc">帳號(員工編號)</label>
+                                        <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newuser-InputName">名稱</label>
+                                        <input type="text" class="form-control" id="newuser-InputName" placeholder="輸入名稱"
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newuser-InputPermission">權限</label>
+                                        <select class="custom-select" id="newuser-InputPermission" required>
+                                            <option value="-1" selected disabled>設定權限</option>
+                                            <option value="0">0(未啟用)</option>
+                                            <option value="1">1(狀態查詢)</option>
+                                            <option value="2">2(狀態登錄)</option>
+                                            <option value="3">3(紀錄查看)</option>
+                                            <option value="4">4(裝置管理)</option>
+                                            <option value="5">5(使用者管理)</option>
+                                            <option value="6">6(*)</option>
+                                            <option value="7">7(*)</option>
+                                            <option value="8">8(*)</option>
+                                            <option value="9">9(管理員)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newuser-InputEmail">E-mail</label>
+                                        <input type="email" class="form-control" id="newuser-InputEmail"
+                                               placeholder="輸入E-mail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newuser-InputPw">密碼</label>
+                                        <input type="password" class="form-control" id="newuser-InputPw" placeholder="設定密碼">
+                                        <input type="password" class="form-control" id="newuser-InputPwRe"
+                                               placeholder="確認新密碼">
+                                    </div>
+
+                                    <div class="row justify-content-end">
+                                        <div class="col-4">
+                                            <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                    style="margin-top: 8px">
+                                                送出
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="DM_PM" style="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table id="table_position"></table>
+                        <div id="toolbar_del_position" class="btn-group">
+                            <button id="btn_del_position" type="button" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> 刪除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" id="card-position-new">
+                            <div class="card-header">
+                                <h3 class="card-title">新增床位</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="max-height:385px;overflow-x:hidden;overflow-y: auto">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="inputType_0"
+                                                   placeholder="type"/>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="inputItem_0"
+                                                   placeholder="item"/>
+                                        </div>
+                                    </div>
+                                    <div id="NewPositionRow"></div>
+                                </div>
+                                <span onclick="addNewPositionRow()"
+                                      style="font-size: 32px;margin-left: 15px;opacity:0.7">
+                                        <i class="far fa-plus-square"></i>
+                                </span>
+                                <br>
+                                <button type="submit" class="btn btn-primary" id="btn_new_position">新增</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content_User_manage">
+            <div class="row" id="row-user-list">
+                <div class="container">
+                    <table id="table_user"></table>
+                </div>
+            </div>
+            <div class="row" id="row-user-operate">
+                <div class="col-md-6">
+                    <div class="card" id="card-user-change">
+                        <div class="card-header">
+                            <h3 class="card-title">修改使用者</h3>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-my" id="form-chguser">
+                                <div class="form-group">
+                                    <label for="chguser-ShowAcc">帳號(員工編號)</label>
+                                    <input type="text" class="form-control-plaintext" id="chguser-ShowAcc" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chguser-ShowName">名稱</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chguser-ShowName" readonly>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chguser-InputName"
+                                                   placeholder="修改名稱">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chguser-ShowPermission">權限</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <select class="custom-select" id="chguser-ShowPermission" disabled>
+                                                <option value="0">0(未啟用)</option>
+                                                <option value="1">1(狀態查詢)</option>
+                                                <option value="2">2(狀態登錄)</option>
+                                                <option value="3">3(紀錄查看)</option>
+                                                <option value="4">4(裝置管理)</option>
+                                                <option value="5">5(使用者管理)</option>
+                                                <option value="6">6(*)</option>
+                                                <option value="7">7(*)</option>
+                                                <option value="8">8(*)</option>
+                                                <option value="9">9(管理員)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select class="custom-select" id="chguser-InputPermission">
+                                                <option value="-1" selected>修改權限</option>
+                                                <option value="0">0(未啟用)</option>
+                                                <option value="1">1(狀態查詢)</option>
+                                                <option value="2">2(狀態登錄)</option>
+                                                <option value="3">3(紀錄查看)</option>
+                                                <option value="4">4(裝置管理)</option>
+                                                <option value="5">5(使用者管理)</option>
+                                                <option value="6">6(*)</option>
+                                                <option value="7">7(*)</option>
+                                                <option value="8">8(*)</option>
+                                                <option value="9">9(管理員)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chguser-ShowEmail">E-mail</label>
+                                    <input type="email" class="form-control" id="chguser-ShowEmail" readonly>
+                                    <input type="email" class="form-control" id="chguser-InputEmail"
+                                           placeholder="修改E-mail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="chguser-InputPw">密碼</label>
+                                    <input type="password" class="form-control" id="chguser-InputPw" placeholder="修改密碼">
+                                    <input type="password" class="form-control" id="chguser-InputPwRe"
+                                           placeholder="確認新密碼">
+                                </div>
+
+                                <!-- todo -->
+                                <div class="row justify-content-between">
+                                    <div class="col-4">
+                                        <button id="btn_chguser-del" type="button"
+                                                class="btn btn-default btn-danger btn-block" style="margin-top: 8px">
+                                            刪除
+                                        </button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                style="margin-top: 8px">
+                                            送出
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" id="card-user-new">
+                        <div class="card-header">
+                            <h3 class="card-title">新增使用者</h3>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-my" id="form-newuser">
+                                <div class="form-group">
+                                    <label for="newuser-InputAcc">帳號(員工編號)</label>
+                                    <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputName">名稱</label>
+                                    <input type="text" class="form-control" id="newuser-InputName" placeholder="輸入名稱"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputPermission">權限</label>
+                                    <select class="custom-select" id="newuser-InputPermission" required>
+                                        <option value="-1" selected disabled>設定權限</option>
+                                        <option value="0">0(未啟用)</option>
+                                        <option value="1">1(狀態查詢)</option>
+                                        <option value="2">2(狀態登錄)</option>
+                                        <option value="3">3(紀錄查看)</option>
+                                        <option value="4">4(裝置管理)</option>
+                                        <option value="5">5(使用者管理)</option>
+                                        <option value="6">6(*)</option>
+                                        <option value="7">7(*)</option>
+                                        <option value="8">8(*)</option>
+                                        <option value="9">9(管理員)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputEmail">E-mail</label>
+                                    <input type="email" class="form-control" id="newuser-InputEmail"
+                                           placeholder="輸入E-mail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputPw">密碼</label>
+                                    <input type="password" class="form-control" id="newuser-InputPw" placeholder="設定密碼">
+                                    <input type="password" class="form-control" id="newuser-InputPwRe"
+                                           placeholder="確認新密碼">
+                                </div>
+
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                style="margin-top: 8px">
+                                            送出
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content_Change_pw">
+            <div class="row" id="row-fgtpw">
+                <div class="card" id="Fgtpw_HasToken" style="width: 450px">
+                    <div class="card-header">
+                        <h2 class="card-title">重設密碼</h2>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" class="form-my" id="form-HasToken">
+                            <div class="form-group">
+                                <label for="ShowAcc">帳號</label>
+                                <input type="text" class="form-control-plaintext" id="ShowAcc" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="InputNewPw_f">新密碼</label>
+                                <input type="password" class="form-control" id="InputNewPw_f" placeholder="請輸入新密碼"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="InputNewPwRe_f">確認新密碼</label>
+                                <input type="password" class="form-control" id="InputNewPwRe_f" placeholder="請再次輸入新密碼"
+                                       required>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-default btn-primary btn-block"
+                                            style="margin-top: 8px">
+                                        送出
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="row-chgpw">
+                <div class="col-md-6">
+                    <div class="card" id="Chgpw">
+                        <div class="card-header">
+                            <h3 class="card-title">更改密碼</h3>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-my" id="form-Chgpw">
+                                <div class="form-group">
+                                    <label for="InputAcc">帳號</label>
+                                    <input type="text" class="form-control" id="InputAcc" placeholder="請輸入員工編號"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputOldPw">舊密碼</label>
+                                    <input type="password" class="form-control" id="InputOldPw" placeholder="請輸入舊密碼"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputNewPw">新密碼</label>
+                                    <input type="password" class="form-control" id="InputNewPw" placeholder="請輸入新密碼"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputNewPwRe">確認新密碼</label>
+                                    <input type="password" class="form-control" id="InputNewPwRe" placeholder="請再次輸入新密碼"
+                                           required>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                style="margin-top: 8px">
+                                            送出
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" id="Fgtpw_GetToken">
+                        <div class="card-header">
+                            <h3 class="card-title">忘記密碼</h3>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-my" id="form-GetToken">
+                                <div class="form-group">
+                                    <label for="InputEmail">請輸入您註冊的E-mail</label>
+                                    <input type="email" class="form-control" id="InputEmail" placeholder="請輸入E-mail"
+                                           required>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                style="margin-top: 8px">
+                                            送出
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        init();
+        OnHashchangeListener();
+        $(".nav a").on("click", function () {
+            $(".nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+            $("#navbarToggler").collapse('hide');
+        });
+
+        if ($.cookie('LoginInfoPw') == undefined)
+            $('#btn_logio').text("登入");
+        else
+            $('#btn_logio').text($.cookie('LoginInfoName') + "/登出");
+
+        FormSubmitListener();
+        ButtonOnClickListener();
+
+        window.addEventListener('hashchange', OnHashchangeListener);
+
+        var sql = new WebSql();
+
+    });
+</script>
+</html>
