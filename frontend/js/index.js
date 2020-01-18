@@ -826,17 +826,34 @@ function LinkFormatterUM(value, row, index) {
     return "<a href='?acc=" + value + "#UserManage'>" + value + "</a>";
 }
 
+var grade_num=-1;
 function changeGradeClass() {
     setTimeout(function () {
         var grade=$('#CS_grade_select li .active').text();
         console.log(grade);
         if(grade=="一年級"){
+            grade_num=1;
             $('#CS_class_selectG1').show();
             $('#CS_class_selectG2').hide();
         }else if(grade=="二年級"){
+            grade_num=2;
             $('#CS_class_selectG2').show();
             $('#CS_class_selectG1').hide();
         }
+        changeClass();
+    }, 100);
+}
+
+function changeClass() {
+    setTimeout(function () {
+        console.log(grade_num);
+        var mClass=-1;
+        if(grade_num==1){
+            mClass=$('#CS_class_selectG1 li .active').text();
+        }else if(grade_num==2){
+            mClass=$('#CS_class_selectG2 li .active').text();
+        }
+        console.log(mClass);
     }, 100);
 }
 
