@@ -894,7 +894,7 @@ function changeClass() {
             mClass=$('#CS_class_selectG2 li .active').text();
         }
         console.log(mClass);
-        getStudents(mClass)
+        $('#table_clubSelect').bootstrapTable('load',getStudents(mClass));
     }, 100);
 }
 
