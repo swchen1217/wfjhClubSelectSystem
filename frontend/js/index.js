@@ -864,7 +864,6 @@ function showClubList(in_grade) {
         dataType: "json",
         classes: "table table-bordered table-striped table-sm",
         striped: true,
-        pagination: false,
         uniqueId: 'id',
         sortName: 'id',
         columns: [{
@@ -884,12 +883,13 @@ function showClubList(in_grade) {
 }
 
 function getClubList(need_grade) {
-    var rs='';
+    var data="";
     $.ajax({
         url: "../backend/db.php",
-        data: "mode=sync_position_item_tb_download" +
+        data: "mode=getClubList" +
             "&acc=" + $.cookie("LoginInfoAcc") +
-            "&pw=" + $.cookie("LoginInfoPw"),
+            "&pw=" + $.cookie("LoginInfoPw")+
+            "&grade=" + need_grade,
         type: "POST",
         async: false,
         success: function (msg) {
@@ -908,5 +908,6 @@ function getClubList(need_grade) {
             });
         }
     });
+    return data;
 }
 
