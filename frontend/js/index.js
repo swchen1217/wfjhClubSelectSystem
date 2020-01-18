@@ -840,6 +840,7 @@ function changeGradeClass() {
             $('#CS_class_selectG2').show();
             $('#CS_class_selectG1').hide();
         }
+        showClubList(grade_num);
         changeClass();
     }, 100);
 }
@@ -855,5 +856,57 @@ function changeClass() {
         }
         console.log(mClass);
     }, 100);
+}
+
+function showClubList(in_grade) {
+    $('#table_clubList').bootstrapTable({
+        data: getClubList(in_grade),
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        pagination: false,
+        uniqueId: 'id',
+        sortName: 'id',
+        columns: [{
+            field: 'id',
+            title: '代碼'
+        }, {
+            field: 'name',
+            title: '名稱'
+        }, {
+            field: 'teacher',
+            title: '教師'
+        }, {
+            field: 'isSpecial',
+            title: '特殊社團'
+        }]
+    });
+}
+
+function getClubList(need_grade) {
+    var rs='';
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=sync_position_item_tb_download" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw"),
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            var jsonA = JSON.parse(msg);
+            console.log(jsonA);
+            data = jsonA;
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
 }
 
