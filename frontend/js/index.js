@@ -280,6 +280,7 @@ function changeClass() {
 var club_data;
 
 function getClubList(need_grade) {
+    var fdata = "";
     var data = "";
     $.ajax({
         url: "../backend/db.php",
@@ -293,10 +294,11 @@ function getClubList(need_grade) {
             console.log(msg);
             if (msg != "no_data") {
                 var jsonA = JSON.parse(msg);
-                for (var i = 0; i < jsonA.length; i++)
-                    jsonA[i]['isSpecial'] = jsonA[i]['isSpecial'] == 1 ? "是" : "否";
-                console.log(jsonA);
+                var FjsonA = JSON.parse(msg);
                 data = jsonA;
+                for (var i = 0; i < jsonA.length; i++)
+                    FjsonA[i]['isSpecial'] = FjsonA[i]['isSpecial'] == 1 ? "是" : "否";
+                fdata = FjsonA;
             } else {
                 $('#table_clubSelect').bootstrapTable("removeAll");
             }
@@ -312,7 +314,7 @@ function getClubList(need_grade) {
         }
     });
     club_data = data;
-    return data;
+    return fdata;
 }
 
 var student_data;
@@ -435,6 +437,10 @@ function checkCS(row) {
 function selectVerify() {
     var codeErrorArray = [];
     for (var i = 0; i < student_data.length; i++) {
+        var inputD = $('#inputDefinite_' + i);
+        var inputA1 = $('#inputAlternate1_' + i);
+        var inputA2 = $('#inputAlternate2_' + i);
+        var inputA3 = $('#inputAlternate3_' + i);
         var hasClubCode = [false, false, false, false];
         for (var k = 0; k < club_data.length; k++) {
             if (inputD.val() == club_data[k]['id']) {
@@ -469,9 +475,56 @@ function selectVerify() {
             typeAnimated: true
         });
     } else {
-        $.alert({
-            title: 'OK',
-            typeAnimated: true
+        var CSDcode = [student_data.length];
+        for (var i = 0; i < student_data.length; i++) {
+            var inputD = $('#inputDefinite_' + i);
+            CSDcode[i] = inputD.val();
+        }
+        var result = new Set();
+        var repeat = new Set();
+        CSDcode.forEach(item => {
+            result.has(item) ? repeat.add(item) : result.add(item);
         });
+        repeat = Array.from(repeat);
+        for (var i = 0; i < club_data.length; i++) {
+            if (club_data[i]['isSpecial'] == 1) {
+                for (var k = 0; k < repeat.length; k++) {
+                    if (repeat[k] == club_data[i]['id']) {
+                        repeat.splice(k, 1);
+                        k--;
+                    }
+                }
+            }
+        }
+        if (repeat.length != 0) {
+            var context_repeat = '<em><b>確定中選</b>之社團,除<b>特殊社團</b>,其他社團每班限<b>一位同學</b><br><b>志願</b>則不再此限</em><br><br>';
+            for (var i = 0; i < club_data.length; i++){
+                for (var k = 0; k < repeat.length; k++){
+                    if(club_data[i]['id']==repeat[k]){
+                        context_repeat += '<b>'+club_data[i]['id'] + ' ' + club_data[i]['name'] + '</b> 重複於 ';
+                        for (var n = 0; n < student_data.length; n++){
+                            var inputD = $('#inputDefinite_' + n);
+                            if (club_data[i]['id'] == inputD.val()) {
+                                context_repeat += student_data[n]['sid'] + ' ' + student_data[n]['name'] + ' , ';
+                            }
+                        }
+                        context_repeat += '<br>';
+                    }
+                }
+            }
+            $.alert({
+                title: '社團重複',
+                content: context_repeat,
+                type: 'red',
+                typeAnimated: true,
+                columnClass: 'm'
+            });
+        } else {
+            // TODO
+            $.alert({
+                title: 'OK',
+                typeAnimated: true
+            });
+        }
     }
 }
