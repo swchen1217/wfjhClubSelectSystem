@@ -1,5 +1,44 @@
 function init() {
-
+    $('#table_clubList').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'id',
+        sortName: 'id',
+        columns: [{
+            field: 'id',
+            title: '代碼'
+        }, {
+            field: 'name',
+            title: '名稱'
+        }, {
+            field: 'teacher',
+            title: '教師'
+        }, {
+            field: 'isSpecial',
+            title: '特殊社團'
+        }]
+    });
+    $('#table_clubSelect').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'sid',
+        sortName: 'sid',
+        columns: [{
+            field: 'sid',
+            title: '學號'
+        }, {
+            field: 'class',
+            title: '班級'
+        }, {
+            field: 'number',
+            title: '座號'
+        }, {
+            field: 'name',
+            title: '姓名'
+        }]
+    });
 }
 
 function OnHashchangeListener() {
@@ -840,7 +879,7 @@ function changeGradeClass() {
             $('#CS_class_selectG2').show();
             $('#CS_class_selectG1').hide();
         }
-        showClubList(grade_num);
+        $('#table_clubList').bootstrapTable('load',getClubList(grade_num));
         changeClass();
     }, 100);
 }
@@ -856,30 +895,6 @@ function changeClass() {
         }
         console.log(mClass);
     }, 100);
-}
-
-function showClubList(in_grade) {
-    $('#table_clubList').bootstrapTable({
-        data: getClubList(in_grade),
-        dataType: "json",
-        classes: "table table-bordered table-striped table-sm",
-        striped: true,
-        uniqueId: 'id',
-        sortName: 'id',
-        columns: [{
-            field: 'id',
-            title: '代碼'
-        }, {
-            field: 'name',
-            title: '名稱'
-        }, {
-            field: 'teacher',
-            title: '教師'
-        }, {
-            field: 'isSpecial',
-            title: '特殊社團'
-        }]
-    });
 }
 
 function getClubList(need_grade) {
