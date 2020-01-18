@@ -238,37 +238,37 @@ function LinkFormatterUM(value, row, index) {
     return "<a href='?acc=" + value + "#UserManage'>" + value + "</a>";
 }
 
-var grade_num = -1;
-
+var grade_code = -1;
 function changeGradeClass() {
     setTimeout(function () {
         var grade = $('#CS_grade_select li .active').text();
         console.log(grade);
         if (grade == "一年級") {
-            grade_num = 1;
+            grade_code = 1;
             $('#CS_class_selectG1').show();
             $('#CS_class_selectG2').hide();
         } else if (grade == "二年級") {
-            grade_num = 2;
+            grade_code = 2;
             $('#CS_class_selectG2').show();
             $('#CS_class_selectG1').hide();
         }
-        $('#table_clubList').bootstrapTable('load', getClubList(grade_num));
+        $('#table_clubList').bootstrapTable('load', getClubList(grade_code));
         changeClass();
     }, 100);
 }
 
+var class_code = -1;
 function changeClass() {
     setTimeout(function () {
-        console.log(grade_num);
-        var mClass = -1;
-        if (grade_num == 1) {
-            mClass = $('#CS_class_selectG1 li .active').text();
-        } else if (grade_num == 2) {
-            mClass = $('#CS_class_selectG2 li .active').text();
+        console.log(grade_code);
+
+        if (grade_code == 1) {
+            class_code = $('#CS_class_selectG1 li .active').text();
+        } else if (grade_code == 2) {
+            class_code = $('#CS_class_selectG2 li .active').text();
         }
-        console.log(mClass);
-        $('#table_clubSelect').bootstrapTable('load', getStudents(mClass));
+        console.log(class_code);
+        $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
     }, 100);
 }
 
@@ -377,5 +377,25 @@ function checkClubCheck(row) {
         inputD.prop("disabled", true);
     }else{
         inputD.prop("disabled", false);
+    }
+}
+
+function adminViewSwitch() {
+    $('#classSwitch').hide();
+    $('#classShow').hide();
+    if($.cookie('LoginInfoAdmin')=='1'){
+        $('#classSwitch').show();
+        $('#classShow').hide();
+        changeGradeClass();
+    }else{
+        $('#classSwitch').hide();
+        $('#classShow').show();
+        var mClass=$.cookie('LoginInfoClass');
+        var grade=mClass.substring(0, 1);
+        grade_code=grade;
+        class_code=mClass;
+        $('#mClass').text((grade=='1'?"一年級":"二年級")+'-'+mClass);
+        $('#table_clubList').bootstrapTable('load', getClubList(grade));
+        $('#table_clubSelect').bootstrapTable('load', getStudents(mClass));
     }
 }
