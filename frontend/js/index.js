@@ -894,6 +894,7 @@ function changeClass() {
             mClass=$('#CS_class_selectG2 li .active').text();
         }
         console.log(mClass);
+        getStudents(mClass)
     }, 100);
 }
 
@@ -912,6 +913,37 @@ function getClubList(need_grade) {
             var jsonA = JSON.parse(msg);
             console.log(jsonA);
             data = jsonA;
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
+}
+
+function getStudents(need_class) {
+    var data="";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getStudents" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw")+
+            "&class=" + need_class,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if(msg!="no_data"){
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                data = jsonA;
+            }
         },
         error: function (xhr) {
             console.log('ajax er');
