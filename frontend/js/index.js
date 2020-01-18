@@ -551,7 +551,8 @@ function selectVerify() {
                 data: "mode=uploadSelect" +
                     "&acc=" + $.cookie("LoginInfoAcc") +
                     "&pw=" + $.cookie("LoginInfoPw") +
-                    "&josn_data=" + jsonStr,
+                    "&josn_data=" + jsonStr+
+                    "&class=" + class_code,
                 type: "POST",
                 success: function (msg) {
                     console.log(msg);
