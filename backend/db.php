@@ -18,7 +18,7 @@ mb_internal_encoding('UTF-8');
 
 $mode = request("mode");
 $LastModified = request("LastModified");
-$josn_data = request("josn_data");
+$json_data = request("json_data");
 $id = request("id");
 $acc = request("acc");
 $pw = request("pw");
@@ -66,7 +66,9 @@ if ($mode == "getStudents") {
 }
 
 if ($mode == "uploadSelect") {
-    /*if (UserCheck($acc, $pw, false, $db)) {
+    $data=json_decode($json_data,true);
+
+    if (UserCheck($acc, $pw, false, $db)) {
         $sql = 'SELECT * FROM `selected` WHERE class=:class';
         $rs = $db->prepare($sql);
         $rs->bindValue(':class', $class, PDO::PARAM_STR);
@@ -77,27 +79,32 @@ if ($mode == "uploadSelect") {
             $rs2->bindValue(':class', $class, PDO::PARAM_STR);
             $rs2->execute();
 
-            $sql3 = 'INSERT INTO `selects`(sid, definite, alternate1, alternate2, alternate3) VALUES (:sid,:definite,:alternate1,:alternate2,:alternate3)';
-            $rs3 = $db->prepare($sql3);
-            $rs3->bindValue(':sid', $sid, PDO::PARAM_STR);
-            $rs3->bindValue(':definite', $definite, PDO::PARAM_STR);
-            $rs3->bindValue(':alternate1', $alternate1, PDO::PARAM_STR);
-            $rs3->bindValue(':alternate2', $alternate2, PDO::PARAM_STR);
-            $rs3->bindValue(':alternate3', $alternate3, PDO::PARAM_STR);
-            $rs3->execute();
+            for($i=0;$i<count($data);$i++){
+                $sql3 = 'INSERT INTO `selects`(sid, definite, alternate1, alternate2, alternate3) VALUES (:sid,:definite,:alternate1,:alternate2,:alternate3)';
+                $rs3 = $db->prepare($sql3);
+                $rs3->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
+                $rs3->bindValue(':definite', $data[$i]['definite'], PDO::PARAM_STR);
+                $rs3->bindValue(':alternate1', $data[$i]['alternate1'], PDO::PARAM_STR);
+                $rs3->bindValue(':alternate2', $data[$i]['alternate2'], PDO::PARAM_STR);
+                $rs3->bindValue(':alternate3', $data[$i]['alternate3'], PDO::PARAM_STR);
+                $rs3->execute();
+            }
         } else {
-            $sql4 = 'UPDATE `selects` SET `definite`=:definite,`alternate1`=:alternate1,`alternate2`=:alternate2,`alternate3`=:alternate2 WHERE sid=:sid';
-            $rs4 = $db->prepare($sql4);
-            $rs4->bindValue(':sid', $sid, PDO::PARAM_STR);
-            $rs4->bindValue(':definite', $definite, PDO::PARAM_STR);
-            $rs4->bindValue(':alternate1', $alternate1, PDO::PARAM_STR);
-            $rs4->bindValue(':alternate2', $alternate2, PDO::PARAM_STR);
-            $rs4->bindValue(':alternate3', $alternate3, PDO::PARAM_STR);
-            $rs4->execute();
+            for($i=0;$i<count($data);$i++){
+                $sql4 = 'UPDATE `selects` SET `definite`=:definite,`alternate1`=:alternate1,`alternate2`=:alternate2,`alternate3`=:alternate2 WHERE sid=:sid';
+                $rs4 = $db->prepare($sql4);
+                $rs4->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
+                $rs4->bindValue(':definite', $data[$i]['definite'], PDO::PARAM_STR);
+                $rs4->bindValue(':alternate1', $data[$i]['alternate1'], PDO::PARAM_STR);
+                $rs4->bindValue(':alternate2', $data[$i]['alternate2'], PDO::PARAM_STR);
+                $rs4->bindValue(':alternate3', $data[$i]['alternate3'], PDO::PARAM_STR);
+                $rs4->execute();
+            }
         }
+        echo "ok";
     } else {
         echo "user_error";
-    }*/
+    }
 }
 
 ?>
