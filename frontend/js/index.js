@@ -239,6 +239,7 @@ function LinkFormatterUM(value, row, index) {
 }
 
 var grade_code = -1;
+
 function changeGradeClass() {
     setTimeout(function () {
         var grade = $('#CS_grade_select li .active').text();
@@ -258,6 +259,7 @@ function changeGradeClass() {
 }
 
 var class_code = -1;
+
 function changeClass() {
     setTimeout(function () {
         console.log(grade_code);
@@ -307,7 +309,8 @@ function getClubList(need_grade) {
     return data;
 }
 
-var student_num=-1;
+var student_num = -1;
+
 function getStudents(need_class) {
     var data = "";
     $.ajax({
@@ -324,7 +327,7 @@ function getStudents(need_class) {
                 var jsonA = JSON.parse(msg);
                 console.log(jsonA);
                 data = jsonA;
-                student_num=jsonA.length;
+                student_num = jsonA.length;
             } else {
                 $('#table_clubSelect').bootstrapTable("removeAll");
             }
@@ -343,39 +346,39 @@ function getStudents(need_class) {
 }
 
 function formatterDefinite(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputDefinite_'+index+'" onchange="checkClubCheck('+index+')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputDefinite_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
 }
 
 function formatterAlternate1(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate1_'+index+'" onchange="checkClubCheck('+index+')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate1_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
 }
 
 function formatterAlternate2(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate2_'+index+'" onchange="checkClubCheck('+index+')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate2_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
 }
 
 function formatterAlternate3(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate3_'+index+'" onchange="checkClubCheck('+index+')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate3_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
 }
 
 function checkClubCheck(row) {
-    var inputD=$('#inputDefinite_'+row);
-    var inputA1=$('#inputAlternate1_'+row);
-    var inputA2=$('#inputAlternate2_'+row);
-    var inputA3=$('#inputAlternate3_'+row);
+    var inputD = $('#inputDefinite_' + row);
+    var inputA1 = $('#inputAlternate1_' + row);
+    var inputA2 = $('#inputAlternate2_' + row);
+    var inputA3 = $('#inputAlternate3_' + row);
 
-    if(inputD.val()!=""){
+    if (inputD.val() != "") {
         inputA1.prop("disabled", true);
         inputA2.prop("disabled", true);
         inputA3.prop("disabled", true);
-    }else {
+    } else {
         inputA1.prop("disabled", false);
         inputA2.prop("disabled", false);
         inputA3.prop("disabled", false);
     }
-    if(inputA1.val()!="" || inputA2.val()!="" || inputA3.val()!=""){
+    if (inputA1.val() != "" || inputA2.val() != "" || inputA3.val() != "") {
         inputD.prop("disabled", true);
-    }else{
+    } else {
         inputD.prop("disabled", false);
     }
 }
@@ -383,18 +386,18 @@ function checkClubCheck(row) {
 function adminViewSwitch() {
     $('#classSwitch').hide();
     $('#classShow').hide();
-    if($.cookie('LoginInfoAdmin')=='1'){
+    if ($.cookie('LoginInfoAdmin') == '1') {
         $('#classSwitch').show();
         $('#classShow').hide();
         changeGradeClass();
-    }else{
+    } else {
         $('#classSwitch').hide();
         $('#classShow').show();
-        var mClass=$.cookie('LoginInfoClass');
-        var grade=mClass.substring(0, 1);
-        grade_code=grade;
-        class_code=mClass;
-        $('#mClass').text((grade=='1'?"一年級":"二年級")+'-'+mClass);
+        var mClass = $.cookie('LoginInfoClass');
+        var grade = mClass.substring(0, 1);
+        grade_code = grade;
+        class_code = mClass;
+        $('#mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
         $('#table_clubList').bootstrapTable('load', getClubList(grade));
         $('#table_clubSelect').bootstrapTable('load', getStudents(mClass));
     }
