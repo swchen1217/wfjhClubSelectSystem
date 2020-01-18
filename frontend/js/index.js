@@ -912,6 +912,8 @@ function getClubList(need_grade) {
             console.log(msg);
             if(msg!="no_data"){
                 var jsonA = JSON.parse(msg);
+                for(var i=0;i<jsonA.length;i++)
+                    jsonA[i]['isSpecial']=jsonA[i]['isSpecial']==1?"是":"否";
                 console.log(jsonA);
                 data = jsonA;
             }else{
