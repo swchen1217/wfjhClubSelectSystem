@@ -910,9 +910,13 @@ function getClubList(need_grade) {
         async: false,
         success: function (msg) {
             console.log(msg);
-            var jsonA = JSON.parse(msg);
-            console.log(jsonA);
-            data = jsonA;
+            if(msg!="no_data"){
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                data = jsonA;
+            }else{
+                $('#table_clubSelect').bootstrapTable("removeAll");
+            }
         },
         error: function (xhr) {
             console.log('ajax er');
@@ -943,6 +947,8 @@ function getStudents(need_class) {
                 var jsonA = JSON.parse(msg);
                 console.log(jsonA);
                 data = jsonA;
+            }else{
+                $('#table_clubSelect').bootstrapTable("removeAll");
             }
         },
         error: function (xhr) {
