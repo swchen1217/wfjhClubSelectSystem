@@ -349,9 +349,9 @@ function getStudents(need_class) {
         }
     });
     student_data = data;
-    selectCheck=[student_data.length];
-    for(var i=0;i<student_data.length;i++)
-        selectCheck[i]=false;
+    selectCheck = [student_data.length];
+    for (var i = 0; i < student_data.length; i++)
+        selectCheck[i] = false;
     return data;
 }
 
@@ -418,15 +418,15 @@ function checkCS(row) {
 
     if ((inputD.val().length == 4 || (inputA1.val().length == 4 && inputA2.val().length == 4 && inputA3.val().length == 4)) && !(inputD.val() == "" && (inputA1.val() == inputA2.val() || inputA2.val() == inputA3.val() || inputA1.val() == inputA3.val()))) {
         $('#iconSelectIsOk_' + row).html('<i class="fas fa-check" style="color: #1e7e34"/>');
-        selectCheck[row]=true;
+        selectCheck[row] = true;
     } else {
         $('#iconSelectIsOk_' + row).html('<i class="fas fa-times" style="color: #b21f2d"/>');
-        selectCheck[row]=false;
+        selectCheck[row] = false;
     }
-    var canEnable=true;
-    for(var i=0;i<selectCheck.length;i++){
-        if(!selectCheck[i]){
-            canEnable=false;
+    var canEnable = true;
+    for (var i = 0; i < selectCheck.length; i++) {
+        if (!selectCheck[i]) {
+            canEnable = false;
         }
     }
     $('#btn_CS_submit').prop("disabled", !canEnable);
