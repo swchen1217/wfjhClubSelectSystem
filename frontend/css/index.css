@@ -43,6 +43,6 @@ body {
     background-color: #f07e22;
 }
 
-#CS_grade_select li :not(.active):not(.disabled),#CS_class_selectG1 li :not(.active):not(.disabled),#CS_class_selectG2 li :not(.active):not(.disabled){
+#CS_grade_select li :not(.active):not(.disabled), #CS_class_selectG1 li :not(.active):not(.disabled), #CS_class_selectG2 li :not(.active):not(.disabled) {
     color: #000000;
 }
