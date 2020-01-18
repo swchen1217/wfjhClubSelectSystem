@@ -57,6 +57,9 @@ function init() {
             title: '志願3',
             width: 100,
             formatter: formatterAlternate3,
+        }, {
+            field: 'isOk',
+            formatter: formatterIsOk,
         }]
     });
 }
@@ -274,6 +277,8 @@ function changeClass() {
     }, 100);
 }
 
+var club_data;
+
 function getClubList(need_grade) {
     var data = "";
     $.ajax({
@@ -306,10 +311,12 @@ function getClubList(need_grade) {
             });
         }
     });
+    club_data = data;
     return data;
 }
 
-var student_num = -1;
+var student_data;
+var selectCheck;
 
 function getStudents(need_class) {
     var data = "";
@@ -327,7 +334,6 @@ function getStudents(need_class) {
                 var jsonA = JSON.parse(msg);
                 console.log(jsonA);
                 data = jsonA;
-                student_num = jsonA.length;
             } else {
                 $('#table_clubSelect').bootstrapTable("removeAll");
             }
@@ -342,45 +348,31 @@ function getStudents(need_class) {
             });
         }
     });
+    student_data = data;
+    selectCheck=[student_data.length];
+    for(var i=0;i<student_data.length;i++)
+        selectCheck[i]=false;
     return data;
 }
 
 function formatterDefinite(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputDefinite_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputDefinite_' + index + '" oninput="checkCS(' + index + ')"/>';
 }
 
 function formatterAlternate1(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate1_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate1_' + index + '" oninput="checkCS(' + index + ')"/>';
 }
 
 function formatterAlternate2(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate2_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate2_' + index + '" oninput="checkCS(' + index + ')"/>';
 }
 
 function formatterAlternate3(value, row, index) {
-    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate3_' + index + '" onchange="checkClubCheck(' + index + ')"/>';
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputAlternate3_' + index + '" oninput="checkCS(' + index + ')"/>';
 }
 
-function checkClubCheck(row) {
-    var inputD = $('#inputDefinite_' + row);
-    var inputA1 = $('#inputAlternate1_' + row);
-    var inputA2 = $('#inputAlternate2_' + row);
-    var inputA3 = $('#inputAlternate3_' + row);
-
-    if (inputD.val() != "") {
-        inputA1.prop("disabled", true);
-        inputA2.prop("disabled", true);
-        inputA3.prop("disabled", true);
-    } else {
-        inputA1.prop("disabled", false);
-        inputA2.prop("disabled", false);
-        inputA3.prop("disabled", false);
-    }
-    if (inputA1.val() != "" || inputA2.val() != "" || inputA3.val() != "") {
-        inputD.prop("disabled", true);
-    } else {
-        inputD.prop("disabled", false);
-    }
+function formatterIsOk(value, row, index) {
+    return '<a id="iconSelectIsOk_' + index + '"><i class="fas fa-times" style="color: #b21f2d"/></a>';
 }
 
 function adminViewSwitch() {
@@ -400,5 +392,86 @@ function adminViewSwitch() {
         $('#mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
         $('#table_clubList').bootstrapTable('load', getClubList(grade));
         $('#table_clubSelect').bootstrapTable('load', getStudents(mClass));
+    }
+}
+
+function checkCS(row) {
+    var inputD = $('#inputDefinite_' + row);
+    var inputA1 = $('#inputAlternate1_' + row);
+    var inputA2 = $('#inputAlternate2_' + row);
+    var inputA3 = $('#inputAlternate3_' + row);
+
+    if (inputD.val() != "") {
+        inputA1.prop("disabled", true);
+        inputA2.prop("disabled", true);
+        inputA3.prop("disabled", true);
+    } else {
+        inputA1.prop("disabled", false);
+        inputA2.prop("disabled", false);
+        inputA3.prop("disabled", false);
+    }
+    if (inputA1.val() != "" || inputA2.val() != "" || inputA3.val() != "") {
+        inputD.prop("disabled", true);
+    } else {
+        inputD.prop("disabled", false);
+    }
+
+    if ((inputD.val().length == 4 || (inputA1.val().length == 4 && inputA2.val().length == 4 && inputA3.val().length == 4)) && !(inputD.val() == "" && (inputA1.val() == inputA2.val() || inputA2.val() == inputA3.val() || inputA1.val() == inputA3.val()))) {
+        $('#iconSelectIsOk_' + row).html('<i class="fas fa-check" style="color: #1e7e34"/>');
+        selectCheck[row]=true;
+    } else {
+        $('#iconSelectIsOk_' + row).html('<i class="fas fa-times" style="color: #b21f2d"/>');
+        selectCheck[row]=false;
+    }
+    var canEnable=true;
+    for(var i=0;i<selectCheck.length;i++){
+        if(!selectCheck[i]){
+            canEnable=false;
+        }
+    }
+    $('#btn_CS_submit').prop("disabled", !canEnable);
+}
+
+function selectVerify() {
+    var codeErrorArray = [];
+    for (var i = 0; i < student_data.length; i++) {
+        var hasClubCode = [false, false, false, false];
+        for (var k = 0; k < club_data.length; k++) {
+            if (inputD.val() == club_data[k]['id']) {
+                hasClubCode[0] = true;
+                continue;
+            }
+            if (inputA1.val() == club_data[k]['id']) {
+                hasClubCode[1] = true;
+                continue;
+            }
+            if (inputA2.val() == club_data[k]['id']) {
+                hasClubCode[2] = true;
+                continue;
+            }
+            if (inputA3.val() == club_data[k]['id']) {
+                hasClubCode[3] = true;
+                continue;
+            }
+        }
+        if (!(hasClubCode[0] || (hasClubCode[1] && hasClubCode[2] && hasClubCode[3])))
+            codeErrorArray.push(i);
+    }
+    if (codeErrorArray.length != 0) {
+        var context_cEA = '';
+        for (var i = 0; i < codeErrorArray.length; i++) {
+            context_cEA += student_data[codeErrorArray[i]]['sid'] + " " + student_data[codeErrorArray[i]]['name'] + "<br>";
+        }
+        $.alert({
+            title: '社團代碼錯誤',
+            content: context_cEA,
+            type: 'red',
+            typeAnimated: true
+        });
+    } else {
+        $.alert({
+            title: 'OK',
+            typeAnimated: true
+        });
     }
 }
