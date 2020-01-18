@@ -496,6 +496,12 @@ function selectVerify() {
                 }
             }
         }
+        for (var k = 0; k < repeat.length; k++) {
+            if (repeat[k] == '') {
+                repeat.splice(k, 1);
+                k--;
+            }
+        }
         if (repeat.length != 0) {
             var context_repeat = '<em><b>確定中選</b>之社團,除<b>特殊社團</b>,其他社團每班限<b>一位同學</b><br><b>志願</b>則不再此限</em><br><br>';
             for (var i = 0; i < club_data.length; i++){
@@ -520,11 +526,31 @@ function selectVerify() {
                 columnClass: 'm'
             });
         } else {
-            // TODO
-            $.alert({
+            $.ajax({
+                url: "../backend/db.php",
+                data: "mode=getClubList" +
+                    "&acc=" + $.cookie("LoginInfoAcc") +
+                    "&pw=" + $.cookie("LoginInfoPw") +
+                    "&grade=" + need_grade,
+                type: "POST",
+                success: function (msg) {
+                    console.log(msg);
+                },
+                error: function (xhr) {
+                    console.log('ajax er');
+                    $.alert({
+                        title: '錯誤',
+                        content: 'Ajax 發生錯誤',
+                        type: 'red',
+                        typeAnimated: true
+                    });
+                }
+            });
+
+            /*$.alert({
                 title: 'OK',
                 typeAnimated: true
-            });
+            });*/
         }
     }
 }
