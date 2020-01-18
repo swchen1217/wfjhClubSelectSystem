@@ -526,15 +526,43 @@ function selectVerify() {
                 columnClass: 'm'
             });
         } else {
+            var jsonA=new Array();
+            for (var i = 0; i < student_data.length; i++) {
+                var inputD = $('#inputDefinite_' + i);
+                var inputA1 = $('#inputAlternate1_' + i);
+                var inputA2 = $('#inputAlternate2_' + i);
+                var inputA3 = $('#inputAlternate3_' + i);
+
+                var myObj=new Object();
+                myObj.sid=student_data[i]['sid'];
+                myObj.definite=inputD.val();
+                myObj.alternate1=inputA1.val();
+                myObj.alternate2=inputA2.val();
+                myObj.alternate3=inputA3.val();
+
+                jsonA.push(myObj);
+            }
+            var jsonStr=JSON.stringify(jsonA);
+
+            console.log(jsonStr);
+
             $.ajax({
                 url: "../backend/db.php",
-                data: "mode=getClubList" +
+                data: "mode=uploadSelect" +
                     "&acc=" + $.cookie("LoginInfoAcc") +
                     "&pw=" + $.cookie("LoginInfoPw") +
-                    "&grade=" + need_grade,
+                    "&josn_data=" + jsonStr,
                 type: "POST",
                 success: function (msg) {
                     console.log(msg);
+                    if(msg=="ok"){
+                        $.alert({
+                            title: '上傳完成',
+                            context:'選填成功',
+                            typeAnimated: true
+                        });
+                        $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
+                    }
                 },
                 error: function (xhr) {
                     console.log('ajax er');
@@ -546,11 +574,6 @@ function selectVerify() {
                     });
                 }
             });
-
-            /*$.alert({
-                title: 'OK',
-                typeAnimated: true
-            });*/
         }
     }
 }
