@@ -5,7 +5,7 @@ function init() {
 function OnHashchangeListener() {
     var hash = location.hash;
     if (hash != '') {
-        $(".navbar .nav").find(".active").removeClass("active");
+        $("#mNav .nav").find(".active").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass('active');
     }
     $("div[id^='Content_']").hide();
@@ -824,5 +824,19 @@ window.operateEvents = {
 
 function LinkFormatterUM(value, row, index) {
     return "<a href='?acc=" + value + "#UserManage'>" + value + "</a>";
+}
+
+function changeGradeClass() {
+    setTimeout(function () {
+        var grade=$('#CS_grade_select li .active').text();
+        console.log(grade);
+        if(grade=="一年級"){
+            $('#CS_class_selectG1').show();
+            $('#CS_class_selectG2').hide();
+        }else if(grade=="二年級"){
+            $('#CS_class_selectG2').show();
+            $('#CS_class_selectG1').hide();
+        }
+    }, 100);
 }
 
