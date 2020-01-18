@@ -556,10 +556,10 @@ function selectVerify() {
                 type: "POST",
                 success: function (msg) {
                     console.log(msg);
-                    if(msg=="ok"){
+                    if(msg.substr(-2,2)=="ok"){
                         $.alert({
                             title: '上傳完成',
-                            context:'選填成功',
+                            content:'選填成功',
                             typeAnimated: true
                         });
                         $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
