@@ -23,9 +23,10 @@ $id = request("id");
 $acc = request("acc");
 $pw = request("pw");
 $grade = request("grade");
+$class = request("class");
 
-if($mode=="getClubList"){
-    if(UserCheck($acc,$pw,false,$db)){
+if ($mode == "getClubList") {
+    if (UserCheck($acc, $pw, false, $db)) {
         $sql = 'SELECT id, name, teacher, isSpecial FROM `clubs` WHERE grade=:grade';
         $rs = $db->prepare($sql);
         $rs->bindValue(':grade', $grade, PDO::PARAM_STR);
@@ -39,7 +40,27 @@ if($mode=="getClubList"){
             }
             echo json_encode($ToJson);
         }
-    }else {
+    } else {
+        echo "user_error";
+    }
+}
+
+if ($mode == "getStudents") {
+    if (UserCheck($acc, $pw, false, $db)) {
+        $sql = 'SELECT sid, class, number, name FROM `students` WHERE class=:class';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':class', $class, PDO::PARAM_STR);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            echo "no_data";
+        } else {
+            $ToJson = array();
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $ToJson[] = $row;
+            }
+            echo json_encode($ToJson);
+        }
+    } else {
         echo "user_error";
     }
 }
