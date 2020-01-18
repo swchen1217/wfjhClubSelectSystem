@@ -67,8 +67,8 @@ if ($mode == "getStudents") {
 
 if ($mode == "uploadSelect") {
     $data=json_decode($json_data,true);
-
     if (UserCheck($acc, $pw, false, $db)) {
+        $data=json_decode($json_data,true);
         $sql = 'SELECT * FROM `selected` WHERE class=:class';
         $rs = $db->prepare($sql);
         $rs->bindValue(':class', $class, PDO::PARAM_STR);
