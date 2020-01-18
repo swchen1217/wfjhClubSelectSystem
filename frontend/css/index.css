@@ -2,33 +2,39 @@ body{
     background-color: #e5e5e5;
     font-family: 'Noto Sans TC', sans-serif;
 }
-.navbar-nav li > a:hover, #topheader .navbar-nav li > a:focus {
+#mNav .navbar-nav li > a:hover, #topheader .navbar-nav li > a:focus {
     background-color: #999;
     color: #fff;
     line-height: 40px;
 }
 
-.navbar-nav li.active > a {
+#mNav .navbar-nav li.active > a {
     background-color: #fff;
     line-height: 40px;
 }
 
-.navbar-dark .navbar-nav .nav-link{
+#mNav .navbar-dark .navbar-nav .nav-link{
     color: #f2f2f2;
     line-height: 40px;
     padding-left: 16px;
     padding-right: 16px;
 }
 
-.navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active{
+#mNav .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active{
     color: #000000;
     line-height: 40px;
 }
 
-.navbar-dark .navbar-brand{
+#mNav .navbar-dark .navbar-brand{
+    line-height: 40px;
+}
+#mNav li .nav-link{
     line-height: 40px;
 }
 .card{
     padding: 10px;
     margin: 10px auto;
+}
+#CS_grade_select li .active{
+    background-color: #f07e22;
 }
