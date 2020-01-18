@@ -65,4 +65,39 @@ if ($mode == "getStudents") {
     }
 }
 
+if ($mode == "uploadSelect") {
+    /*if (UserCheck($acc, $pw, false, $db)) {
+        $sql = 'SELECT * FROM `selected` WHERE class=:class';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':class', $class, PDO::PARAM_STR);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            $sql2 = 'INSERT INTO `selected`(`class`) VALUES (:class)';
+            $rs2 = $db->prepare($sql2);
+            $rs2->bindValue(':class', $class, PDO::PARAM_STR);
+            $rs2->execute();
+
+            $sql3 = 'INSERT INTO `selects`(sid, definite, alternate1, alternate2, alternate3) VALUES (:sid,:definite,:alternate1,:alternate2,:alternate3)';
+            $rs3 = $db->prepare($sql3);
+            $rs3->bindValue(':sid', $sid, PDO::PARAM_STR);
+            $rs3->bindValue(':definite', $definite, PDO::PARAM_STR);
+            $rs3->bindValue(':alternate1', $alternate1, PDO::PARAM_STR);
+            $rs3->bindValue(':alternate2', $alternate2, PDO::PARAM_STR);
+            $rs3->bindValue(':alternate3', $alternate3, PDO::PARAM_STR);
+            $rs3->execute();
+        } else {
+            $sql4 = 'UPDATE `selects` SET `definite`=:definite,`alternate1`=:alternate1,`alternate2`=:alternate2,`alternate3`=:alternate2 WHERE sid=:sid';
+            $rs4 = $db->prepare($sql4);
+            $rs4->bindValue(':sid', $sid, PDO::PARAM_STR);
+            $rs4->bindValue(':definite', $definite, PDO::PARAM_STR);
+            $rs4->bindValue(':alternate1', $alternate1, PDO::PARAM_STR);
+            $rs4->bindValue(':alternate2', $alternate2, PDO::PARAM_STR);
+            $rs4->bindValue(':alternate3', $alternate3, PDO::PARAM_STR);
+            $rs4->execute();
+        }
+    } else {
+        echo "user_error";
+    }*/
+}
+
 ?>
