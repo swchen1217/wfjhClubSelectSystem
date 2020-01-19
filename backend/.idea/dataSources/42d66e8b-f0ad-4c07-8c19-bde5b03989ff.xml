@@ -1103,97 +1103,72 @@
       <ColNames>alternate3</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="274" parent="247" name="selects_ibfk_5">
-      <ColNames>sid</ColNames>
-      <RefTableName>students</RefTableName>
-      <RefColNames>sid</RefColNames>
-    </foreign-key>
-    <foreign-key id="275" parent="247" name="selects_ibfk_1">
-      <ColNames>definite</ColNames>
-      <RefTableName>clubs</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="276" parent="247" name="selects_ibfk_2">
-      <ColNames>alternate1</ColNames>
-      <RefTableName>clubs</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="277" parent="247" name="selects_ibfk_3">
-      <ColNames>alternate2</ColNames>
-      <RefTableName>clubs</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="278" parent="247" name="selects_ibfk_4">
-      <ColNames>alternate3</ColNames>
-      <RefTableName>clubs</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="279" parent="248" name="sid">
+    <column id="274" parent="248" name="sid">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="248" name="grade">
+    <column id="275" parent="248" name="grade">
       <Position>2</Position>
       <DataType>int(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="248" name="class">
+    <column id="276" parent="248" name="class">
       <Position>3</Position>
       <DataType>int(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="248" name="number">
+    <column id="277" parent="248" name="number">
       <Position>4</Position>
       <DataType>int(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="248" name="name">
+    <column id="278" parent="248" name="name">
       <Position>5</Position>
       <DataType>varchar(256)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="284" parent="248" name="PRIMARY">
+    <key id="279" parent="248" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="285" parent="249" name="account">
+    <column id="280" parent="249" name="account">
       <Position>1</Position>
       <DataType>varchar(256)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="249" name="password">
+    <column id="281" parent="249" name="password">
       <Position>2</Position>
       <DataType>varchar(256)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="249" name="name">
+    <column id="282" parent="249" name="name">
       <Position>3</Position>
       <DataType>varchar(256)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="249" name="isAdmin">
+    <column id="283" parent="249" name="isAdmin">
       <Position>4</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="249" name="class">
+    <column id="284" parent="249" name="class">
       <Position>5</Position>
       <DataType>int(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="249" name="created">
+    <column id="285" parent="249" name="created">
       <Position>6</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
