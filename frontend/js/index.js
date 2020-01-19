@@ -268,9 +268,9 @@ function changeClass() {
         console.log(grade_code);
 
         if (grade_code == 1) {
-            class_code = parseInt($('#CS_class_selectG1 li .active').text(),10);
+            class_code = parseInt($('#CS_class_selectG1 li .active').text(), 10);
         } else if (grade_code == 2) {
-            class_code = parseInt($('#CS_class_selectG2 li .active').text(),10);
+            class_code = parseInt($('#CS_class_selectG2 li .active').text(), 10);
         }
         console.log(class_code);
         $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
