@@ -43,6 +43,7 @@ if ($mode == "getClubList") {
     } else {
         echo "user_error";
     }
+    exit;
 }
 
 if ($mode == "getStudents") {
@@ -63,12 +64,16 @@ if ($mode == "getStudents") {
     } else {
         echo "user_error";
     }
+    exit;
 }
 
 if ($mode == "uploadSelect") {
+    //ini_set('display_errors','0');
     $data=json_decode($json_data,true);
+    $count=0;
+    while($data[$count]!=null)
+        $count++;
     if (UserCheck($acc, $pw, false, $db)) {
-        $data=json_decode($json_data,true);
         $sql = 'SELECT * FROM `selected` WHERE class=:class';
         $rs = $db->prepare($sql);
         $rs->bindValue(':class', $class, PDO::PARAM_STR);
@@ -79,7 +84,7 @@ if ($mode == "uploadSelect") {
             $rs2->bindValue(':class', $class, PDO::PARAM_STR);
             $rs2->execute();
 
-            for($i=0;$i<count($data);$i++){
+            for($i=0;$i<$count;$i++){
                 $sql3 = 'INSERT INTO `selects`(sid, definite, alternate1, alternate2, alternate3) VALUES (:sid,:definite,:alternate1,:alternate2,:alternate3)';
                 $rs3 = $db->prepare($sql3);
                 $rs3->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
@@ -90,8 +95,8 @@ if ($mode == "uploadSelect") {
                 $rs3->execute();
             }
         } else {
-            for($i=0;$i<count($data);$i++){
-                $sql4 = 'UPDATE `selects` SET `definite`=:definite,`alternate1`=:alternate1,`alternate2`=:alternate2,`alternate3`=:alternate2 WHERE sid=:sid';
+            for($i=0;$i<$count;$i++){
+                $sql4 = 'UPDATE `selects` SET `definite`=:definite,`alternate1`=:alternate1,`alternate2`=:alternate2,`alternate3`=:alternate3 WHERE sid=:sid';
                 $rs4 = $db->prepare($sql4);
                 $rs4->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
                 $rs4->bindValue(':definite', $data[$i]['definite'], PDO::PARAM_STR);
@@ -105,6 +110,7 @@ if ($mode == "uploadSelect") {
     } else {
         echo "user_error";
     }
+    exit;
 }
 
 ?>
