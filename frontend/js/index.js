@@ -268,9 +268,9 @@ function changeClass() {
         console.log(grade_code);
 
         if (grade_code == 1) {
-            class_code = $('#CS_class_selectG1 li .active').text();
+            class_code = parseInt($('#CS_class_selectG1 li .active').text(),10);
         } else if (grade_code == 2) {
-            class_code = $('#CS_class_selectG2 li .active').text();
+            class_code = parseInt($('#CS_class_selectG2 li .active').text(),10);
         }
         console.log(class_code);
         $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
@@ -504,11 +504,11 @@ function selectVerify() {
         }
         if (repeat.length != 0) {
             var context_repeat = '<em><b>確定中選</b>之社團,除<b>特殊社團</b>,其他社團每班限<b>一位同學</b><br><b>志願</b>則不再此限</em><br><br>';
-            for (var i = 0; i < club_data.length; i++){
-                for (var k = 0; k < repeat.length; k++){
-                    if(club_data[i]['id']==repeat[k]){
-                        context_repeat += '<b>'+club_data[i]['id'] + ' ' + club_data[i]['name'] + '</b> 重複於 ';
-                        for (var n = 0; n < student_data.length; n++){
+            for (var i = 0; i < club_data.length; i++) {
+                for (var k = 0; k < repeat.length; k++) {
+                    if (club_data[i]['id'] == repeat[k]) {
+                        context_repeat += '<b>' + club_data[i]['id'] + ' ' + club_data[i]['name'] + '</b> 重複於 ';
+                        for (var n = 0; n < student_data.length; n++) {
                             var inputD = $('#inputDefinite_' + n);
                             if (club_data[i]['id'] == inputD.val()) {
                                 context_repeat += student_data[n]['sid'] + ' ' + student_data[n]['name'] + ' , ';
@@ -526,23 +526,23 @@ function selectVerify() {
                 columnClass: 'm'
             });
         } else {
-            var jsonA=new Array();
+            var jsonA = new Array();
             for (var i = 0; i < student_data.length; i++) {
                 var inputD = $('#inputDefinite_' + i);
                 var inputA1 = $('#inputAlternate1_' + i);
                 var inputA2 = $('#inputAlternate2_' + i);
                 var inputA3 = $('#inputAlternate3_' + i);
 
-                var myObj=new Object();
-                myObj.sid=student_data[i]['sid'];
-                myObj.definite=inputD.val();
-                myObj.alternate1=inputA1.val();
-                myObj.alternate2=inputA2.val();
-                myObj.alternate3=inputA3.val();
+                var myObj = new Object();
+                myObj.sid = student_data[i]['sid'];
+                myObj.definite = inputD.val();
+                myObj.alternate1 = inputA1.val();
+                myObj.alternate2 = inputA2.val();
+                myObj.alternate3 = inputA3.val();
 
                 jsonA.push(myObj);
             }
-            var jsonStr=JSON.stringify(jsonA);
+            var jsonStr = JSON.stringify(jsonA);
 
             console.log(jsonStr);
 
@@ -551,15 +551,15 @@ function selectVerify() {
                 data: "mode=uploadSelect" +
                     "&acc=" + $.cookie("LoginInfoAcc") +
                     "&pw=" + $.cookie("LoginInfoPw") +
-                    "&josn_data=" + jsonStr+
-                    "&class=" + class_code,
+                    "&class=" + class_code +
+                    "&josn_data=" + jsonStr,
                 type: "POST",
                 success: function (msg) {
                     console.log(msg);
-                    if(msg.substr(-2,2)=="ok"){
+                    if (msg.substr(-2, 2) == "ok") {
                         $.alert({
                             title: '上傳完成',
-                            content:'選填成功',
+                            content: '選填成功',
                             typeAnimated: true
                         });
                         $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
