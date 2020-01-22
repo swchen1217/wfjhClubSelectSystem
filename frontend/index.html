@@ -524,8 +524,8 @@
 <script>
     $(document).ready(function () {
         init();
+		OnHashchangeListener();
         adminViewSwitch();
-        OnHashchangeListener();
         $("#mNav .nav a").on("click", function () {
             $("#mNav .nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
