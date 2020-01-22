@@ -114,4 +114,25 @@ if ($mode == "uploadSelect") {
     exit;
 }
 
+if ($mode == "getSelectData") {
+    if (UserCheck($acc, $pw, false, $db)) {
+        $sql = 'SELECT selects.sid,definite,alternate1,alternate2,alternate3 FROM `selects` inner join students on selects.sid = students.sid where class=:class';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':class', $class, PDO::PARAM_STR);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            echo "no_data";
+        } else {
+            $ToJson = array();
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $ToJson[] = $row;
+            }
+            echo json_encode($ToJson);
+        }
+    } else {
+        echo "user_error";
+    }
+    exit;
+}
+
 ?>
