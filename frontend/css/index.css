@@ -3,35 +3,27 @@ body {
     font-family: 'Noto Sans TC', sans-serif;
 }
 
-#mNav .navbar-nav li > a:hover, #topheader .navbar-nav li > a:focus {
-    background-color: #999;
-    color: #fff;
-    line-height: 40px;
-}
-
-#mNav .navbar-nav li.active > a {
-    background-color: #fff;
-    line-height: 40px;
-}
-
-#mNav .navbar-dark .navbar-nav .nav-link {
-    color: #f2f2f2;
-    line-height: 40px;
-    padding-left: 16px;
-    padding-right: 16px;
-}
-
-#mNav .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
-    color: #000000;
-    line-height: 40px;
-}
-
-#mNav .navbar-dark .navbar-brand {
+#mNav{
     line-height: 40px;
 }
 
 #mNav li .nav-link {
-    line-height: 40px;
+    color: #fff;
+    padding: 8px 16px;
+}
+
+#mNav .navbar-nav li > a:hover, #topheader .navbar-nav li > a:focus {
+    background-color: #999;
+    color: #f2f2f2;
+}
+
+#mNav .navbar-nav li.active > a {
+    background-color: #fff;
+    color: #000;
+}
+
+#mNav .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+    color: #000000;
 }
 
 .card {
