@@ -552,7 +552,7 @@ function selectVerify() {
                     "&acc=" + $.cookie("LoginInfoAcc") +
                     "&pw=" + $.cookie("LoginInfoPw") +
                     "&class=" + class_code +
-                    "&josn_data=" + jsonStr,
+                    "&json_data=" + jsonStr,
                 type: "POST",
                 success: function (msg) {
                     console.log(msg);
