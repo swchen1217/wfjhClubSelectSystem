@@ -69,14 +69,11 @@ if ($mode == "getStudents") {
 
 if ($mode == "uploadSelect") {
     //ini_set('display_errors','0');
-    echo $json_data;
     $data = json_decode($json_data, true);
     $count = 0;
     while ($data[$count] != null)
         $count++;
     echo "count : ".$count.",";
-    echo "data[n] : ".$data[0]['sid'].",";
-    echo var_dump($data);
     if (UserCheck($acc, $pw, false, $db)) {
         $sql = 'SELECT * FROM `selected` WHERE class=:class';
         $rs = $db->prepare($sql);
