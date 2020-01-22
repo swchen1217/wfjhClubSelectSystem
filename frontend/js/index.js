@@ -273,7 +273,8 @@ function changeClass() {
             class_code = parseInt($('#CS_class_selectG2 li .active').text(), 10);
         }
         console.log(class_code);
-        $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
+        $('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+        getSelectData(class_code);
     }, 100);
 }
 
@@ -320,7 +321,7 @@ function getClubList(need_grade) {
 var student_data;
 var selectCheck;
 
-function getStudents(need_class) {
+function getStudentsData(need_class) {
     var data = "";
     $.ajax({
         url: "../backend/db.php",
@@ -393,7 +394,8 @@ function adminViewSwitch() {
         class_code = mClass;
         $('#mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
         $('#table_clubList').bootstrapTable('load', getClubList(grade_code));
-        $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
+        $('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+        getSelectData(class_code);
     }
 }
 
@@ -562,7 +564,8 @@ function selectVerify() {
                             content: '選填成功',
                             typeAnimated: true
                         });
-                        $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
+                        $('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+                        getSelectData(class_code);
                     }
                 },
                 error: function (xhr) {
@@ -577,4 +580,49 @@ function selectVerify() {
             });
         }
     }
+}
+
+function getSelectData(rq_class) {
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getSelectData" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&class=" + rq_class,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                for (var i = 0; i < student_data.length; i++) {
+                    var sid = student_data[i]['sid'];
+                    var inputD = $('#inputDefinite_' + i);
+                    var inputA1 = $('#inputAlternate1_' + i);
+                    var inputA2 = $('#inputAlternate2_' + i);
+                    var inputA3 = $('#inputAlternate3_' + i);
+
+                    for (var k = 0; k < jsonA.length; k++) {
+                        if (sid == jsonA[k]['sid']) {
+                            inputD.val(jsonA[k]['definite']==0?"":jsonA[k]['definite']);
+                            inputA1.val(jsonA[k]['alternate1']==0?"":jsonA[k]['alternate1']);
+                            inputA2.val(jsonA[k]['alternate2']==0?"":jsonA[k]['alternate2']);
+                            inputA3.val(jsonA[k]['alternate3']==0?"":jsonA[k]['alternate3']);
+                            checkCS(i);
+                        }
+                    }
+                }
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
 }
