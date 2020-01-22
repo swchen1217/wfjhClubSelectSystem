@@ -392,8 +392,8 @@ function adminViewSwitch() {
         grade_code = grade;
         class_code = mClass;
         $('#mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
-        $('#table_clubList').bootstrapTable('load', getClubList(grade));
-        $('#table_clubSelect').bootstrapTable('load', getStudents(mClass));
+        $('#table_clubList').bootstrapTable('load', getClubList(grade_code));
+        $('#table_clubSelect').bootstrapTable('load', getStudents(class_code));
     }
 }
 
