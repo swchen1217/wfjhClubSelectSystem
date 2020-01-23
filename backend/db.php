@@ -135,4 +135,24 @@ if ($mode == "getSelectData") {
     exit;
 }
 
+if ($mode == "getAllClub") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'SELECT id, name, teacher, grade, isSpecial FROM `clubs` WHERE 1=1';
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            echo "no_data";
+        } else {
+            $ToJson = array();
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $ToJson[] = $row;
+            }
+            echo json_encode($ToJson);
+        }
+    } else {
+        echo "user_error";
+    }
+    exit;
+}
+
 ?>
