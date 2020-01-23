@@ -793,7 +793,7 @@ function FormSubmitListener() {
         var n_pw_re = $('#newuser-InputPwRe').val();
         if (n_permission == '1')
             n_class = '-1';
-        if (n_acc != '' && n_name != '' && n_class != '' && n_permission != '-1' && n_pw != '' && n_pw_re != '') {
+        if (n_acc != '' && n_name != '' && n_class != '' && n_permission != "-1" && n_pw != '' && n_pw_re != '') {
             if (n_pw == n_pw_re) {
                 var create_time = moment().format('YYYYMMDDHHmmss');
                 var create_time2 = moment().format('YYYY-MM-DD HH:mm:ss');
