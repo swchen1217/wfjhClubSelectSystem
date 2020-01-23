@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="js/jquery-3.4.1.js"></script>
+</head>
+<body>
+<script>
+    $.ajax({
+        url: "../backend/user.php",
+        data: "mode=chguser&acc=admin&pw="+""+"&operate_acc=205&new_isAdmin=0",
+        type: "POST",
+        success: function (msg) {
+            console.log(msg);
+            document.write(msg);
+        },
+        error: function (xhr) {
+            console.log(xhr);
+        }
+    });
+</script>
+</body>
+</html>
