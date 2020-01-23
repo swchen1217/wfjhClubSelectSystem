@@ -648,5 +648,4 @@ function setClassCheck() {
         newCi.prop("disabled", true);
     else
         newCi.prop("disabled", false);
-
 }
