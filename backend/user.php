@@ -44,9 +44,9 @@ if ($mode == "get_create_time") {
 }
 
 // Manage
-/*if($mode=="get_user_list"){
+if($mode=="get_user_list"){
     if(UserCheck($acc,$pw,5,$db)){
-        $sql = "SELECT account, name, permission, email, created FROM `user_tb` WHERE `permission`!='-1'";
+        $sql = "SELECT account, name, isAdmin, class, created FROM `users` WHERE 1";
         $rs = $db->prepare($sql);
         $rs->execute();
         $json=array();
@@ -56,7 +56,7 @@ if ($mode == "get_create_time") {
     }
     exit;
 }
-if($mode=="chguser"){
+/*if($mode=="chguser"){
     if(UserCheck($acc,$pw,5,$db)){
         $data="";
         if($new_name!="")
