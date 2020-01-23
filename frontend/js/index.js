@@ -788,7 +788,7 @@ function FormSubmitListener() {
         var n_acc = $('#newuser-InputAcc').val();
         var n_name = $('#newuser-InputName').val();
         var n_permission = $('#newuser-InputPermission').val();
-        var n_class = $('#chguser-InputClass').val();
+        var n_class = $('#newuser-InputClass').val();
         var n_pw = $('#newuser-InputPw').val();
         var n_pw_re = $('#newuser-InputPwRe').val();
         if (n_permission == '1')
