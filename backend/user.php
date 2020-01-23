@@ -1,6 +1,7 @@
 <?php
 require("config.php");
 require("request.php");
+require("UserCheck.php");
 
 mb_internal_encoding('UTF-8');
 
@@ -45,8 +46,8 @@ if ($mode == "get_create_time") {
 
 // Manage
 if($mode=="get_user_list"){
-    if(UserCheck($acc,$pw,5,$db)){
-        $sql = "SELECT account, name, isAdmin, class, created FROM `users` WHERE 1";
+    if(UserCheck($acc,$pw,true,$db)){
+        $sql = "SELECT account, name, isAdmin, class, created FROM `users` WHERE 1=1";
         $rs = $db->prepare($sql);
         $rs->execute();
         $json=array();
