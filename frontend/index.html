@@ -467,7 +467,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="newuser-InputPermission">權限</label>
-                                    <select class="custom-select" id="newuser-InputPermission" required>
+                                    <select class="custom-select" id="newuser-InputPermission" required onchange="setClassCheck()">
                                         <option value="-1" selected disabled>設定權限</option>
                                         <option value="0">0(班級使用者)</option>
                                         <option value="1">1(管理員)</option>
