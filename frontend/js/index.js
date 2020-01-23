@@ -1,4 +1,6 @@
 function init() {
+    PermissionStr = ["班級使用者", "管理員"];
+
     $('#table_clubList').bootstrapTable({
         dataType: "json",
         classes: "table table-bordered table-striped table-sm",
@@ -62,6 +64,39 @@ function init() {
             formatter: formatterIsOk,
         }]
     });
+    $('#table_user').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        pagination: true,
+        uniqueId: 'account',
+        sortName: 'account',
+        pageNumber: 1,
+        pageSize: 5,
+        search: true,
+        showPaginationSwitch: true,
+        columns: [{
+            field: 'account',
+            title: '帳號(員工編號)',
+            formatter: LinkFormatterUM
+        }, {
+            field: 'name',
+            title: '名稱'
+        }, {
+            field: 'isAdmin',
+            title: '權限<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" data-html="true" ' +
+                'title="<h6>權限說明：</h6>' +
+                '0 班級使用者<br>' +
+                '1 管理員" style="margin-left: 3px"></i>'
+        }, {
+            field: 'class',
+            title: '班級',
+        }, {
+            field: 'created',
+            title: '建立時間',
+        }]
+    });
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function OnHashchangeListener() {
@@ -98,76 +133,12 @@ function OnHashchangeListener() {
         $('#Content_User_manage').show();
         $("#title_bar").hide();
 
-        $.ajax({
-            url: "../backend/user.php",
-            data: "mode=get_user_list&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw"),
-            type: "POST",
-            success: function (msg) {
-                $.cookie("AllUserData", msg);
-                var jsonA = JSON.parse(msg);
-                for (let i = 0; i < jsonA.length; i++) {
-                    jsonA[i]['permission'] += "(" + PermissionStr[jsonA[i]['permission']] + ")";
-                }
-                console.log(jsonA);
-                $('#table_user').bootstrapTable({
-                    data: jsonA,
-                    dataType: "json",
-                    classes: "table table-bordered table-striped table-sm",
-                    striped: true,
-                    pagination: true,
-                    uniqueId: 'account',
-                    sortName: 'account',
-                    pageNumber: 1,
-                    pageSize: 5,
-                    search: true,
-                    showPaginationSwitch: true,
-                    columns: [{
-                        field: 'account',
-                        title: '帳號(員工編號)',
-                        formatter: LinkFormatterUM
-                    }, {
-                        field: 'name',
-                        title: '名稱'
-                    }, {
-                        field: 'permission',
-                        title: '權限<i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" data-html="true" ' +
-                            'title="<h6>權限說明：</h6>' +
-                            '0 未啟用<br>' +
-                            '1 狀態查詢<br>' +
-                            '2 狀態登錄<br>' +
-                            '3 紀錄查看<br>' +
-                            '4 裝置管理<br>' +
-                            '5 使用者管理<br>' +
-                            '6-8 狀態登錄<br>' +
-                            '9 管理員<br>' +
-                            '若擁有權限>=所需權限<br>' +
-                            '皆可使用" style="margin-left: 3px"></i>'
-                    }, {
-                        field: 'email',
-                        title: 'E-mail',
-                    }, {
-                        field: 'created',
-                        title: '建立時間',
-                    }]
-                });
-                $('[data-toggle="tooltip"]').tooltip();
-            },
-            error: function (xhr) {
-                console.log('ajax er');
-                $.alert({
-                    title: '錯誤',
-                    content: 'Ajax 發生錯誤',
-                    type: 'red',
-                    typeAnimated: true
-                });
-            }
-        });
+        $('#table_user').bootstrapTable('load', getUsers(true));
 
         var getURl = new URL(location.href);
         if (getURl.searchParams.has('acc')) {
             var acc = getURl.searchParams.get('acc');
-            var users = JSON.parse($.cookie("AllUserData"));
-            console.log(users);
+            var users = getUsers(false);
             var userinfo;
             for (let i = 0; i < users.length; i++) {
                 if (users[i]['account'] == acc) {
@@ -178,8 +149,10 @@ function OnHashchangeListener() {
             if (userinfo != undefined) {
                 $('#chguser-ShowAcc').val(userinfo['account']);
                 $('#chguser-ShowName').val(userinfo['name']);
-                $('#chguser-ShowPermission').val(userinfo['permission']);
-                $('#chguser-ShowEmail').val(userinfo['email']);
+                $('#chguser-ShowPermission').val(userinfo['isAdmin']);
+                $('#chguser-ShowClass').val(userinfo['class']);
+
+                setClassCheck();
             }
         }
     }
@@ -605,10 +578,10 @@ function getSelectData(rq_class) {
 
                     for (var k = 0; k < jsonA.length; k++) {
                         if (sid == jsonA[k]['sid']) {
-                            inputD.val(jsonA[k]['definite']==0?"":jsonA[k]['definite']);
-                            inputA1.val(jsonA[k]['alternate1']==0?"":jsonA[k]['alternate1']);
-                            inputA2.val(jsonA[k]['alternate2']==0?"":jsonA[k]['alternate2']);
-                            inputA3.val(jsonA[k]['alternate3']==0?"":jsonA[k]['alternate3']);
+                            inputD.val(jsonA[k]['definite'] == 0 ? "" : jsonA[k]['definite']);
+                            inputA1.val(jsonA[k]['alternate1'] == 0 ? "" : jsonA[k]['alternate1']);
+                            inputA2.val(jsonA[k]['alternate2'] == 0 ? "" : jsonA[k]['alternate2']);
+                            inputA3.val(jsonA[k]['alternate3'] == 0 ? "" : jsonA[k]['alternate3']);
                             checkCS(i);
                         }
                     }
@@ -625,4 +598,48 @@ function getSelectData(rq_class) {
             });
         }
     });
+}
+
+function getUsers(format) {
+    var data = "";
+    $.ajax({
+        url: "../backend/user.php",
+        data: "mode=get_user_list&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw"),
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            var jsonA = JSON.parse(msg);
+            if(format){
+                for (let i = 0; i < jsonA.length; i++) {
+                    jsonA[i]['isAdmin'] += "(" + PermissionStr[jsonA[i]['isAdmin']] + ")";
+                    jsonA[i]['class'] = jsonA[i]['class'] == '-1' ? '-' : jsonA[i]['class']
+                }
+            }
+            console.log(jsonA);
+            data = jsonA;
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
+}
+
+function setClassCheck() {
+    var chgPs=$('#chguser-ShowPermission');
+    var chgPi=$('#chguser-InputPermission');
+    var chgCi=$('#chguser-InputClass');
+    var newPi=$('#newuser-InputPermission');
+
+    if((chgPs.val()=="1" && chgPi.val()!="0") || chgPi.val()=="1")
+        chgCi.prop("disabled", true);
+    else
+        chgCi.prop("disabled", false);
 }
