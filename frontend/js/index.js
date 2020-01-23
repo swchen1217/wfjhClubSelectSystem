@@ -610,7 +610,7 @@ function getUsers(format) {
         success: function (msg) {
             console.log(msg);
             var jsonA = JSON.parse(msg);
-            if(format){
+            if (format) {
                 for (let i = 0; i < jsonA.length; i++) {
                     jsonA[i]['isAdmin'] += "(" + PermissionStr[jsonA[i]['isAdmin']] + ")";
                     jsonA[i]['class'] = jsonA[i]['class'] == '-1' ? '-' : jsonA[i]['class']
@@ -633,18 +633,18 @@ function getUsers(format) {
 }
 
 function setClassCheck() {
-    var chgPs=$('#chguser-ShowPermission');
-    var chgPi=$('#chguser-InputPermission');
-    var chgCi=$('#chguser-InputClass');
-    var newPi=$('#newuser-InputPermission');
-    var newCi=$('#newuser-InputClass');
+    var chgPs = $('#chguser-ShowPermission');
+    var chgPi = $('#chguser-InputPermission');
+    var chgCi = $('#chguser-InputClass');
+    var newPi = $('#newuser-InputPermission');
+    var newCi = $('#newuser-InputClass');
 
-    if((chgPs.val()=="1" && chgPi.val()!="0") || chgPi.val()=="1")
+    if ((chgPs.val() == "1" && chgPi.val() != "0") || chgPi.val() == "1")
         chgCi.prop("disabled", true);
     else
         chgCi.prop("disabled", false);
 
-    if(newPi.val()=="1")
+    if (newPi.val() == "1")
         newCi.prop("disabled", true);
     else
         newCi.prop("disabled", false);
@@ -791,8 +791,8 @@ function FormSubmitListener() {
         var n_class = $('#chguser-InputClass').val();
         var n_pw = $('#newuser-InputPw').val();
         var n_pw_re = $('#newuser-InputPwRe').val();
-        if(n_permission=='1')
-            n_class='-1';
+        if (n_permission == '1')
+            n_class = '-1';
         if (n_acc != '' && n_name != '' && n_class != '' && n_permission != '-1' && n_pw != '' && n_pw_re != '') {
             if (n_pw == n_pw_re) {
                 var create_time = moment().format('YYYYMMDDHHmmss');
