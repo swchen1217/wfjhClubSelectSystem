@@ -637,9 +637,16 @@ function setClassCheck() {
     var chgPi=$('#chguser-InputPermission');
     var chgCi=$('#chguser-InputClass');
     var newPi=$('#newuser-InputPermission');
+    var newCi=$('#newuser-InputClass');
 
     if((chgPs.val()=="1" && chgPi.val()!="0") || chgPi.val()=="1")
         chgCi.prop("disabled", true);
     else
         chgCi.prop("disabled", false);
+
+    if(newPi.val()=="1")
+        newCi.prop("disabled", true);
+    else
+        newCi.prop("disabled", false);
+
 }
