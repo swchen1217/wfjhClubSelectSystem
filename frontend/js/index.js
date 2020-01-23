@@ -99,7 +99,7 @@ function OnHashchangeListener() {
         $("#title_bar").hide();
 
         $.ajax({
-            url: "../ntuh_yl_RT_mdms_api/user.php",
+            url: "../backend/user.php",
             data: "mode=get_user_list&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw"),
             type: "POST",
             success: function (msg) {
