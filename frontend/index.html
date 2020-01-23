@@ -403,11 +403,23 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <select class="custom-select" id="chguser-InputPermission">
+                                            <select class="custom-select" id="chguser-InputPermission" onchange="setClassCheck()">
                                                 <option value="-1" selected>修改權限</option>
                                                 <option value="0">0(班級使用者)</option>
                                                 <option value="1">1(管理員)</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chguser-ShowClass">班級</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chguser-ShowClass" readonly>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chguser-InputClass"
+                                                   placeholder="修改班級">
                                         </div>
                                     </div>
                                 </div>
@@ -460,6 +472,11 @@
                                         <option value="0">0(班級使用者)</option>
                                         <option value="1">1(管理員)</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputClass">班級</label>
+                                    <input type="text" class="form-control" id="newuser-InputClass" placeholder="輸入班級"
+                                           required>
                                 </div>
                                 <div class="form-group">
                                     <label for="newuser-InputPw">密碼</label>
