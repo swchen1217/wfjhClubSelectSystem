@@ -398,40 +398,18 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <select class="custom-select" id="chguser-ShowPermission" disabled>
-                                                <option value="0">0(未啟用)</option>
-                                                <option value="1">1(狀態查詢)</option>
-                                                <option value="2">2(狀態登錄)</option>
-                                                <option value="3">3(紀錄查看)</option>
-                                                <option value="4">4(裝置管理)</option>
-                                                <option value="5">5(使用者管理)</option>
-                                                <option value="6">6(*)</option>
-                                                <option value="7">7(*)</option>
-                                                <option value="8">8(*)</option>
-                                                <option value="9">9(管理員)</option>
+                                                <option value="0">0(班級使用者)</option>
+                                                <option value="1">1(管理員)</option>
                                             </select>
                                         </div>
                                         <div class="col">
                                             <select class="custom-select" id="chguser-InputPermission">
                                                 <option value="-1" selected>修改權限</option>
-                                                <option value="0">0(未啟用)</option>
-                                                <option value="1">1(狀態查詢)</option>
-                                                <option value="2">2(狀態登錄)</option>
-                                                <option value="3">3(紀錄查看)</option>
-                                                <option value="4">4(裝置管理)</option>
-                                                <option value="5">5(使用者管理)</option>
-                                                <option value="6">6(*)</option>
-                                                <option value="7">7(*)</option>
-                                                <option value="8">8(*)</option>
-                                                <option value="9">9(管理員)</option>
+                                                <option value="0">0(班級使用者)</option>
+                                                <option value="1">1(管理員)</option>
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chguser-ShowEmail">E-mail</label>
-                                    <input type="email" class="form-control" id="chguser-ShowEmail" readonly>
-                                    <input type="email" class="form-control" id="chguser-InputEmail"
-                                           placeholder="修改E-mail">
                                 </div>
                                 <div class="form-group">
                                     <label for="chguser-InputPw">密碼</label>
@@ -440,7 +418,6 @@
                                            placeholder="確認新密碼">
                                 </div>
 
-                                <!-- todo -->
                                 <div class="row justify-content-between">
                                     <div class="col-4">
                                         <button id="btn_chguser-del" type="button"
@@ -480,22 +457,9 @@
                                     <label for="newuser-InputPermission">權限</label>
                                     <select class="custom-select" id="newuser-InputPermission" required>
                                         <option value="-1" selected disabled>設定權限</option>
-                                        <option value="0">0(未啟用)</option>
-                                        <option value="1">1(狀態查詢)</option>
-                                        <option value="2">2(狀態登錄)</option>
-                                        <option value="3">3(紀錄查看)</option>
-                                        <option value="4">4(裝置管理)</option>
-                                        <option value="5">5(使用者管理)</option>
-                                        <option value="6">6(*)</option>
-                                        <option value="7">7(*)</option>
-                                        <option value="8">8(*)</option>
-                                        <option value="9">9(管理員)</option>
+                                        <option value="0">0(班級使用者)</option>
+                                        <option value="1">1(管理員)</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newuser-InputEmail">E-mail</label>
-                                    <input type="email" class="form-control" id="newuser-InputEmail"
-                                           placeholder="輸入E-mail" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="newuser-InputPw">密碼</label>
