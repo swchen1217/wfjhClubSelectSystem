@@ -361,8 +361,119 @@
         </div>
         <div id="Content_SelectResult">2</div>
         <div id="Content_SelectManage">3</div>
-        <div id="Content_ClubManage">4</div>
+        <div id="Content_ClubManage">
+            <div class="row" id="row-club-list">
+                <div class="container">
+                    <table id="table_club"></table>
+                </div>
+            </div>
+            <div class="row" id="row-club-operate">
+                <div class="col-md-6">
+                    <div class="card" id="card-club-change">
+                        <div class="card-header">
+                            <h3 class="card-title">修改社團</h3>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-my" id="form-chgclub">
+                                <div class="form-group">
+                                    <label for="chgclub-ShowId">編號</label>
+                                    <input type="text" class="form-control-plaintext" id="chgclub-ShowId" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chgclub-ShowName">名稱</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chgclub-ShowName" readonly>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chgclub-InputName"
+                                                   placeholder="修改名稱">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chgclub-ShowTeacher">教師</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chgclub-ShowTeacher" readonly>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="chgclub-InputTeacher"
+                                                   placeholder="修改教師">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- TODO Radio btn -->
+                                <!-- TODO Switch -->
+                                <div class="row justify-content-between">
+                                    <div class="col-4">
+                                        <button id="btn_chgclub-del" type="button"
+                                                class="btn btn-default btn-danger btn-block" style="margin-top: 8px">
+                                            刪除
+                                        </button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                style="margin-top: 8px">
+                                            送出
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-6">
+                    <div class="card" id="card-user-new">
+                        <div class="card-header">
+                            <h3 class="card-title">新增使用者</h3>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="form-my" id="form-newuser">
+                                <div class="form-group">
+                                    <label for="newuser-InputAcc">帳號(員工編號)</label>
+                                    <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputName">名稱</label>
+                                    <input type="text" class="form-control" id="newuser-InputName" placeholder="輸入名稱"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputPermission">權限</label>
+                                    <select class="custom-select" id="newuser-InputPermission" required onchange="setClassCheck()">
+                                        <option value="-1" selected disabled>設定權限</option>
+                                        <option value="0">0(班級使用者)</option>
+                                        <option value="1">1(管理員)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputClass">班級</label>
+                                    <input type="text" class="form-control" id="newuser-InputClass" placeholder="輸入班級"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newuser-InputPw">密碼</label>
+                                    <input type="password" class="form-control" id="newuser-InputPw" placeholder="設定密碼">
+                                    <input type="password" class="form-control" id="newuser-InputPwRe"
+                                           placeholder="確認新密碼">
+                                </div>
 
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-default btn-primary btn-block"
+                                                style="margin-top: 8px">
+                                            送出
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
         <div id="Content_User_manage">
             <div class="row" id="row-user-list">
                 <div class="container">
@@ -403,7 +514,8 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <select class="custom-select" id="chguser-InputPermission" onchange="setClassCheck()">
+                                            <select class="custom-select" id="chguser-InputPermission"
+                                                    onchange="setClassCheck()">
                                                 <option value="-1" selected>修改權限</option>
                                                 <option value="0">0(班級使用者)</option>
                                                 <option value="1">1(管理員)</option>
@@ -467,7 +579,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="newuser-InputPermission">權限</label>
-                                    <select class="custom-select" id="newuser-InputPermission" required onchange="setClassCheck()">
+                                    <select class="custom-select" id="newuser-InputPermission" required
+                                            onchange="setClassCheck()">
                                         <option value="-1" selected disabled>設定權限</option>
                                         <option value="0">0(班級使用者)</option>
                                         <option value="1">1(管理員)</option>
