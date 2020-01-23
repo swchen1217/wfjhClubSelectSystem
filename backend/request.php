@@ -1,8 +1,12 @@
 <?php
-function request($key)
+function request($key,$unsafe=false)
 {
-    $tmp = filter_input(INPUT_POST, $key);
-    if (!$tmp) $tmp = filter_input(INPUT_GET, $key);
+    if(!$unsafe){
+        $tmp = filter_input(INPUT_POST, $key);
+        if (!$tmp) $tmp = filter_input(INPUT_GET, $key);
+    }else{
+        $tmp=$_REQUEST[$key];
+    }
     return $tmp;
 }
 ?>
