@@ -77,7 +77,7 @@ function init() {
         showPaginationSwitch: true,
         columns: [{
             field: 'account',
-            title: '帳號(員工編號)',
+            title: '帳號',
             formatter: LinkFormatterUM
         }, {
             field: 'name',
@@ -648,4 +648,334 @@ function setClassCheck() {
         newCi.prop("disabled", true);
     else
         newCi.prop("disabled", false);
+}
+
+function FormSubmitListener() {
+    $('#form-chguser').submit(function () {
+        var getURl = new URL(location.href);
+        var acc = getURl.searchParams.get('acc');
+        var n_name = $('#chguser-InputName').val();
+        var n_permission = $('#chguser-InputPermission').val();
+        var n_class = $('#chguser-InputClass').val();
+        var n_pw = $('#chguser-InputPw').val();
+        var n_pw_re = $('#chguser-InputPwRe').val();
+
+        if (acc == null) {
+            $.alert({
+                title: '錯誤',
+                content: '尚未選擇欲更改之帳號',
+                type: 'red',
+                typeAnimated: true
+            });
+        } else {
+            var users = getUsers(false);
+            var userinfo;
+            for (let i = 0; i < users.length; i++) {
+                if (users[i]['account'] == acc) {
+                    userinfo = users[i];
+                    break;
+                }
+            }
+            var old_name = userinfo['name'];
+            var old_class = userinfo['class'];
+            var old_permission = userinfo['isAdmin'];
+            if (n_name == '' && n_permission == '-1' && n_class == '' && n_pw == '') {
+                $.alert({
+                    title: '錯誤',
+                    content: '無任何欲修改之資料',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            } else {
+                var ConfrimContent = "";
+                var chguserParams = "";
+                ConfrimContent += "欲修改資訊如下 請確認:<br>帳號: " + acc + "<br>";
+                chguserParams += "&operate_acc=" + acc;
+                if (n_name != "") {
+                    chguserParams += "&new_name=" + n_name;
+                    ConfrimContent += "名稱: <var>" + old_name + "</var> 更改為 <var>" + n_name + "</var><br>";
+                }
+                if (n_permission != '-1') {
+                    chguserParams += "&new_isAdmin=" + n_permission;
+                    ConfrimContent += "權限: <var>" + old_permission + "(" + PermissionStr[old_permission] + ")</var> 更改為 <var>" + n_permission + "(" + PermissionStr[n_permission] + ")</var><br>";
+                }
+                if (n_class != "") {
+                    chguserParams += "&new_class=" + n_class;
+                    ConfrimContent += "班級: <var>" + old_class + "</var><br>更改為 <var>" + n_class + "</var><br>";
+                }
+                if (n_pw != "") {
+                    if (n_pw != '' && n_pw_re != '') {
+                        if (n_pw == n_pw_re) {
+                            var create_time = moment(userinfo['created']).format('YYYYMMDDHHmmss');
+                            var mMD5 = md5(create_time + n_pw);
+                            chguserParams += "&new_pw=" + mMD5;
+                            ConfrimContent += "<b>密碼更改</b><br>";
+                        } else {
+                            $.alert({
+                                title: '錯誤',
+                                content: '確認新密碼不符合!!請重新輸入',
+                                type: 'red',
+                                typeAnimated: true
+                            });
+                            return false;
+                        }
+                    } else {
+                        $.alert({
+                            title: '錯誤',
+                            content: '密碼未輸入完整!!請重新輸入',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                        return false;
+                    }
+                }
+                console.log(chguserParams);
+                $.confirm({
+                    title: '更改確認!',
+                    content: ConfrimContent,
+                    buttons: {
+                        confirm: {
+                            text: '確認',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                HideAlert();
+                                $.ajax({
+                                    url: "../backend/user.php",
+                                    data: "mode=chguser&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw") + chguserParams,
+                                    type: "POST",
+                                    success: function (msg) {
+                                        console.log(msg);
+                                        $('#chguser-InputName').val('');
+                                        $('#chguser-InputPermission').val(-1);
+                                        $('#chguser-InputClass').val('');
+                                        $('#chguser-InputPw').val('');
+                                        $('#chguser-InputPwRe').val('');
+                                        if (msg == "ok") {
+                                            ShowAlart('alert-success', '修改成功', false, true);
+                                            if (acc == $.cookie("LoginInfoAcc")) {
+                                                location.replace("./login.html")
+                                            } else {
+                                                setTimeout(function () {
+                                                    location.replace("./index.html#UserManage")
+                                                }, 1500);
+                                            }
+                                        } else {
+                                            ShowAlart('alert-danger', '權限錯誤!!', false, false);
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        console.log('ajax er');
+                                        $.alert({
+                                            title: '錯誤',
+                                            content: 'Ajax 發生錯誤',
+                                            type: 'red',
+                                            typeAnimated: true
+                                        });
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '取消'
+                        }
+                    }
+                });
+            }
+        }
+        return false;
+    });
+    $('#form-newuser').submit(function () {
+        var n_acc = $('#newuser-InputAcc').val();
+        var n_name = $('#newuser-InputName').val();
+        var n_permission = $('#newuser-InputPermission').val();
+        var n_class = $('#chguser-InputClass').val();
+        var n_pw = $('#newuser-InputPw').val();
+        var n_pw_re = $('#newuser-InputPwRe').val();
+        if(n_permission=='1')
+            n_class='-1';
+        if (n_acc != '' && n_name != '' && n_class != '' && n_permission != '-1' && n_pw != '' && n_pw_re != '') {
+            if (n_pw == n_pw_re) {
+                var create_time = moment().format('YYYYMMDDHHmmss');
+                var create_time2 = moment().format('YYYY-MM-DD HH:mm:ss');
+                var mMD5 = md5(create_time + n_pw);
+                $.confirm({
+                    title: '新增帳號!!',
+                    content: '確認新增此帳號??',
+                    buttons: {
+                        confirm: {
+                            text: '確認',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                HideAlert();
+                                $.ajax({
+                                    url: "../backend/user.php",
+                                    data: "mode=newuser" +
+                                        "&acc=" + $.cookie("LoginInfoAcc") +
+                                        "&pw=" + $.cookie("LoginInfoPw") +
+                                        "&operate_acc=" + n_acc +
+                                        "&new_name=" + n_name +
+                                        "&new_isAdmin=" + n_permission +
+                                        "&new_class=" + n_class +
+                                        "&new_pw=" + mMD5 +
+                                        "&new_create_time=" + create_time2
+                                    ,
+                                    type: "POST",
+                                    success: function (msg) {
+                                        console.log(msg);
+                                        $('#newuser-InputAcc').val('');
+                                        $('#newuser-InputPermission').val(-1);
+                                        $('#newuser-InputName').val('');
+                                        $('#newuser-InputClass').val('');
+                                        $('#newuser-InputPw').val('');
+                                        $('#newuser-InputPwRe').val('');
+                                        if (msg == "ok")
+                                            ShowAlart('alert-success', '新增成功', false, true);
+                                        else
+                                            ShowAlart('alert-danger', '錯誤!!', false, false);
+                                    },
+                                    error: function (xhr) {
+                                        console.log('ajax er');
+                                        $.alert({
+                                            title: '錯誤',
+                                            content: 'Ajax 發生錯誤',
+                                            type: 'red',
+                                            typeAnimated: true
+                                        });
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '取消'
+                        }
+                    }
+                });
+            } else {
+                $.alert({
+                    title: '錯誤',
+                    content: '確認新密碼不符合!!請重新輸入',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }
+        } else {
+            $.alert({
+                title: '錯誤',
+                content: '輸入未完整!!',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+        return false;
+    });
+}
+
+function ButtonOnClickListener() {
+    $('#btn_chguser-del').click(function () {
+        var getURl = new URL(location.href);
+        var acc = getURl.searchParams.get('acc');
+        if (acc == null) {
+            $.alert({
+                title: '錯誤',
+                content: '尚未選擇欲刪除之帳號',
+                type: 'red',
+                typeAnimated: true
+            });
+        } else {
+            var users = getUsers(false);
+            var userinfo;
+            for (let i = 0; i < users.length; i++) {
+                if (users[i]['account'] == acc) {
+                    userinfo = users[i];
+                    break;
+                }
+            }
+            var name = userinfo['name'];
+            $.confirm({
+                title: '確認刪除!!',
+                content:
+                    '即將刪除:' + acc + '(' + name + ')' +
+                    '<label>請再次輸入你的密碼確認刪除此帳號</label>' +
+                    '<input type="password" placeholder="輸入密碼" class="pw form-control" required/>'
+                ,
+                type: 'red',
+                autoClose: 'cancel|10000',
+                buttons: {
+                    confirm: {
+                        text: '刪除',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var pw = this.$content.find('.pw').val();
+                            if (pw != '') {
+                                $.ajax({
+                                    url: "../backend/user.php",
+                                    data: "mode=get_create_time" +
+                                        "&acc=" + $.cookie("LoginInfoAcc"),
+                                    type: "POST",
+                                    success: function (msg) {
+                                        if (msg != 'no_acc') {
+                                            mMd5 = md5(msg + pw);
+                                            if (mMd5 == $.cookie("LoginInfoPw")) {
+                                                $.ajax({
+                                                    url: "../backend/user.php",
+                                                    data: "mode=deluser" +
+                                                        "&acc=" + $.cookie("LoginInfoAcc") +
+                                                        "&pw=" + $.cookie("LoginInfoPw") +
+                                                        "&operate_acc=" + acc
+                                                    ,
+                                                    type: "POST",
+                                                    success: function (msg) {
+                                                        if (msg == "ok") {
+                                                            ShowAlart('alert-success', '刪除成功', false, true);
+                                                            if (acc == $.cookie("LoginInfoAcc")) {
+                                                                location.replace("./login.html")
+                                                            } else {
+                                                                setTimeout(function () {
+                                                                    location.replace("./index.html#UserManage")
+                                                                }, 1500);
+                                                            }
+                                                        } else {
+                                                            ShowAlart('alert-danger', '錯誤!!', false, false);
+                                                        }
+                                                    },
+                                                    error: function (xhr) {
+                                                        console.log('ajax er');
+                                                        $.alert({
+                                                            title: '錯誤',
+                                                            content: 'Ajax 發生錯誤',
+                                                            type: 'red',
+                                                            typeAnimated: true
+                                                        });
+                                                    }
+                                                });
+                                            } else {
+                                                $.alert('密碼錯誤');
+                                            }
+                                        } else {
+                                            $.alert('錯誤');
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        console.log('ajax er');
+                                        $.alert({
+                                            title: '錯誤',
+                                            content: 'Ajax 發生錯誤',
+                                            type: 'red',
+                                            typeAnimated: true
+                                        });
+                                    }
+                                });
+                            } else {
+                                $.alert('未輸入密碼');
+                                return false;
+                            }
+                        }
+                    },
+                    cancel: {
+                        text: '取消'
+                    },
+                }
+            });
+        }
+    });
 }
