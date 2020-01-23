@@ -97,6 +97,35 @@ function init() {
         }]
     });
     $('[data-toggle="tooltip"]').tooltip();
+    $('#table_club').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        pagination: true,
+        uniqueId: 'id',
+        sortName: 'grade',
+        pageNumber: 1,
+        pageSize: 5,
+        search: true,
+        showPaginationSwitch: true,
+        columns: [{
+            field: 'id',
+            title: '代碼',
+            formatter: LinkFormatterCM
+        }, {
+            field: 'name',
+            title: '名稱'
+        }, {
+            field: 'teacher',
+            title: '教師'
+        }, {
+            field: 'grade',
+            title: '年級'
+        }, {
+            field: 'isSpecial',
+            title: '特殊社團'
+        }]
+    });
 }
 
 function OnHashchangeListener() {
@@ -127,6 +156,29 @@ function OnHashchangeListener() {
     if (hash == '#ClubManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_ClubManage').show();
         $("#title_bar").hide();
+
+        $('#table_club').bootstrapTable('load', getAllClub());
+
+        var getURl = new URL(location.href);
+        if (getURl.searchParams.has('id')) {
+            var id = getURl.searchParams.get('id');
+            var clubs = getAllClub();
+            var clubinfo;
+            for (let i = 0; i < clubs.length; i++) {
+                if (clubs[i]['id'] == id) {
+                    clubinfo = clubs[i];
+                    break;
+                }
+            }
+            if (clubinfo != undefined) {
+                $('#chgclub-ShowId').val(clubinfo['id']);
+                $('#chgclub-ShowName').val(clubinfo['name']);
+                $('#chgclub-ShowTeacher').val(clubinfo['teacher']);
+                $('#chgclub-ShowGrade').val(clubinfo['grade']);
+                $('#chgclub-ShowIsSpecial').val(clubinfo['isSpecial']);
+                $('#chgclub-ShowIsSpecial').val(clubinfo['isSpecial']);
+            }
+        }
     }
 
     if (hash == '#UserManage' && login_check() && PermissionCheck(true, true)) {
@@ -212,6 +264,10 @@ window.operateEvents = {
 
 function LinkFormatterUM(value, row, index) {
     return "<a href='?acc=" + value + "#UserManage'>" + value + "</a>";
+}
+
+function LinkFormatterCM(value, row, index) {
+    return "<a href='?id=" + value + "#ClubManage'>" + value + "</a>";
 }
 
 var grade_code = -1;
@@ -978,4 +1034,35 @@ function ButtonOnClickListener() {
             });
         }
     });
+}
+
+function getAllClub() {
+    var data = "";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getAllClub" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw"),
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                for (var i = 0; i < jsonA.length; i++)
+                    jsonA[i]['isSpecial'] = jsonA[i]['isSpecial'] == 1 ? "是" : "否";
+                data = jsonA;
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
 }
