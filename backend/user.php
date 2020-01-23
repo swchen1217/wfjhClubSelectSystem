@@ -76,7 +76,7 @@ if ($mode == "chguser") {
         if ($new_name != "")
             $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
         if ($new_isAdmin != "")
-            $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
+            $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_BOOL);
         if ($new_class != "")
             $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
         if ($new_pw != "")
