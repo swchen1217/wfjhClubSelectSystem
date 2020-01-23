@@ -15,6 +15,7 @@ $operate_acc = request("operate_acc");
 $new_name = request("new_name");
 $new_isAdmin = request("new_isAdmin");
 $new_create_time = request("new_create_time");
+$new_class = request("new_class");
 
 if ($mode == "login_check") {
     $sql = "SELECT password,name,isAdmin,class FROM `users` WHERE `account`=:acc";
@@ -57,27 +58,27 @@ if($mode=="get_user_list"){
     }
     exit;
 }
-/*if($mode=="chguser"){
-    if(UserCheck($acc,$pw,5,$db)){
+if($mode=="chguser"){
+    if(UserCheck($acc,$pw,true,$db)){
         $data="";
         if($new_name!="")
             $data .= "`name`=:name,";
-        if($new_permission!="")
-            $data .= "`permission`=:permission,";
-        if($new_email!="")
-            $data .= "`email`=:email,";
+        if($new_isAdmin!="")
+            $data .= "`isAdmin`=:isAdmin,";
+        if($new_class!="")
+            $data .= "`class`=:class,";
         if($new_pw!="")
             $data .= "`password`=:password,";
         $data=substr($data,0,-1);
-        $sql = 'UPDATE `user_tb` SET' . $data .' WHERE `account`=:acc';
+        $sql = 'UPDATE `users` SET' . $data .' WHERE `account`=:acc';
         $rs = $db->prepare($sql);
         $rs->bindValue(':acc', $operate_acc, PDO::PARAM_STR);
         if($new_name!="")
             $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
-        if($new_permission!="")
-            $rs->bindValue(':permission', $new_permission, PDO::PARAM_STR);
-        if($new_email!="")
-            $rs->bindValue(':email', $new_email, PDO::PARAM_STR);
+        if($new_isAdmin!="")
+            $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
+        if($new_class!="")
+            $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
         if($new_pw!="")
             $rs->bindValue(':password', $new_pw, PDO::PARAM_STR);
         $rs->execute();
@@ -88,14 +89,14 @@ if($mode=="get_user_list"){
     exit;
 }
 if($mode=="newuser"){
-    if(UserCheck($acc,$pw,5,$db)){
-        $sql = 'INSERT INTO `user_tb` (`account`, `password`, `name`, `permission`, `email`, `created`) VALUES (:account, :password, :name, :permission, :email, :created)';
+    if(UserCheck($acc,$pw,true,$db)){
+        $sql = 'INSERT INTO `users` (`account`, `password`, `name`, `isAdmin`, `class`, `created`) VALUES (:account, :password, :name, :isAdmin, :class, :created)';
         $rs = $db->prepare($sql);
         $rs->bindValue(':account', $operate_acc, PDO::PARAM_STR);
         $rs->bindValue(':password', $new_pw, PDO::PARAM_STR);
         $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
-        $rs->bindValue(':permission', $new_permission, PDO::PARAM_STR);
-        $rs->bindValue(':email', $new_email, PDO::PARAM_STR);
+        $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
+        $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
         $rs->bindValue(':created', $new_create_time, PDO::PARAM_STR);
         $rs->execute();
         echo "ok";
@@ -105,8 +106,8 @@ if($mode=="newuser"){
     exit;
 }
 if($mode="deluser"){
-    if(UserCheck($acc,$pw,5,$db)){
-        $sql = 'DELETE FROM `user_tb` WHERE `account`=:acc';
+    if(UserCheck($acc,$pw,true,$db)){
+        $sql = 'DELETE FROM `users` WHERE `account`=:acc';
         $rs = $db->prepare($sql);
         $rs->bindValue(':acc', $operate_acc, PDO::PARAM_STR);
         $rs->execute();
@@ -115,5 +116,5 @@ if($mode="deluser"){
         echo "error";
     }
     exit;
-}*/
+}
 ?>
