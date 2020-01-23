@@ -411,12 +411,12 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="btnR_clubInputGrade1" value="1" checked>
-                                                <label class="form-check-label" for="btnR_clubInputGrade1">國一</label>
+                                                <input class="form-check-input" type="radio" name="radio_chg" id="btnR_clubChgInputGrade1" value="1" checked>
+                                                <label class="form-check-label" for="btnR_clubChgInputGrade1">國一</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="btnR_clubInputGrade2" value="2">
-                                                <label class="form-check-label" for="btnR_clubInputGrade2">國二</label>
+                                                <input class="form-check-input" type="radio" name="radio_chg" id="btnR_clubChgInputGrade2" value="2">
+                                                <label class="form-check-label" for="btnR_clubChgInputGrade2">國二</label>
                                             </div>
                                         </div>
                                     </div>
@@ -455,41 +455,46 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-md-6">
-                    <div class="card" id="card-user-new">
+                <div class="col-md-6">
+                    <div class="card" id="card-club-new">
                         <div class="card-header">
-                            <h3 class="card-title">新增使用者</h3>
+                            <h3 class="card-title">新增社團</h3>
                         </div>
                         <div class="card-body">
-                            <form role="form" class="form-my" id="form-newuser">
+                            <form role="form" class="form-my" id="form-newclub">
                                 <div class="form-group">
-                                    <label for="newuser-InputAcc">帳號(員工編號)</label>
-                                    <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
+                                    <label for="newclub-InputName">名稱</label>
+                                    <input type="text" class="form-control" id="newclub-InputName" placeholder="輸入名稱"
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="newuser-InputName">名稱</label>
-                                    <input type="text" class="form-control" id="newuser-InputName" placeholder="輸入名稱"
+                                    <label for="newclub-InputTeacher">教師</label>
+                                    <input type="text" class="form-control" id="newclub-InputTeacher" placeholder="輸入教師"
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="newuser-InputPermission">權限</label>
-                                    <select class="custom-select" id="newuser-InputPermission" required onchange="setClassCheck()">
-                                        <option value="-1" selected disabled>設定權限</option>
-                                        <option value="0">0(班級使用者)</option>
-                                        <option value="1">1(管理員)</option>
-                                    </select>
+                                    <label>年級</label>
+                                    <div class="form-row">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="radio_new" id="btnR_clubNewInputGrade1" value="1" checked>
+                                            <label class="form-check-label" for="btnR_clubNewInputGrade1">國一</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="radio_new" id="btnR_clubNewInputGrade2" value="2">
+                                            <label class="form-check-label" for="btnR_clubNewInputGrade2">國二</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="newuser-InputClass">班級</label>
-                                    <input type="text" class="form-control" id="newuser-InputClass" placeholder="輸入班級"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newuser-InputPw">密碼</label>
-                                    <input type="password" class="form-control" id="newuser-InputPw" placeholder="設定密碼">
-                                    <input type="password" class="form-control" id="newuser-InputPwRe"
-                                           placeholder="確認新密碼">
+                                    <label for="newclub-InputIsSpecial">特殊社團</label>
+                                    <div class="form-row">
+                                        <span style="font-size: 1.2em;line-height: 32px">否&nbsp;</span>
+                                        <label class="switch" style="vertical-align: top">
+                                            <input type="checkbox" id="newclub-InputIsSpecial">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                                    </div>
                                 </div>
 
                                 <div class="row justify-content-end">
@@ -503,7 +508,7 @@
                             </form>
                         </div>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
         <div id="Content_User_manage">
@@ -600,7 +605,7 @@
                         <div class="card-body">
                             <form role="form" class="form-my" id="form-newuser">
                                 <div class="form-group">
-                                    <label for="newuser-InputAcc">帳號(員工編號)</label>
+                                    <label for="newuser-InputAcc">帳號</label>
                                     <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
                                            required>
                                 </div>
