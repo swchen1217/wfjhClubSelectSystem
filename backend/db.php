@@ -14,6 +14,11 @@ $acc = request("acc");
 $pw = request("pw");
 $grade = request("grade");
 $class = request("class");
+$operate_id = request("operate_id");
+$new_name = request("new_name");
+$new_teacher = request("new_teacher");
+$new_grade = request("new_grade");
+$new_isSpecial = request("new_isSpecial",true);
 
 if ($mode == "getClubList") {
     if (UserCheck($acc, $pw, false, $db)) {
@@ -63,7 +68,7 @@ if ($mode == "uploadSelect") {
     $count = 0;
     while ($data[$count] != null)
         $count++;
-    echo "count : ".$count.",";
+    echo "count : " . $count . ",";
     if (UserCheck($acc, $pw, false, $db)) {
         $sql = 'SELECT * FROM `selected` WHERE class=:class';
         $rs = $db->prepare($sql);
@@ -144,5 +149,65 @@ if ($mode == "getAllClub") {
     }
     exit;
 }
+
+if ($mode == "chgclub") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $data = "";
+        if ($new_name != "")
+            $data .= "`name`=:name,";
+        if ($new_teacher != "")
+            $data .= "`teacher`=:teacher,";
+        if ($new_grade != "")
+            $data .= "`grade`=:grade,";
+        if ($new_isSpecial != "")
+            $data .= "`isSpecial`=:isSpecial,";
+        $data = substr($data, 0, -1);
+        $sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':id', $operate_id, PDO::PARAM_STR);
+        if ($new_name != "")
+            $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
+        if ($new_teacher != "")
+            $rs->bindValue(':teacher', $new_teacher, PDO::PARAM_STR);
+        if ($new_grade != "")
+            $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
+        if ($new_isSpecial != "")
+            $rs->bindValue(':isSpecial', $new_isSpecial, PDO::PARAM_STR);
+        $rs->execute();
+        echo "ok";
+    } else {
+        echo "error";
+    }
+    exit;
+}
+/*if ($mode == "newuser") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'INSERT INTO `users` (`account`, `password`, `name`, `isAdmin`, `class`, `created`) VALUES (:account, :password, :name, :isAdmin, :class, :created)';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':account', $operate_acc, PDO::PARAM_STR);
+        $rs->bindValue(':password', $new_pw, PDO::PARAM_STR);
+        $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
+        $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
+        $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
+        $rs->bindValue(':created', $new_create_time, PDO::PARAM_STR);
+        $rs->execute();
+        echo "ok";
+    } else {
+        echo "error";
+    }
+    exit;
+}
+if ($mode = "deluser") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'DELETE FROM `users` WHERE `account`=:acc';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':acc', $operate_acc, PDO::PARAM_STR);
+        $rs->execute();
+        echo "ok";
+    } else {
+        echo "error";
+    }
+    exit;
+}*/
 
 ?>
