@@ -1,14 +1,4 @@
 <?php
-// $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_DBNAME.';charset=utf8', DB_USER, DB_PASS);
-
-// Auth
-/*
-if(UserCheck($acc,$pw,false,$db)){
-
-}else {
-    echo "user_error";
-}
-*/
 
 require("config.php");
 require("request.php");
