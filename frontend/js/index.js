@@ -177,12 +177,12 @@ function OnHashchangeListener() {
                 $('#chgclub-ShowGrade').val(clubinfo['grade']);
                 $('#chgclub-ShowIsSpecial').val(clubinfo['isSpecial']);
 
-                if(clubinfo['grade']=='1')
+                if (clubinfo['grade'] == '1')
                     $('#btnR_clubChgInputGrade1').prop("checked", true);
                 else
                     $('#btnR_clubChgInputGrade2').prop("checked", true);
 
-                if(clubinfo['isSpecial']=='是')
+                if (clubinfo['isSpecial'] == '是')
                     $('#chgclub-InputIsSpecial').prop("checked", true);
                 else
                     $('#chgclub-InputIsSpecial').prop("checked", false);
@@ -941,10 +941,10 @@ function FormSubmitListener() {
         var n_isSpecial = $('#chgclub-InputIsSpecial').prop("checked");
         var n_grade;
 
-        if($("[name='radio_chg']:checked").val()=='1')
-            n_grade='1';
-        else if($("[name='radio_chg']:checked").val()=='2')
-            n_grade='2';
+        if ($("[name='radio_chg']:checked").val() == '1')
+            n_grade = '1';
+        else if ($("[name='radio_chg']:checked").val() == '2')
+            n_grade = '2';
 
         if (id == null) {
             $.alert({
@@ -966,7 +966,7 @@ function FormSubmitListener() {
             var old_teacher = clubinfo['teacher'];
             var old_grade = clubinfo['grade'];
             var old_isSpecial = clubinfo['isSpecial'];
-            if (n_name == '' && n_teacher=='' && n_grade == old_grade && n_isSpecial==(old_isSpecial=='是')) {
+            if (n_name == '' && n_teacher == '' && n_grade == old_grade && n_isSpecial == (old_isSpecial == '是')) {
                 $.alert({
                     title: '錯誤',
                     content: '無任何欲修改之資料',
@@ -990,9 +990,9 @@ function FormSubmitListener() {
                     chguserParams += "&new_grade=" + n_grade;
                     ConfrimContent += "年級: <var>" + old_grade + "</var>更改為 <var>" + n_grade + "</var><br>";
                 }
-                if (n_isSpecial!=(old_isSpecial=='是')) {
+                if (n_isSpecial != (old_isSpecial == '是')) {
                     chguserParams += "&new_isSpecial=" + n_isSpecial;
-                    ConfrimContent += "特殊社團: <var>" + old_isSpecial + "</var>更改為 <var>" + (n_isSpecial?'是':'否') + "</var><br>";
+                    ConfrimContent += "特殊社團: <var>" + old_isSpecial + "</var>更改為 <var>" + (n_isSpecial ? '是' : '否') + "</var><br>";
                 }
 
                 console.log(chguserParams);
