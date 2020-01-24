@@ -18,7 +18,7 @@ $operate_id = request("operate_id");
 $new_name = request("new_name");
 $new_teacher = request("new_teacher");
 $new_grade = request("new_grade");
-$new_isSpecial = request("new_isSpecial",true);
+$new_isSpecial = request("new_isSpecial", true);
 
 if ($mode == "getClubList") {
     if (UserCheck($acc, $pw, false, $db)) {
