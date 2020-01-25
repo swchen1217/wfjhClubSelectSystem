@@ -938,7 +938,7 @@ function FormSubmitListener() {
         var id = getURl.searchParams.get('id');
         var n_name = $('#chgclub-InputName').val();
         var n_teacher = $('#chgclub-InputTeacher').val();
-        var n_grade=$("[name='radio_chg']:checked").val();
+        var n_grade = $("[name='radio_chg']:checked").val();
         var n_isSpecial = $('#chgclub-InputIsSpecial').prop("checked");
 
         if (id == null) {
@@ -1039,7 +1039,7 @@ function FormSubmitListener() {
     $('#form-newclub').submit(function () {
         var n_name = $('#newclub-InputName').val();
         var n_teacher = $('#newclub-InputTeacher').val();
-        var n_grade=$("[name='radio_new']:checked").val();
+        var n_grade = $("[name='radio_new']:checked").val();
         var n_isSpecial = $('#newclub-InputIsSpecial').prop("checked");
 
         if (n_name != '' && n_teacher != '') {
@@ -1067,9 +1067,12 @@ function FormSubmitListener() {
                                     console.log(msg);
                                     $('#newclub-InputName').val('');
                                     $('#newclub-InputTeacher').val('');
-                                    if (msg == "ok")
+                                    if (msg == "ok") {
                                         ShowAlart('alert-success', '新增成功', false, true);
-                                    else
+                                        setTimeout(function () {
+                                            location.replace("./index.html#ClubManage")
+                                        }, 1500);
+                                    } else
                                         ShowAlart('alert-danger', '錯誤!!', false, false);
                                 },
                                 error: function (xhr) {
