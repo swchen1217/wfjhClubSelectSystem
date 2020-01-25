@@ -153,16 +153,25 @@ if ($mode == "getAllClub") {
 if ($mode == "chgclub") {
     if (UserCheck($acc, $pw, true, $db)) {
         $data = "";
+        $id_c=false;
         if ($new_name != "")
             $data .= "`name`=:name,";
         if ($new_teacher != "")
             $data .= "`teacher`=:teacher,";
-        if ($new_grade != "")
+        if ($new_grade != ""){
             $data .= "`grade`=:grade,";
-        if ($new_isSpecial != null)
+            $id_c=true;
+        }
+        if ($new_isSpecial != null){
             $data .= "`isSpecial`=:isSpecial,";
+            $id_c=true;
+        }
+        if($id_c!=false)
+            $data .= "`id`=:id,";
         $data = substr($data, 0, -1);
-        $sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
+        $id_n=($new_grade != ""?$new_grade:substr($operate_id, 0, 1)).($new_isSpecial != null?($new_isSpecial == 'true' ? '1' : '2'):substr($operate_id, 1, 1)).($new_grade != "" && $new_grade!=substr($operate_id, 0,1)?getId($new_grade,$db):substr($operate_id, -2));
+        echo $id_n;
+        /*$sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
         $rs = $db->prepare($sql);
         $rs->bindValue(':id', $operate_id, PDO::PARAM_STR);
         if ($new_name != "")
@@ -173,8 +182,10 @@ if ($mode == "chgclub") {
             $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
         if ($new_isSpecial != null)
             $rs->bindValue(':isSpecial', filter_var($new_isSpecial, FILTER_VALIDATE_BOOLEAN), PDO::PARAM_BOOL);
+        if ($id_c!=false)
+            $rs->bindValue(':id', $id_n, PDO::PARAM_STR);
         $rs->execute();
-        echo "ok";
+        echo "ok";*/
     } else {
         echo "error";
     }
@@ -183,17 +194,7 @@ if ($mode == "chgclub") {
 
 if ($mode == "newclub") {
     if (UserCheck($acc, $pw, true, $db)) {
-        $sql = 'SELECT id FROM `clubs` WHERE grade=:grade order by sort_id desc';
-        $rs = $db->prepare($sql);
-        $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
-        $rs->execute();
-        $last_num = 0;
-        if ($rs->rowCount() != 0) {
-            list($id_r) = $rs->fetch(PDO::FETCH_NUM);
-            $last_num = substr($id_r, -2);
-        }
-        $new_num = sprintf("%02d", $last_num += 1);
-        $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . $new_num;
+        $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . getId($new_grade,$db);
 
         $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial) VALUES (:id, :name, :teacher, :grade, :isSpecial)';
         $rs2 = $db->prepare($sql2);
@@ -207,6 +208,20 @@ if ($mode == "newclub") {
     } else
         echo "error";
     exit;
+}
+
+function getId($grade,PDO $mDB){
+    $sqlM = 'SELECT id FROM `clubs` WHERE grade=:grade order by sort_id desc';
+    $rsM = $mDB->prepare($sqlM);
+    $rsM->bindValue(':grade', $grade, PDO::PARAM_STR);
+    $rsM->execute();
+    $last_num = 0;
+    if ($rsM->rowCount() != 0) {
+        list($id_r) = $rsM->fetch(PDO::FETCH_NUM);
+        $last_num = substr($id_r, -2);
+    }
+    $new_num = sprintf("%02d", $last_num += 1);
+    return $new_num;
 }
 
 /*if ($mode = "delclub") {
