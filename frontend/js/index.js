@@ -103,7 +103,7 @@ function init() {
         striped: true,
         pagination: true,
         uniqueId: 'id',
-        sortName: 'grade',
+        sortName: 'id',
         pageNumber: 1,
         pageSize: 5,
         search: true,
