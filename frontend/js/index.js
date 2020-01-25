@@ -938,13 +938,8 @@ function FormSubmitListener() {
         var id = getURl.searchParams.get('id');
         var n_name = $('#chgclub-InputName').val();
         var n_teacher = $('#chgclub-InputTeacher').val();
+        var n_grade=$("[name='radio_chg']:checked").val();
         var n_isSpecial = $('#chgclub-InputIsSpecial').prop("checked");
-        var n_grade;
-
-        if ($("[name='radio_chg']:checked").val() == '1')
-            n_grade = '1';
-        else if ($("[name='radio_chg']:checked").val() == '2')
-            n_grade = '2';
 
         if (id == null) {
             $.alert({
@@ -1041,80 +1036,59 @@ function FormSubmitListener() {
         }
         return false;
     });
-    /*$('#form-newuser').submit(function () {
-        var n_acc = $('#newuser-InputAcc').val();
-        var n_name = $('#newuser-InputName').val();
-        var n_permission = $('#newuser-InputPermission').val();
-        var n_class = $('#newuser-InputClass').val();
-        var n_pw = $('#newuser-InputPw').val();
-        var n_pw_re = $('#newuser-InputPwRe').val();
-        if (n_permission == '1')
-            n_class = '-1';
-        if (n_acc != '' && n_name != '' && n_class != '' && n_permission != "-1" && n_pw != '' && n_pw_re != '') {
-            if (n_pw == n_pw_re) {
-                var create_time = moment().format('YYYYMMDDHHmmss');
-                var create_time2 = moment().format('YYYY-MM-DD HH:mm:ss');
-                var mMD5 = md5(create_time + n_pw);
-                $.confirm({
-                    title: '新增帳號!!',
-                    content: '確認新增此帳號??',
-                    buttons: {
-                        confirm: {
-                            text: '確認',
-                            btnClass: 'btn-blue',
-                            action: function () {
-                                HideAlert();
-                                $.ajax({
-                                    url: "../backend/user.php",
-                                    data: "mode=newuser" +
-                                        "&acc=" + $.cookie("LoginInfoAcc") +
-                                        "&pw=" + $.cookie("LoginInfoPw") +
-                                        "&operate_acc=" + n_acc +
-                                        "&new_name=" + n_name +
-                                        "&new_isAdmin=" + n_permission +
-                                        "&new_class=" + n_class +
-                                        "&new_pw=" + mMD5 +
-                                        "&new_create_time=" + create_time2
-                                    ,
-                                    type: "POST",
-                                    success: function (msg) {
-                                        console.log(msg);
-                                        $('#newuser-InputAcc').val('');
-                                        $('#newuser-InputPermission').val(-1);
-                                        $('#newuser-InputName').val('');
-                                        $('#newuser-InputClass').val('');
-                                        $('#newuser-InputPw').val('');
-                                        $('#newuser-InputPwRe').val('');
-                                        if (msg == "ok")
-                                            ShowAlart('alert-success', '新增成功', false, true);
-                                        else
-                                            ShowAlart('alert-danger', '錯誤!!', false, false);
-                                    },
-                                    error: function (xhr) {
-                                        console.log('ajax er');
-                                        $.alert({
-                                            title: '錯誤',
-                                            content: 'Ajax 發生錯誤',
-                                            type: 'red',
-                                            typeAnimated: true
-                                        });
-                                    }
-                                });
-                            }
-                        },
-                        cancel: {
-                            text: '取消'
+    $('#form-newclub').submit(function () {
+        var n_name = $('#newclub-InputName').val();
+        var n_teacher = $('#newclub-InputTeacher').val();
+        var n_grade=$("[name='radio_new']:checked").val();
+        var n_isSpecial = $('#newclub-InputIsSpecial').prop("checked");
+
+        if (n_name != '' && n_teacher != '') {
+            $.confirm({
+                title: '新增社團!!',
+                content: '確認新增此帳號??',
+                buttons: {
+                    confirm: {
+                        text: '確認',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            HideAlert();
+                            $.ajax({
+                                url: "../backend/db.php",
+                                data: "mode=newclub" +
+                                    "&acc=" + $.cookie("LoginInfoAcc") +
+                                    "&pw=" + $.cookie("LoginInfoPw") +
+                                    "&new_name=" + n_name +
+                                    "&new_teacher=" + n_teacher +
+                                    "&new_grade=" + n_grade +
+                                    "&new_isSpecial=" + n_isSpecial
+                                ,
+                                type: "POST",
+                                success: function (msg) {
+                                    console.log(msg);
+                                    $('#newclub-InputName').val('');
+                                    $('#newclub-InputTeacher').val('');
+                                    if (msg == "ok")
+                                        ShowAlart('alert-success', '新增成功', false, true);
+                                    else
+                                        ShowAlart('alert-danger', '錯誤!!', false, false);
+                                },
+                                error: function (xhr) {
+                                    console.log('ajax er');
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: 'Ajax 發生錯誤',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            });
                         }
+                    },
+                    cancel: {
+                        text: '取消'
                     }
-                });
-            } else {
-                $.alert({
-                    title: '錯誤',
-                    content: '確認新密碼不符合!!請重新輸入',
-                    type: 'red',
-                    typeAnimated: true
-                });
-            }
+                }
+            });
         } else {
             $.alert({
                 title: '錯誤',
@@ -1124,7 +1098,7 @@ function FormSubmitListener() {
             });
         }
         return false;
-    });*/
+    });
 }
 
 function ButtonOnClickListener() {
