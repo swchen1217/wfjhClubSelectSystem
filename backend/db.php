@@ -161,17 +161,17 @@ if ($mode == "chgclub") {
         if ($new_grade != ""){
             $data .= "`grade`=:grade,";
             $id_c=true;
+            $data .= '`sort_id`="'.getSortId($db).'",';
         }
         if ($new_isSpecial != null){
             $data .= "`isSpecial`=:isSpecial,";
             $id_c=true;
         }
         if($id_c!=false)
-            $data .= "`id`=:id,";
+            $data .= "`id`=:idn,";
         $data = substr($data, 0, -1);
         $id_n=($new_grade != ""?$new_grade:substr($operate_id, 0, 1)).($new_isSpecial != null?($new_isSpecial == 'true' ? '1' : '2'):substr($operate_id, 1, 1)).($new_grade != "" && $new_grade!=substr($operate_id, 0,1)?getId($new_grade,$db):substr($operate_id, -2));
-        echo $id_n;
-        /*$sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
+        $sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
         $rs = $db->prepare($sql);
         $rs->bindValue(':id', $operate_id, PDO::PARAM_STR);
         if ($new_name != "")
@@ -183,9 +183,9 @@ if ($mode == "chgclub") {
         if ($new_isSpecial != null)
             $rs->bindValue(':isSpecial', filter_var($new_isSpecial, FILTER_VALIDATE_BOOLEAN), PDO::PARAM_BOOL);
         if ($id_c!=false)
-            $rs->bindValue(':id', $id_n, PDO::PARAM_STR);
+            $rs->bindValue(':idn', $id_n, PDO::PARAM_STR);
         $rs->execute();
-        echo "ok";*/
+        echo "ok";
     } else {
         echo "error";
     }
@@ -196,7 +196,7 @@ if ($mode == "newclub") {
     if (UserCheck($acc, $pw, true, $db)) {
         $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . getId($new_grade,$db);
 
-        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial) VALUES (:id, :name, :teacher, :grade, :isSpecial)';
+        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial,sort_id) VALUES (:id, :name, :teacher, :grade, :isSpecial,'.getSortId($db).')';
         $rs2 = $db->prepare($sql2);
         $rs2->bindValue(':id', $new_id, PDO::PARAM_STR);
         $rs2->bindValue(':name', $new_name, PDO::PARAM_STR);
@@ -221,6 +221,19 @@ function getId($grade,PDO $mDB){
         $last_num = substr($id_r, -2);
     }
     $new_num = sprintf("%02d", $last_num += 1);
+    return $new_num;
+}
+
+function getSortId(PDO $mDB){
+    $sqlM2 = 'SELECT sort_id FROM `clubs` WHERE 1=1 order by sort_id desc';
+    $rsM2 = $mDB->prepare($sqlM2);
+    $rsM2->execute();
+    $last_num = 0;
+    if ($rsM2->rowCount() != 0) {
+        list($sid_r) = $rsM2->fetch(PDO::FETCH_NUM);
+        $last_num = $sid_r;
+    }
+    $new_num = $last_num += 1;
     return $new_num;
 }
 
