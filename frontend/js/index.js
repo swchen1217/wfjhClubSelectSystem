@@ -987,7 +987,7 @@ function FormSubmitListener() {
                 }
                 if (n_isSpecial != (old_isSpecial == '是')) {
                     chguserParams += "&new_isSpecial=" + n_isSpecial;
-                    ConfrimContent += "特殊社團: <var>" + old_isSpecial + "</var>更改為 <var>" + (n_isSpecial ? '是' : '否') + "</var><br>";
+                    ConfrimContent += "特殊社團: <var>" + old_isSpecial + "&nbsp;</var>更改為 <var>" + (n_isSpecial ? '是' : '否') + "</var><br>";
                 }
 
                 console.log(chguserParams);
@@ -1045,7 +1045,7 @@ function FormSubmitListener() {
         if (n_name != '' && n_teacher != '') {
             $.confirm({
                 title: '新增社團!!',
-                content: '確認新增此帳號??',
+                content: '確認新增此社團??',
                 buttons: {
                     confirm: {
                         text: '確認',
@@ -1070,7 +1070,7 @@ function FormSubmitListener() {
                                     if (msg == "ok") {
                                         ShowAlart('alert-success', '新增成功', false, true);
                                         setTimeout(function () {
-                                            location.replace("./index.html#ClubManage")
+                                            location.reload();
                                         }, 1500);
                                     } else
                                         ShowAlart('alert-danger', '錯誤!!', false, false);
