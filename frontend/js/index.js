@@ -1212,6 +1212,73 @@ function ButtonOnClickListener() {
             });
         }
     });
+    $('#btn_chgclub-del').click(function () {
+        var getURl = new URL(location.href);
+        var id = getURl.searchParams.get('id');
+        if (id == null) {
+            $.alert({
+                title: '錯誤',
+                content: '尚未選擇欲刪除之社團',
+                type: 'red',
+                typeAnimated: true
+            });
+        } else {
+            var clubs = getAllClub();
+            var clubinfo;
+            for (let i = 0; i < clubs.length; i++) {
+                if (clubs[i]['id'] == id) {
+                    clubinfo = clubs[i];
+                    break;
+                }
+            }
+            var name = clubinfo['name'];
+            $.confirm({
+                title: '確認刪除!!',
+                content: '即將刪除:' + id + '(' + name + ')',
+                type: 'red',
+                autoClose: 'cancel|10000',
+                buttons: {
+                    confirm: {
+                        text: '刪除',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                url: "../backend/db.php",
+                                data: "mode=delclub" +
+                                    "&acc=" + $.cookie("LoginInfoAcc") +
+                                    "&pw=" + $.cookie("LoginInfoPw") +
+                                    "&operate_id=" + id
+                                ,
+                                type: "POST",
+                                success: function (msg) {
+                                    if (msg == "ok") {
+                                        ShowAlart('alert-success', '刪除成功', false, true);
+                                        setTimeout(function () {
+                                            location.reload();
+                                        }, 1500);
+                                    } else {
+                                        ShowAlart('alert-danger', '錯誤!!', false, false);
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log('ajax er');
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: 'Ajax 發生錯誤',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: '取消'
+                    },
+                }
+            });
+        }
+    });
 }
 
 function getAllClub() {
