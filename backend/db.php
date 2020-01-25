@@ -210,6 +210,19 @@ if ($mode == "newclub") {
     exit;
 }
 
+if ($mode = "delclub") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'DELETE FROM `clubs` WHERE `id`=:id';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':id', $operate_id, PDO::PARAM_STR);
+        $rs->execute();
+        echo "ok";
+    } else {
+        echo "error";
+    }
+    exit;
+}
+
 function getId($grade,PDO $mDB){
     $sqlM = 'SELECT id FROM `clubs` WHERE grade=:grade order by sort_id desc';
     $rsM = $mDB->prepare($sqlM);
@@ -236,18 +249,5 @@ function getSortId(PDO $mDB){
     $new_num = $last_num += 1;
     return $new_num;
 }
-
-/*if ($mode = "delclub") {
-    if (UserCheck($acc, $pw, true, $db)) {
-        $sql = 'DELETE FROM `users` WHERE `account`=:acc';
-        $rs = $db->prepare($sql);
-        $rs->bindValue(':acc', $operate_acc, PDO::PARAM_STR);
-        $rs->execute();
-        echo "ok";
-    } else {
-        echo "error";
-    }
-    exit;
-}*/
 
 ?>
