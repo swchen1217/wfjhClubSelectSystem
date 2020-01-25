@@ -159,7 +159,7 @@ if ($mode == "chgclub") {
             $data .= "`teacher`=:teacher,";
         if ($new_grade != "")
             $data .= "`grade`=:grade,";
-        if ($new_isSpecial != "")
+        if ($new_isSpecial != null)
             $data .= "`isSpecial`=:isSpecial,";
         $data = substr($data, 0, -1);
         $sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
@@ -171,8 +171,8 @@ if ($mode == "chgclub") {
             $rs->bindValue(':teacher', $new_teacher, PDO::PARAM_STR);
         if ($new_grade != "")
             $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
-        if ($new_isSpecial != "")
-            $rs->bindValue(':isSpecial', $new_isSpecial, PDO::PARAM_BOOL);
+        if ($new_isSpecial != null)
+            $rs->bindValue(':isSpecial', filter_var($new_isSpecial, FILTER_VALIDATE_BOOLEAN), PDO::PARAM_BOOL);
         $rs->execute();
         echo "ok";
     } else {
@@ -201,24 +201,11 @@ if ($mode == "newclub") {
         $rs2->bindValue(':name', $new_name, PDO::PARAM_STR);
         $rs2->bindValue(':teacher', $new_teacher, PDO::PARAM_STR);
         $rs2->bindValue(':grade', $new_grade, PDO::PARAM_STR);
-        $rs2->bindValue(':isSpecial', $new_isSpecial, PDO::PARAM_BOOL);
+        $rs2->bindValue(':isSpecial', filter_var($new_isSpecial, FILTER_VALIDATE_BOOLEAN), PDO::PARAM_BOOL);
         $rs2->execute();
         echo "ok";
     } else
         echo "error";
-
-
-    $sql = 'INSERT INTO `users` (`account`, `password`, `name`, `isAdmin`, `class`, `created`) VALUES (:account, :password, :name, :isAdmin, :class, :created)';
-    $rs = $db->prepare($sql);
-    $rs->bindValue(':account', $operate_acc, PDO::PARAM_STR);
-    $rs->bindValue(':password', $new_pw, PDO::PARAM_STR);
-    $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
-    $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
-    $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
-    $rs->bindValue(':created', $new_create_time, PDO::PARAM_STR);
-    $rs->execute();
-
-
     exit;
 }
 
