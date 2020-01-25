@@ -172,7 +172,7 @@ if ($mode == "chgclub") {
         if ($new_grade != "")
             $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
         if ($new_isSpecial != "")
-            $rs->bindValue(':isSpecial', $new_isSpecial, PDO::PARAM_STR);
+            $rs->bindValue(':isSpecial', $new_isSpecial, PDO::PARAM_BOOL);
         $rs->execute();
         echo "ok";
     } else {
@@ -180,24 +180,49 @@ if ($mode == "chgclub") {
     }
     exit;
 }
-/*if ($mode == "newuser") {
+
+if ($mode == "newclub") {
     if (UserCheck($acc, $pw, true, $db)) {
-        $sql = 'INSERT INTO `users` (`account`, `password`, `name`, `isAdmin`, `class`, `created`) VALUES (:account, :password, :name, :isAdmin, :class, :created)';
+        $sql = 'SELECT id FROM `clubs` WHERE grade=:grade order by sort_id desc';
         $rs = $db->prepare($sql);
-        $rs->bindValue(':account', $operate_acc, PDO::PARAM_STR);
-        $rs->bindValue(':password', $new_pw, PDO::PARAM_STR);
-        $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
-        $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
-        $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
-        $rs->bindValue(':created', $new_create_time, PDO::PARAM_STR);
+        $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
         $rs->execute();
+        $last_num = 0;
+        if ($rs->rowCount() != 0) {
+            list($id_r) = $rs->fetch(PDO::FETCH_NUM);
+            $last_num = substr($id_r, -2);
+        }
+        $new_num = sprintf("%02d", $last_num += 1);
+        $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . $new_num;
+
+        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial) VALUES (:id, :name, :teacher, :grade, :isSpecial)';
+        $rs2 = $db->prepare($sql2);
+        $rs2->bindValue(':id', $new_id, PDO::PARAM_STR);
+        $rs2->bindValue(':name', $new_name, PDO::PARAM_STR);
+        $rs2->bindValue(':teacher', $new_teacher, PDO::PARAM_STR);
+        $rs2->bindValue(':grade', $new_grade, PDO::PARAM_STR);
+        $rs2->bindValue(':isSpecial', $new_isSpecial, PDO::PARAM_BOOL);
+        $rs2->execute();
         echo "ok";
-    } else {
+    } else
         echo "error";
-    }
+
+
+    $sql = 'INSERT INTO `users` (`account`, `password`, `name`, `isAdmin`, `class`, `created`) VALUES (:account, :password, :name, :isAdmin, :class, :created)';
+    $rs = $db->prepare($sql);
+    $rs->bindValue(':account', $operate_acc, PDO::PARAM_STR);
+    $rs->bindValue(':password', $new_pw, PDO::PARAM_STR);
+    $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
+    $rs->bindValue(':isAdmin', $new_isAdmin, PDO::PARAM_STR);
+    $rs->bindValue(':class', $new_class, PDO::PARAM_STR);
+    $rs->bindValue(':created', $new_create_time, PDO::PARAM_STR);
+    $rs->execute();
+
+
     exit;
 }
-if ($mode = "deluser") {
+
+/*if ($mode = "delclub") {
     if (UserCheck($acc, $pw, true, $db)) {
         $sql = 'DELETE FROM `users` WHERE `account`=:acc';
         $rs = $db->prepare($sql);
