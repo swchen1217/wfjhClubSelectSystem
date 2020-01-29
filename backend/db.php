@@ -276,7 +276,7 @@ if($mode=="getSystem"){
 }
 
 function createSystemSetting(PDO $mDB){
-    $setting=[['display_result','false']];
+    $setting=[['display_result','false'],['CSenable','false'],['maxGCPN',30]];
     for($i=0;$i<count($setting);$i++){
         $sql = "SELECT * FROM `system` WHERE `id`=".$setting[$i][0];
         $rs = $mDB->prepare($sql);
