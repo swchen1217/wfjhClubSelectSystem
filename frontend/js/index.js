@@ -144,14 +144,36 @@ function OnHashchangeListener() {
     if (hash == '#ClubSelect' && login_check() && PermissionCheck(false, true)) {
         $('#Content_ClubSelect').show();
         $("#title_bar").hide();
+
+        if(getSystem('CSenable')=='false')
+            ShowAlart('alert-warning', '現在非選填時間', false, false);
+
     }
     if (hash == '#SelectResult' && login_check() && PermissionCheck(false, true)) {
         $('#Content_SelectResult').show();
         $("#title_bar").hide();
+
+        if(getSystem('display_result')=='false'){
+            $('#SR').hide();
+            ShowAlart('alert-warning', '選社結果尚未公佈', false, false);
+        }
+        else{
+            $('#SR').show();
+        }
     }
     if (hash == '#SelectManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_SelectManage').show();
         $("#title_bar").hide();
+
+        if (getSystem('CSenable') == 'true')
+            $('#SM-CSenable').prop("checked", true);
+        else
+            $('#SM-CSenable').prop("checked", false);
+        $('#SM-maxGCPN').val(getSystem('maxGCPN'));
+        if (getSystem('display_result') == 'true')
+            $('#SM-display_result').prop("checked", true);
+        else
+            $('#SM-display_result').prop("checked", false);
     }
     if (hash == '#ClubManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_ClubManage').show();
@@ -475,6 +497,8 @@ function checkCS(row) {
 }
 
 function selectVerify() {
+    if(getSystem('CSenable')=='false')
+        location.reload();
     var codeErrorArray = [];
     var cantSpecialClub = [];
     for (var i = 0; i < student_data.length; i++) {
@@ -490,7 +514,7 @@ function selectVerify() {
             }
             if (inputA1.val() == club_data[k]['id']) {
                 hasClubCode[1] = true;
-                if(club_data[k]['isSpecial']=='1'){
+                if (club_data[k]['isSpecial'] == '1') {
                     cantSpecialClub.push(i);
                     break;
                 }
@@ -498,7 +522,7 @@ function selectVerify() {
             }
             if (inputA2.val() == club_data[k]['id']) {
                 hasClubCode[2] = true;
-                if(club_data[k]['isSpecial']=='1'){
+                if (club_data[k]['isSpecial'] == '1') {
                     cantSpecialClub.push(i);
                     break;
                 }
@@ -506,7 +530,7 @@ function selectVerify() {
             }
             if (inputA3.val() == club_data[k]['id']) {
                 hasClubCode[3] = true;
-                if(club_data[k]['isSpecial']=='1'){
+                if (club_data[k]['isSpecial'] == '1') {
                     cantSpecialClub.push(i);
                     break;
                 }
@@ -527,7 +551,7 @@ function selectVerify() {
             type: 'red',
             typeAnimated: true
         });
-    } else if(cantSpecialClub.length!=0){
+    } else if (cantSpecialClub.length != 0) {
         var content_cSC = '';
         for (var i = 0; i < cantSpecialClub.length; i++) {
             content_cSC += student_data[cantSpecialClub[i]]['sid'] + " " + student_data[cantSpecialClub[i]]['name'] + "<br>";
@@ -673,8 +697,16 @@ function getSelectData(rq_class) {
                             inputA3.val(jsonA[k]['alternate3'] == 0 ? "" : jsonA[k]['alternate3']);
                             checkCS(i);
                         }
+                        if(getSystem('CSenable')=='false'){
+                            inputD.prop("disabled",true);
+                            inputA1.prop("disabled",true);
+                            inputA2.prop("disabled",true);
+                            inputA3.prop("disabled",true);
+                        }
                     }
                 }
+                if(getSystem('CSenable')=='false')
+                    $('#btn_CS_submit').prop("disabled", true);
             }
         },
         error: function (xhr) {
@@ -1334,4 +1366,72 @@ function getAllClub() {
         }
     });
     return data;
+}
+
+function getSystem(id) {
+    var data = "";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getSystem" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&id=" + id,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            data = msg;
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
+}
+
+function setSystem(id, value,alert=false) {
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=setSystem" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&id=" + id +
+            "&value=" + value,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            if(alert){
+                $.alert({
+                    title: '選社設定',
+                    content: '設定成功',
+                    type: 'blue',
+                    typeAnimated: true
+                });
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+}
+
+function CSsetting(target) {
+    if(target=='CSenable')
+        setSystem("CSenable",$('#SM-CSenable').prop("checked").toString(),true);
+    if(target=='maxGCPN')
+        setSystem('maxGCPN',$('#SM-maxGCPN').val(),true);
+    if(target=='display_result')
+        setSystem("display_result",$('#SM-display_result').prop("checked").toString(),true);
 }
