@@ -10,6 +10,7 @@ $mode = request("mode");
 $LastModified = request("LastModified");
 $json_data = request("json_data");
 $id = request("id");
+$value = request("value",true);
 $acc = request("acc");
 $pw = request("pw");
 $grade = request("grade");
@@ -210,7 +211,7 @@ if ($mode == "newclub") {
     exit;
 }
 
-if ($mode = "delclub") {
+if ($mode == "delclub") {
     if (UserCheck($acc, $pw, true, $db)) {
         $sql = 'DELETE FROM `clubs` WHERE `id`=:id';
         $rs = $db->prepare($sql);
@@ -248,6 +249,44 @@ function getSortId(PDO $mDB){
     }
     $new_num = $last_num += 1;
     return $new_num;
+}
+
+if($mode=="setSystem"){
+    if (UserCheck($acc, $pw, true, $db)) {
+        createSystemSetting($db);
+        $sql = "UPDATE `system` SET `value`=:value WHERE id=:id";
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':value', $value, PDO::PARAM_STR);
+        $rs->bindValue(':id', $id, PDO::PARAM_STR);
+        $rs->execute();
+        echo 'ok';
+    }
+}
+
+if($mode=="getSystem"){
+    if (UserCheck($acc, $pw, false, $db)){
+        createSystemSetting($db);
+        $sql = "SELECT value FROM `system` WHERE `id`=:id";
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':id', $id, PDO::PARAM_STR);
+        $rs->execute();
+        list($r)=$rs->fetch(PDO::FETCH_NUM);
+        echo $r;
+    }
+}
+
+function createSystemSetting(PDO $mDB){
+    $setting=[['display_result','false']];
+    for($i=0;$i<count($setting);$i++){
+        $sql = "SELECT * FROM `system` WHERE `id`=".$setting[$i][0];
+        $rs = $mDB->prepare($sql);
+        $rs->execute();
+        if ($rs->rowCount() == 0){
+            $sql2 = "INSERT INTO `system`(`id`, `value`) VALUES ('".$setting[$i][0]."','".$setting[$i][1]."')";
+            $rs2 = $mDB->prepare($sql2);
+            $rs2->execute();
+        }
+    }
 }
 
 ?>
