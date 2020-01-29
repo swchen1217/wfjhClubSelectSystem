@@ -1435,3 +1435,40 @@ function CSsetting(target) {
     if(target=='display_result')
         setSystem("display_result",$('#SM-display_result').prop("checked").toString(),true);
 }
+
+function checkNotSelected() {
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=checkNotSelected" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw"),
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if(msg!='no_data'){
+                var jsonA = JSON.parse(msg);
+                var content_stuList='';
+                for(var i=0;i<jsonA.length;i++)
+                    content_stuList+=jsonA[i]['sid']+" "+jsonA[i]['name']+"<br>";
+                $.alert({
+                    title: '未選社學生',
+                    content: content_stuList,
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }else{
+                alert('next');
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+}
