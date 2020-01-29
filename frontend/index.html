@@ -359,8 +359,75 @@
                 </div>
             </div>
         </div>
-        <div id="Content_SelectResult">2</div>
-        <div id="Content_SelectManage">3</div>
+        <div id="Content_SelectResult">
+            <div id="SR" style="display: none">
+                SR
+            </div>
+        </div>
+        <div id="Content_SelectManage">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card" id="card-SM-setting">
+                        <div class="card-header">
+                            <h3 class="card-title">選社設定</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <h4>開放選填</h4>
+                                <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
+                                <label class="switch" style="vertical-align: top">
+                                    <input type="checkbox" id="SM-CSenable" onchange="CSsetting('CSenable')">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                            </div>
+                            <div class="form-group">
+                                <h4>每社最多人數(一般)</h4>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" id="SM-maxGCPN" placeholder="最高人數" style="margin-left: 50px;max-width: 12em">
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-default btn-primary btn-block" id="btn_maxGCPN" onclick="CSsetting('maxGCPN')">設定</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h4>結果顯示</h4>
+                                <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
+                                <label class="switch" style="vertical-align: top">
+                                    <input type="checkbox" id="SM-display_result" onchange="CSsetting('display_result')">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" id="card-SM-operate">
+                        <div class="card-header">
+                            <h3 class="card-title">選社操作</h3>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="card" id="card-AM">
+                        <div class="card-header">
+                            <h3 class="card-title">公告管理</h3>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="Content_ClubManage">
             <div class="row" id="row-club-list">
                 <div class="container">
@@ -411,11 +478,13 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="radio_chg" id="btnR_clubChgInputGrade1" value="1">
+                                                <input class="form-check-input" type="radio" name="radio_chg"
+                                                       id="btnR_clubChgInputGrade1" value="1">
                                                 <label class="form-check-label" for="btnR_clubChgInputGrade1">國一</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="radio_chg" id="btnR_clubChgInputGrade2" value="2">
+                                                <input class="form-check-input" type="radio" name="radio_chg"
+                                                       id="btnR_clubChgInputGrade2" value="2">
                                                 <label class="form-check-label" for="btnR_clubChgInputGrade2">國二</label>
                                             </div>
                                         </div>
@@ -476,11 +545,13 @@
                                     <label>年級</label>
                                     <div class="form-row">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="radio_new" id="btnR_clubNewInputGrade1" value="1" checked>
+                                            <input class="form-check-input" type="radio" name="radio_new"
+                                                   id="btnR_clubNewInputGrade1" value="1" checked>
                                             <label class="form-check-label" for="btnR_clubNewInputGrade1">國一</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="radio_new" id="btnR_clubNewInputGrade2" value="2">
+                                            <input class="form-check-input" type="radio" name="radio_new"
+                                                   id="btnR_clubNewInputGrade2" value="2">
                                             <label class="form-check-label" for="btnR_clubNewInputGrade2">國二</label>
                                         </div>
                                     </div>
