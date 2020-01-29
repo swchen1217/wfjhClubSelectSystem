@@ -476,6 +476,7 @@ function checkCS(row) {
 
 function selectVerify() {
     var codeErrorArray = [];
+    var cantSpecialClub = [];
     for (var i = 0; i < student_data.length; i++) {
         var inputD = $('#inputDefinite_' + i);
         var inputA1 = $('#inputAlternate1_' + i);
@@ -489,14 +490,26 @@ function selectVerify() {
             }
             if (inputA1.val() == club_data[k]['id']) {
                 hasClubCode[1] = true;
+                if(club_data[k]['isSpecial']=='1'){
+                    cantSpecialClub.push(i);
+                    break;
+                }
                 continue;
             }
             if (inputA2.val() == club_data[k]['id']) {
                 hasClubCode[2] = true;
+                if(club_data[k]['isSpecial']=='1'){
+                    cantSpecialClub.push(i);
+                    break;
+                }
                 continue;
             }
             if (inputA3.val() == club_data[k]['id']) {
                 hasClubCode[3] = true;
+                if(club_data[k]['isSpecial']=='1'){
+                    cantSpecialClub.push(i);
+                    break;
+                }
                 continue;
             }
         }
@@ -504,13 +517,24 @@ function selectVerify() {
             codeErrorArray.push(i);
     }
     if (codeErrorArray.length != 0) {
-        var context_cEA = '';
+        var content_cEA = '';
         for (var i = 0; i < codeErrorArray.length; i++) {
-            context_cEA += student_data[codeErrorArray[i]]['sid'] + " " + student_data[codeErrorArray[i]]['name'] + "<br>";
+            content_cEA += student_data[codeErrorArray[i]]['sid'] + " " + student_data[codeErrorArray[i]]['name'] + "<br>";
         }
         $.alert({
             title: '社團代碼錯誤',
-            content: context_cEA,
+            content: content_cEA,
+            type: 'red',
+            typeAnimated: true
+        });
+    } else if(cantSpecialClub.length!=0){
+        var content_cSC = '';
+        for (var i = 0; i < cantSpecialClub.length; i++) {
+            content_cSC += student_data[cantSpecialClub[i]]['sid'] + " " + student_data[cantSpecialClub[i]]['name'] + "<br>";
+        }
+        $.alert({
+            title: '志願不可為特殊社團',
+            content: content_cSC,
             type: 'red',
             typeAnimated: true
         });
