@@ -289,4 +289,21 @@ function createSystemSetting(PDO $mDB){
     }
 }
 
+if($mode=="checkNotSelected"){
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = "SELECT students.sid,students.name FROM `students` left join selects on students.sid=selects.sid where selects.sid is null ";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            echo "no_data";
+        } else {
+            $ToJson = array();
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $ToJson[] = $row;
+            }
+            echo json_encode($ToJson);
+        }
+    }
+}
+
 ?>
