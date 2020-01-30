@@ -1809,7 +1809,9 @@ function stepCheck() {
     }
 }
 
-var selectChecknd;
+var secondStudents;
+var selectCheckNd;
+
 function getSecondStudents(grade) {
     var data = "";
     $.ajax({
@@ -1838,11 +1840,14 @@ function getSecondStudents(grade) {
             });
         }
     });
-    selectChecknd = [data.length];
+    selectCheckNd = [data.length];
     for (var i = 0; i < data.length; i++)
-        selectChecknd[i] = false;
+        selectCheckNd[i] = false;
+    secondStudents = data;
     return data;
 }
+
+var secondClubs;
 
 function getSecondClubs(grade) {
     var data = "";
@@ -1872,6 +1877,7 @@ function getSecondClubs(grade) {
             });
         }
     });
+    secondClubs = data;
     return data;
 }
 
@@ -1886,7 +1892,7 @@ function formatterIsOkNd(value, row, index) {
 function changeGradeClass_SM_SSubmit() {
     setTimeout(function () {
         var grade = $('#SM_second_submit_grade_select li .active').text();
-        var gc=-1;
+        var gc = -1;
         if (grade == "一年級")
             gc = 1;
         else if (grade == "二年級")
@@ -1901,15 +1907,15 @@ function checkCSnd(row) {
 
     if (inputCid.val().length == 4) {
         $('#iconSelectIsOknd_' + row).html('<i class="fas fa-check" style="color: #1e7e34"/>');
-        selectChecknd[row] = true;
+        selectCheckNd[row] = true;
     } else {
         $('#iconSelectIsOknd_' + row).html('<i class="fas fa-times" style="color: #b21f2d"/>');
-        selectChecknd[row] = false;
+        selectCheckNd[row] = false;
     }
 
     var canEnable = true;
-    for (var i = 0; i < selectChecknd.length; i++) {
-        if (!selectChecknd[i]) {
+    for (var i = 0; i < selectCheckNd.length; i++) {
+        if (!selectCheckNd[i]) {
             canEnable = false;
         }
     }
@@ -1917,5 +1923,168 @@ function checkCSnd(row) {
 }
 
 function cecondVerify() {
+    var codeErrorArray = [];
+    var cantSpecialClub = [];
+    for (var i = 0; i < student_data.length; i++) {
+        var inputD = $('#inputDefinite_' + i);
+        var inputA1 = $('#inputAlternate1_' + i);
+        var inputA2 = $('#inputAlternate2_' + i);
+        var inputA3 = $('#inputAlternate3_' + i);
+        var hasClubCode = [false, false, false, false];
+        for (var k = 0; k < club_data.length; k++) {
+            if (inputD.val() == club_data[k]['id']) {
+                hasClubCode[0] = true;
+                continue;
+            }
+            if (inputA1.val() == club_data[k]['id']) {
+                hasClubCode[1] = true;
+                if (club_data[k]['isSpecial'] == '1') {
+                    cantSpecialClub.push(i);
+                }
+                continue;
+            }
+            if (inputA2.val() == club_data[k]['id']) {
+                hasClubCode[2] = true;
+                if (club_data[k]['isSpecial'] == '1') {
+                    cantSpecialClub.push(i);
+                }
+                continue;
+            }
+            if (inputA3.val() == club_data[k]['id']) {
+                hasClubCode[3] = true;
+                if (club_data[k]['isSpecial'] == '1') {
+                    cantSpecialClub.push(i);
+                }
+                continue;
+            }
+        }
+        if (!(hasClubCode[0] || (hasClubCode[1] && hasClubCode[2] && hasClubCode[3])))
+            codeErrorArray.push(i);
+    }
+    if (codeErrorArray.length != 0) {
+        var content_cEA = '';
+        for (var i = 0; i < codeErrorArray.length; i++) {
+            content_cEA += student_data[codeErrorArray[i]]['sid'] + " " + student_data[codeErrorArray[i]]['name'] + "<br>";
+        }
+        $.alert({
+            title: '社團代碼錯誤',
+            content: content_cEA,
+            type: 'red',
+            typeAnimated: true
+        });
+    } else if (cantSpecialClub.length != 0) {
+        var content_cSC = '';
+        for (var i = 0; i < cantSpecialClub.length; i++) {
+            content_cSC += student_data[cantSpecialClub[i]]['sid'] + " " + student_data[cantSpecialClub[i]]['name'] + "<br>";
+        }
+        $.alert({
+            title: '志願不可為特殊社團',
+            content: content_cSC,
+            type: 'red',
+            typeAnimated: true
+        });
+    } else {
+        var CSDcode = [student_data.length];
+        for (var i = 0; i < student_data.length; i++) {
+            var inputD = $('#inputDefinite_' + i);
+            CSDcode[i] = inputD.val();
+        }
+        var result = new Set();
+        var repeat = new Set();
+        CSDcode.forEach(item => {
+            result.has(item) ? repeat.add(item) : result.add(item);
+        });
+        repeat = Array.from(repeat);
+        for (var i = 0; i < club_data.length; i++) {
+            if (club_data[i]['isSpecial'] == 1) {
+                for (var k = 0; k < repeat.length; k++) {
+                    if (repeat[k] == club_data[i]['id']) {
+                        repeat.splice(k, 1);
+                        k--;
+                    }
+                }
+            }
+        }
+        for (var k = 0; k < repeat.length; k++) {
+            if (repeat[k] == '') {
+                repeat.splice(k, 1);
+                k--;
+            }
+        }
+        if (repeat.length != 0) {
+            var context_repeat = '<em><b>確定中選</b>之社團,除<b>特殊社團</b>,其他社團每班限<b>一位同學</b><br><b>志願</b>則不再此限</em><br><br>';
+            for (var i = 0; i < club_data.length; i++) {
+                for (var k = 0; k < repeat.length; k++) {
+                    if (club_data[i]['id'] == repeat[k]) {
+                        context_repeat += '<b>' + club_data[i]['id'] + ' ' + club_data[i]['name'] + '</b> 重複於 ';
+                        for (var n = 0; n < student_data.length; n++) {
+                            var inputD = $('#inputDefinite_' + n);
+                            if (club_data[i]['id'] == inputD.val()) {
+                                context_repeat += student_data[n]['sid'] + ' ' + student_data[n]['name'] + ' , ';
+                            }
+                        }
+                        context_repeat += '<br>';
+                    }
+                }
+            }
+            $.alert({
+                title: '社團重複',
+                content: context_repeat,
+                type: 'red',
+                typeAnimated: true,
+                columnClass: 'm'
+            });
+        } else {
+            var jsonA = new Array();
+            for (var i = 0; i < student_data.length; i++) {
+                var inputD = $('#inputDefinite_' + i);
+                var inputA1 = $('#inputAlternate1_' + i);
+                var inputA2 = $('#inputAlternate2_' + i);
+                var inputA3 = $('#inputAlternate3_' + i);
 
+                var myObj = new Object();
+                myObj.sid = student_data[i]['sid'];
+                myObj.definite = inputD.val();
+                myObj.alternate1 = inputA1.val();
+                myObj.alternate2 = inputA2.val();
+                myObj.alternate3 = inputA3.val();
+
+                jsonA.push(myObj);
+            }
+            var jsonStr = JSON.stringify(jsonA);
+
+            console.log(jsonStr);
+
+            $.ajax({
+                url: "../backend/db.php",
+                data: "mode=uploadSelect" +
+                    "&acc=" + $.cookie("LoginInfoAcc") +
+                    "&pw=" + $.cookie("LoginInfoPw") +
+                    "&class=" + class_code +
+                    "&json_data=" + jsonStr,
+                type: "POST",
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg.substr(-2, 2) == "ok") {
+                        $.alert({
+                            title: '上傳完成',
+                            content: '選填成功',
+                            typeAnimated: true
+                        });
+                        $('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+                        getSelectData(class_code);
+                    }
+                },
+                error: function (xhr) {
+                    console.log('ajax er');
+                    $.alert({
+                        title: '錯誤',
+                        content: 'Ajax 發生錯誤',
+                        type: 'red',
+                        typeAnimated: true
+                    });
+                }
+            });
+        }
+    }
 }
