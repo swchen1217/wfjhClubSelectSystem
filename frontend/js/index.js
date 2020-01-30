@@ -145,6 +145,9 @@ function OnHashchangeListener() {
         $('#Content_ClubSelect').show();
         $("#title_bar").hide();
 
+        if ($.cookie('LoginInfoAcc'))
+            adminViewSwitch();
+
         if(getSystem('CSenable')=='false')
             ShowAlart('alert-warning', '現在非選填時間', false, false);
 
@@ -698,16 +701,17 @@ function getSelectData(rq_class) {
                             inputA3.val(jsonA[k]['alternate3'] == 0 ? "" : jsonA[k]['alternate3']);
                             checkCS(i);
                         }
-                        if(getSystem('CSenable')=='false'){
-                            inputD.prop("disabled",true);
-                            inputA1.prop("disabled",true);
-                            inputA2.prop("disabled",true);
-                            inputA3.prop("disabled",true);
-                        }
                     }
                 }
-                if(getSystem('CSenable')=='false')
-                    $('#btn_CS_submit').prop("disabled", true);
+            }
+            if(getSystem('CSenable')=='false'){
+                $('#btn_CS_submit').prop("disabled", true);
+                for(var i=0;i<student_data.length;i++){
+                    $('#inputDefinite_' + i).prop("disabled",true);
+                    $('#inputAlternate1_' + i).prop("disabled",true);
+                    $('#inputAlternate2_' + i).prop("disabled",true);
+                    $('#inputAlternate3_' + i).prop("disabled",true);
+                }
             }
         },
         error: function (xhr) {
