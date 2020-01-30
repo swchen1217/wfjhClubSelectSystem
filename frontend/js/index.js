@@ -1583,6 +1583,7 @@ function stepCheck() {
     if (getSystem('selects_drew') != 'false') {
         $('#btn_selects_draw').prop('disabled', true);
         $('#btn_second_show').prop('disabled', false);
+        $('#btn_maxGCPN').prop('disabled', true);
         $('#icon-maxGCPN-lock').show();
     }
 }
