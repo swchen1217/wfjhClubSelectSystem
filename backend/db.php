@@ -344,48 +344,61 @@ if ($mode == "selects_draw") {
         while (list($row) = $rs->fetch(PDO::FETCH_NUM)) {
             $club_list[] = $row;
         }
-        $rs=null;
+        $rs = null;
 
         foreach ($club_list as $value)
-            echo $value.',';
+            echo $value . ',';
         echo '<br>';
 
         //maxGCPN-確定中選人數
-        for($i=0; $i<count($club_list); $i++){
-            $sql = "SELECT clubs.id FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.isSpecial=0 AND clubs.id='".$club_list[$i]."'";
+        for ($i = 0; $i < count($club_list); $i++) {
+            $sql = "SELECT clubs.id FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.isSpecial=0 AND clubs.id='" . $club_list[$i] . "'";
             $rs = $db->prepare($sql);
             $rs->execute();
-            $club_rest_num[$i]=getSystem('maxGCPN',$db)-$rs->rowCount();
-            $rs=null;
+            $club_rest_num[$i] = getSystem('maxGCPN', $db) - $rs->rowCount();
+            $rs = null;
         }
 
         //A1
-        for($i=0; $i<count($club_list); $i++){
-            $sid_r=array();
+        for ($i = 0; $i < count($club_list); $i++) {
+            $sid_r = array();
             //A1人數
-            $sql = "SELECT `sid` FROM `selects` WHERE `alternate1`='".$club_list[$i]."'";
+            $sql = "SELECT `sid` FROM `selects` WHERE `alternate1`='" . $club_list[$i] . "'";
             $rs = $db->prepare($sql);
             $rs->execute();
-            $A1_num=$rs->rowCount();
+            $A1_num = $rs->rowCount();
             while (list($row) = $rs->fetch(PDO::FETCH_NUM)) {
                 $sid_r[] = $row;
             }
-            $rs=null;
+            $rs = null;
 
             //中選or抽籤
-            if($A1_num<=$club_rest_num[$i]){
-                echo 'cp,';
-                $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate1 FROM selects WHERE selects.alternate1='".$club_list[$i]."'";
+            if ($A1_num <= $club_rest_num[$i]) {
+                echo 'cp,'.$A1_num.',';
+                //複製
+                $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate1 FROM selects WHERE selects.alternate1='" . $club_list[$i] . "'";
                 $rs = $db->prepare($sql);
                 $rs->execute();
-                $rs=null;
-            }else{
-                echo 'draw,';
-                foreach ($sid_r as $value)
-                    echo $value.',';
+                $rs = null;
+                $club_rest_num[$i]-=$A1_num;
+            } else {
+                echo 'draw,'.$club_rest_num[$i].',';
+                //抽籤
+                if($club_rest_num[$i]>0){
+                    $draw=(array)array_rand($sid_r,$club_rest_num[$i]);
+                    foreach ($draw as $value)
+                        echo $sid_r[$value].',';
+                    for($k=0;$k<count($draw);$k++){
+                        //寫入
+                        $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('".$sid_r[$k]."','".$club_list[$i]."')";
+                        $rs = $db->prepare($sql);
+                        $rs->execute();
+                        $rs = null;
+                    }
+
+                }
             }
         }
-
 
 
     }
