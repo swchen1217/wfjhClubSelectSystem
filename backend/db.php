@@ -548,4 +548,28 @@ if ($mode == "getSecondStudents") {
     }
     exit;
 }
+
+if ($mode == "getSecondClubs") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $ToJson = array();
+        $sql = "SELECT id,name FROM `clubs` WHERE `isSpecial`=0 and grade=:grade";
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':grade', $grade, PDO::PARAM_STR);
+        $rs->execute();
+        while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+            $sql2 = "SELECT clubs.id,clubs.name FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.id='" . $row['id'] . "'";
+            $rs2 = $db->prepare($sql2);
+            $rs2->execute();
+            $rest=getSystem('maxGCPN', $db) - $rs2->rowCount();
+            if($rest>0){
+                $ToJson[] = array_merge($row,array('rest'=>$rest));
+            }
+        }
+        echo json_encode($ToJson);
+        $rs = null;
+    } else {
+        echo "user_error";
+    }
+    exit;
+}
 ?>
