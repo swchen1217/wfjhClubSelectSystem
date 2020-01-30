@@ -126,6 +126,43 @@ function init() {
             title: '特殊社團'
         }]
     });
+    $('#table_second_students').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'sid',
+        sortName: 'sid',
+        columns: [{
+            field: 'sid',
+            title: '學號'
+        }, {
+            field: 'class',
+            title: '班級'
+        }, {
+            field: 'number',
+            title: '座號'
+        }, {
+            field: 'name',
+            title: '姓名'
+        }]
+    });
+    $('#table_second_clubs').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'id',
+        sortName: 'id',
+        columns: [{
+            field: 'id',
+            title: '代碼'
+        }, {
+            field: 'name',
+            title: '名稱'
+        }, {
+            field: 'rest',
+            title: '餘額'
+        }]
+    });
 }
 
 function OnHashchangeListener() {
@@ -1194,7 +1231,7 @@ function ButtonOnClickListener() {
                 buttons: {
                     confirm: {
                         text: '刪除',
-                        btnClass: 'btn-blue',
+                        btnClass: 'btn-red',
                         action: function () {
                             var pw = this.$content.find('.pw').val();
                             if (pw != '') {
@@ -1402,7 +1439,7 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_second_show').click(function () {
-
+        $('#modal-second_show').modal('show');
     });
     $('#btn_second_submit').click(function () {
 
@@ -1416,8 +1453,167 @@ function ButtonOnClickListener() {
     $('#btn_dl_result_club').click(function () {
 
     });
-    $('#btn_reset').click(function () {
-
+    $('#btn_reset_select').click(function () {
+        $.confirm({
+            title: '確認重設??',
+            content:
+                '重設將會刪除所有選填資料' +
+                '<label>請再次輸入你的密碼確認重設資料</label>' +
+                '<input type="password" placeholder="輸入密碼" class="pw form-control" required/>'
+            ,
+            type: 'red',
+            autoClose: 'cancel|10000',
+            buttons: {
+                confirm: {
+                    text: '重設',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        var pw = this.$content.find('.pw').val();
+                        if (pw != '') {
+                            $.ajax({
+                                url: "../backend/user.php",
+                                data: "mode=get_create_time" +
+                                    "&acc=" + $.cookie("LoginInfoAcc"),
+                                type: "POST",
+                                success: function (msg) {
+                                    if (msg != 'no_acc') {
+                                        mMd5 = md5(msg + pw);
+                                        if (mMd5 == $.cookie("LoginInfoPw")) {
+                                            $.ajax({
+                                                url: "../backend/db.php",
+                                                data: "mode=reset_select" +
+                                                    "&acc=" + $.cookie("LoginInfoAcc") +
+                                                    "&pw=" + $.cookie("LoginInfoPw"),
+                                                type: "POST",
+                                                success: function (msg) {
+                                                    if (msg == "ok") {
+                                                        ShowAlart('alert-success', '重設成功', false, true);
+                                                        setTimeout(function () {
+                                                            location.reload();
+                                                        }, 1500);
+                                                    } else {
+                                                        ShowAlart('alert-danger', '錯誤!!', false, false);
+                                                    }
+                                                },
+                                                error: function (xhr) {
+                                                    console.log('ajax er');
+                                                    $.alert({
+                                                        title: '錯誤',
+                                                        content: 'Ajax 發生錯誤',
+                                                        type: 'red',
+                                                        typeAnimated: true
+                                                    });
+                                                }
+                                            });
+                                        } else {
+                                            $.alert('密碼錯誤');
+                                        }
+                                    } else {
+                                        $.alert('錯誤');
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log('ajax er');
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: 'Ajax 發生錯誤',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            });
+                        } else {
+                            $.alert('未輸入密碼');
+                            return false;
+                        }
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                },
+            }
+        });
+    });
+    $('#btn_reset_result').click(function () {
+        $.confirm({
+            title: '確認重設??',
+            content:
+                '重設將會刪除所有選社結果' +
+                '<label>請再次輸入你的密碼確認重設資料</label>' +
+                '<input type="password" placeholder="輸入密碼" class="pw form-control" required/>'
+            ,
+            type: 'red',
+            autoClose: 'cancel|10000',
+            buttons: {
+                confirm: {
+                    text: '重設',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        var pw = this.$content.find('.pw').val();
+                        if (pw != '') {
+                            $.ajax({
+                                url: "../backend/user.php",
+                                data: "mode=get_create_time" +
+                                    "&acc=" + $.cookie("LoginInfoAcc"),
+                                type: "POST",
+                                success: function (msg) {
+                                    if (msg != 'no_acc') {
+                                        mMd5 = md5(msg + pw);
+                                        if (mMd5 == $.cookie("LoginInfoPw")) {
+                                            $.ajax({
+                                                url: "../backend/db.php",
+                                                data: "mode=reset_result" +
+                                                    "&acc=" + $.cookie("LoginInfoAcc") +
+                                                    "&pw=" + $.cookie("LoginInfoPw"),
+                                                type: "POST",
+                                                success: function (msg) {
+                                                    if (msg == "ok") {
+                                                        ShowAlart('alert-success', '重設成功', false, true);
+                                                        setTimeout(function () {
+                                                            location.reload();
+                                                        }, 1500);
+                                                    } else {
+                                                        ShowAlart('alert-danger', '錯誤!!', false, false);
+                                                    }
+                                                },
+                                                error: function (xhr) {
+                                                    console.log('ajax er');
+                                                    $.alert({
+                                                        title: '錯誤',
+                                                        content: 'Ajax 發生錯誤',
+                                                        type: 'red',
+                                                        typeAnimated: true
+                                                    });
+                                                }
+                                            });
+                                        } else {
+                                            $.alert('密碼錯誤');
+                                        }
+                                    } else {
+                                        $.alert('錯誤');
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log('ajax er');
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: 'Ajax 發生錯誤',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            });
+                        } else {
+                            $.alert('未輸入密碼');
+                            return false;
+                        }
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                },
+            }
+        });
     });
 }
 
@@ -1542,9 +1738,6 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                if (getSystem('definite_distributed') == 'false') {
-                    $('#btn_definite_distribute').prop('disabled', true);
-                }
             } else {
                 if (alert) {
                     $.alert({
@@ -1573,7 +1766,9 @@ function checkNotSelected(alert) {
 
 function stepCheck() {
     if (getSystem('definite_distributed') != 'false') {
-        $('#btn_reset').prop('disabled', false);
+        $('#btn_checkNotSelected').prop('disabled', true);
+        $('#btn_reset_select').prop('disabled', true);
+        $('#btn_reset_result').prop('disabled', false);
         $('#btn_definite_distribute').prop('disabled', true);
         $('#btn_selects_draw').prop('disabled', false);
         $('#SM-CSenable').prop("checked", false);
@@ -1583,7 +1778,51 @@ function stepCheck() {
     if (getSystem('selects_drew') != 'false') {
         $('#btn_selects_draw').prop('disabled', true);
         $('#btn_second_show').prop('disabled', false);
+        $('#btn_second_submit').prop('disabled', false);
         $('#btn_maxGCPN').prop('disabled', true);
         $('#icon-maxGCPN-lock').show();
     }
+}
+
+function changeGradeClass_SM_SS() {
+    setTimeout(function () {
+        var grade = $('#SM_second_show_grade_select li .active').text();
+        if (grade == "一年級")
+            grade_code = 1;
+            else if (grade == "二年級")
+            grade_code = 2;
+        $('#table_second_students').bootstrapTable('load', getSecondStudents(grade_code));
+        changeClass();
+    }, 100);
+}
+
+function getSecondStudents(grade) {
+    var data = "";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getSecondStudents" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&grade=" + grade,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                data = jsonA;
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
 }
