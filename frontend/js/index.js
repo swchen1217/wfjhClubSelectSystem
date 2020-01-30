@@ -1371,7 +1371,35 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_selects_draw').click(function () {
-
+        $.ajax({
+            url: "../backend/db.php",
+            data: "mode=selects_draw" +
+                "&acc=" + $.cookie("LoginInfoAcc") +
+                "&pw=" + $.cookie("LoginInfoPw"),
+            type: "POST",
+            async: false,
+            success: function (msg) {
+                console.log(msg);
+                if (msg == 'ok') {
+                    $.alert({
+                        title: '志願序抽籤',
+                        content: '抽籤完成',
+                        type: 'blue',
+                        typeAnimated: true
+                    });
+                    stepCheck();
+                }
+            },
+            error: function (xhr) {
+                console.log('ajax er');
+                $.alert({
+                    title: '錯誤',
+                    content: 'Ajax 發生錯誤',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }
+        });
     });
     $('#btn_second_show').click(function () {
 
