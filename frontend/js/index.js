@@ -1546,6 +1546,7 @@ function checkNotSelected(alert) {
 function stepCheck() {
     if (getSystem('definite_distributed') != 'false') {
         $('#btn_reset').prop('disabled', false);
+        $('#btn_definite_distribute').prop('disabled', true);
         $('#btn_selects_draw').prop('disabled', false);
         $('#SM-CSenable').prop("checked", false);
         $('#SM-CSenable').prop("disabled", true);
