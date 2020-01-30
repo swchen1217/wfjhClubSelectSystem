@@ -163,6 +163,34 @@ function init() {
             title: '餘額'
         }]
     });
+    $('#tablb_second_submit').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'sid',
+        sortName: 'sid',
+        columns: [{
+            field: 'sid',
+            title: '學號'
+        }, {
+            field: 'class',
+            title: '班級'
+        }, {
+            field: 'number',
+            title: '座號'
+        }, {
+            field: 'name',
+            title: '姓名'
+        }, {
+            field: 'cid',
+            title: '確定中選',
+            width: 100,
+            formatter: formatterCid,
+        }, {
+            field: 'isOk',
+            formatter: formatterIsOkNd,
+        }]
+    });
 }
 
 function OnHashchangeListener() {
@@ -1439,11 +1467,12 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_second_show').click(function () {
-        changeGradeClass_SM_SS();
+        changeGradeClass_SM_SShow();
         $('#modal-second_show').modal('show');
     });
     $('#btn_second_submit').click(function () {
-
+        changeGradeClass_SM_SSubmit();
+        $('#modal-second_submit').modal('show');
     });
     $('#btn_make_result').click(function () {
 
@@ -1785,7 +1814,7 @@ function stepCheck() {
     }
 }
 
-function changeGradeClass_SM_SS() {
+function changeGradeClass_SM_SShow() {
     setTimeout(function () {
         var grade = $('#SM_second_show_grade_select li .active').text();
         var gc=-1;
@@ -1858,4 +1887,61 @@ function getSecondClubs(grade) {
         }
     });
     return data;
+}
+
+function formatterCid(value, row, index) {
+    return '<input type="number" class="form-control" placeholder="代號" maxlength="4" id="inputCid_' + index + '" oninput="checkCSnd(' + index + ')"/>';
+}
+
+function formatterIsOkNd(value, row, index) {
+    return '<a id="iconSelectIsOk_' + index + '"><i class="fas fa-times" style="color: #b21f2d"/></a>';
+}
+
+function changeGradeClass_SM_SSubmit() {
+    setTimeout(function () {
+        var grade = $('#SM_second_submit_grade_select li .active').text();
+        var gc=-1;
+        if (grade == "一年級")
+            gc = 1;
+        else if (grade == "二年級")
+            gc = 2;
+        //$('#table_second_students').bootstrapTable('load', getSecondStudents(gc));
+    }, 100);
+}
+
+function checkCSnd(row) {
+    var inputD = $('#inputDefinite_' + row);
+    var inputA1 = $('#inputAlternate1_' + row);
+    var inputA2 = $('#inputAlternate2_' + row);
+    var inputA3 = $('#inputAlternate3_' + row);
+
+    if (inputD.val() != "") {
+        inputA1.prop("disabled", true);
+        inputA2.prop("disabled", true);
+        inputA3.prop("disabled", true);
+    } else {
+        inputA1.prop("disabled", false);
+        inputA2.prop("disabled", false);
+        inputA3.prop("disabled", false);
+    }
+    if (inputA1.val() != "" || inputA2.val() != "" || inputA3.val() != "") {
+        inputD.prop("disabled", true);
+    } else {
+        inputD.prop("disabled", false);
+    }
+
+    if ((inputD.val().length == 4 || (inputA1.val().length == 4 && inputA2.val().length == 4 && inputA3.val().length == 4)) && !(inputD.val() == "" && (inputA1.val() == inputA2.val() || inputA2.val() == inputA3.val() || inputA1.val() == inputA3.val()))) {
+        $('#iconSelectIsOk_' + row).html('<i class="fas fa-check" style="color: #1e7e34"/>');
+        selectCheck[row] = true;
+    } else {
+        $('#iconSelectIsOk_' + row).html('<i class="fas fa-times" style="color: #b21f2d"/>');
+        selectCheck[row] = false;
+    }
+    var canEnable = true;
+    for (var i = 0; i < selectCheck.length; i++) {
+        if (!selectCheck[i]) {
+            canEnable = false;
+        }
+    }
+    $('#btn_CS_submit').prop("disabled", !canEnable);
 }
