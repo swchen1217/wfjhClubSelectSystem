@@ -1439,6 +1439,7 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_second_show').click(function () {
+        changeGradeClass_SM_SS();
         $('#modal-second_show').modal('show');
     });
     $('#btn_second_submit').click(function () {
@@ -1787,12 +1788,13 @@ function stepCheck() {
 function changeGradeClass_SM_SS() {
     setTimeout(function () {
         var grade = $('#SM_second_show_grade_select li .active').text();
+        var gc=-1;
         if (grade == "一年級")
-            grade_code = 1;
-            else if (grade == "二年級")
-            grade_code = 2;
-        $('#table_second_students').bootstrapTable('load', getSecondStudents(grade_code));
-        changeClass();
+            gc = 1;
+        else if (grade == "二年級")
+            gc = 2;
+        $('#table_second_students').bootstrapTable('load', getSecondStudents(gc));
+        $('#table_second_clubs').bootstrapTable('load', getSecondClubs(gc));
     }, 100);
 }
 
@@ -1801,6 +1803,37 @@ function getSecondStudents(grade) {
     $.ajax({
         url: "../backend/db.php",
         data: "mode=getSecondStudents" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&grade=" + grade,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                data = jsonA;
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
+}
+
+function getSecondClubs(grade) {
+    var data = "";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getSecondClubs" +
             "&acc=" + $.cookie("LoginInfoAcc") +
             "&pw=" + $.cookie("LoginInfoPw") +
             "&grade=" + grade,
