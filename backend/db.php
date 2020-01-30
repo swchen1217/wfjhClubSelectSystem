@@ -6,11 +6,13 @@ require("UserCheck.php");
 
 mb_internal_encoding('UTF-8');
 
+$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false']];
+
 $mode = request("mode");
 $LastModified = request("LastModified");
 $json_data = request("json_data");
 $id = request("id");
-$value = request("value",true);
+$value = request("value", true);
 $acc = request("acc");
 $pw = request("pw");
 $grade = request("grade");
@@ -154,24 +156,24 @@ if ($mode == "getAllClub") {
 if ($mode == "chgclub") {
     if (UserCheck($acc, $pw, true, $db)) {
         $data = "";
-        $id_c=false;
+        $id_c = false;
         if ($new_name != "")
             $data .= "`name`=:name,";
         if ($new_teacher != "")
             $data .= "`teacher`=:teacher,";
-        if ($new_grade != ""){
+        if ($new_grade != "") {
             $data .= "`grade`=:grade,";
-            $id_c=true;
-            $data .= '`sort_id`="'.getSortId($db).'",';
+            $id_c = true;
+            $data .= '`sort_id`="' . getSortId($db) . '",';
         }
-        if ($new_isSpecial != null){
+        if ($new_isSpecial != null) {
             $data .= "`isSpecial`=:isSpecial,";
-            $id_c=true;
+            $id_c = true;
         }
-        if($id_c!=false)
+        if ($id_c != false)
             $data .= "`id`=:idn,";
         $data = substr($data, 0, -1);
-        $id_n=($new_grade != ""?$new_grade:substr($operate_id, 0, 1)).($new_isSpecial != null?($new_isSpecial == 'true' ? '1' : '2'):substr($operate_id, 1, 1)).($new_grade != "" && $new_grade!=substr($operate_id, 0,1)?getId($new_grade,$db):substr($operate_id, -2));
+        $id_n = ($new_grade != "" ? $new_grade : substr($operate_id, 0, 1)) . ($new_isSpecial != null ? ($new_isSpecial == 'true' ? '1' : '2') : substr($operate_id, 1, 1)) . ($new_grade != "" && $new_grade != substr($operate_id, 0, 1) ? getId($new_grade, $db) : substr($operate_id, -2));
         $sql = 'UPDATE `clubs` SET' . $data . ' WHERE `id`=:id';
         $rs = $db->prepare($sql);
         $rs->bindValue(':id', $operate_id, PDO::PARAM_STR);
@@ -183,7 +185,7 @@ if ($mode == "chgclub") {
             $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
         if ($new_isSpecial != null)
             $rs->bindValue(':isSpecial', filter_var($new_isSpecial, FILTER_VALIDATE_BOOLEAN), PDO::PARAM_BOOL);
-        if ($id_c!=false)
+        if ($id_c != false)
             $rs->bindValue(':idn', $id_n, PDO::PARAM_STR);
         $rs->execute();
         echo "ok";
@@ -195,9 +197,9 @@ if ($mode == "chgclub") {
 
 if ($mode == "newclub") {
     if (UserCheck($acc, $pw, true, $db)) {
-        $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . getId($new_grade,$db);
+        $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . getId($new_grade, $db);
 
-        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial,sort_id) VALUES (:id, :name, :teacher, :grade, :isSpecial,'.getSortId($db).')';
+        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial,sort_id) VALUES (:id, :name, :teacher, :grade, :isSpecial,' . getSortId($db) . ')';
         $rs2 = $db->prepare($sql2);
         $rs2->bindValue(':id', $new_id, PDO::PARAM_STR);
         $rs2->bindValue(':name', $new_name, PDO::PARAM_STR);
@@ -224,7 +226,8 @@ if ($mode == "delclub") {
     exit;
 }
 
-function getId($grade,PDO $mDB){
+function getId($grade, PDO $mDB)
+{
     $sqlM = 'SELECT id FROM `clubs` WHERE grade=:grade order by sort_id desc';
     $rsM = $mDB->prepare($sqlM);
     $rsM->bindValue(':grade', $grade, PDO::PARAM_STR);
@@ -238,7 +241,8 @@ function getId($grade,PDO $mDB){
     return $new_num;
 }
 
-function getSortId(PDO $mDB){
+function getSortId(PDO $mDB)
+{
     $sqlM2 = 'SELECT sort_id FROM `clubs` WHERE 1=1 order by sort_id desc';
     $rsM2 = $mDB->prepare($sqlM2);
     $rsM2->execute();
@@ -251,30 +255,32 @@ function getSortId(PDO $mDB){
     return $new_num;
 }
 
-if($mode=="getSystem"){
-    if (UserCheck($acc, $pw, false, $db)){
-        echo getSystem($id,$db);
+if ($mode == "getSystem") {
+    if (UserCheck($acc, $pw, false, $db)) {
+        echo getSystem($id, $db);
     }
 }
 
-if($mode=="setSystem"){
+if ($mode == "setSystem") {
     if (UserCheck($acc, $pw, true, $db)) {
-        setSystem($id,$value,$db);
+        setSystem($id, $value, $db);
         echo 'ok';
     }
 }
 
-function getSystem($mId,PDO $mDB){
+function getSystem($mId, PDO $mDB)
+{
     createSystemSetting($mDB);
     $sql = "SELECT value FROM `system` WHERE `id`=:id";
     $rs = $mDB->prepare($sql);
     $rs->bindValue(':id', $mId, PDO::PARAM_STR);
     $rs->execute();
-    list($r)=$rs->fetch(PDO::FETCH_NUM);
+    list($r) = $rs->fetch(PDO::FETCH_NUM);
     return $r;
 }
 
-function setSystem($mId,$mValue,PDO $mDB){
+function setSystem($mId, $mValue, PDO $mDB)
+{
     createSystemSetting($mDB);
     $sql = "UPDATE `system` SET `value`=:value WHERE id=:id";
     $rs = $mDB->prepare($sql);
@@ -283,21 +289,22 @@ function setSystem($mId,$mValue,PDO $mDB){
     $rs->execute();
 }
 
-function createSystemSetting(PDO $mDB){
-    $setting=[['display_result','false'],['CSenable','false'],['maxGCPN',30],['definite_distributed','false']];
-    for($i=0;$i<count($setting);$i++){
-        $sql = "SELECT * FROM `system` WHERE `id`=".$setting[$i][0];
+function createSystemSetting(PDO $mDB)
+{
+    global $setting;
+    for ($i = 0; $i < count($setting); $i++) {
+        $sql = "SELECT * FROM `system` WHERE `id`=" . $setting[$i][0];
         $rs = $mDB->prepare($sql);
         $rs->execute();
-        if ($rs->rowCount() == 0){
-            $sql2 = "INSERT INTO `system`(`id`, `value`) VALUES ('".$setting[$i][0]."','".$setting[$i][1]."')";
+        if ($rs->rowCount() == 0) {
+            $sql2 = "INSERT INTO `system`(`id`, `value`) VALUES ('" . $setting[$i][0] . "','" . $setting[$i][1] . "')";
             $rs2 = $mDB->prepare($sql2);
             $rs2->execute();
         }
     }
 }
 
-if($mode=="checkNotSelected"){
+if ($mode == "checkNotSelected") {
     if (UserCheck($acc, $pw, true, $db)) {
         $sql = "SELECT students.sid,students.name FROM `students` left join selects on students.sid=selects.sid where selects.sid is null ";
         $rs = $db->prepare($sql);
@@ -314,14 +321,73 @@ if($mode=="checkNotSelected"){
     }
 }
 
-if($mode=="definite_distribute"){
+if ($mode == "definite_distribute") {
     if (UserCheck($acc, $pw, true, $db)) {
         //INSERT INTO result (sid, cid) SELECT sid,definite FROM selects WHERE selects.definite!="0"
         $sql = "INSERT INTO result (sid, cid) SELECT sid,definite FROM selects WHERE selects.definite!='0'";
         $rs = $db->prepare($sql);
         $rs->execute();
-        setSystem('definite_distributed','true',$db);
+        setSystem('definite_distributed', 'true', $db);
+        setSystem('CSenable', 'false', $db);
         echo 'ok';
+    }
+}
+
+if ($mode == "selects_draw") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        //取得一般社團代碼
+        $sql = "SELECT id FROM `clubs` WHERE `isSpecial`=0";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        $club_list = array();
+        $club_rest_num = array();
+        while (list($row) = $rs->fetch(PDO::FETCH_NUM)) {
+            $club_list[] = $row;
+        }
+        $rs=null;
+
+        foreach ($club_list as $value)
+            echo $value.',';
+        echo '<br>';
+
+        //maxGCPN-確定中選人數
+        for($i=0; $i<count($club_list); $i++){
+            $sql = "SELECT clubs.id FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.isSpecial=0 AND clubs.id='".$club_list[$i]."'";
+            $rs = $db->prepare($sql);
+            $rs->execute();
+            $club_rest_num[$i]=getSystem('maxGCPN',$db)-$rs->rowCount();
+            $rs=null;
+        }
+
+        //A1
+        for($i=0; $i<count($club_list); $i++){
+            $sid_r=array();
+            //A1人數
+            $sql = "SELECT `sid` FROM `selects` WHERE `alternate1`='".$club_list[$i]."'";
+            $rs = $db->prepare($sql);
+            $rs->execute();
+            $A1_num=$rs->rowCount();
+            while (list($row) = $rs->fetch(PDO::FETCH_NUM)) {
+                $sid_r[] = $row;
+            }
+            $rs=null;
+
+            //中選or抽籤
+            if($A1_num<=$club_rest_num[$i]){
+                echo 'cp,';
+                $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate1 FROM selects WHERE selects.alternate1='".$club_list[$i]."'";
+                $rs = $db->prepare($sql);
+                $rs->execute();
+                $rs=null;
+            }else{
+                echo 'draw,';
+                foreach ($sid_r as $value)
+                    echo $value.',';
+            }
+        }
+
+
+
     }
 }
 
