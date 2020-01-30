@@ -382,10 +382,10 @@ if ($mode == "selects_draw") {
                 $rs = null;
                 $club_rest_num[$i] -= $A1_num;
             } else {
-                echo 'draw,' . $club_rest_num[$i] . ',';
+                echo 'draw,' . $A1_num . ',' . $club_rest_num[$i] . ',';
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
-                    echo 'draw,' . $A1_num . ',' . $club_rest_num[$i] . ',';
+                    $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
                     foreach ($draw as $value)
                         echo $sid_r[$value] . ',';
                     for ($k = 0; $k < count($draw); $k++) {
