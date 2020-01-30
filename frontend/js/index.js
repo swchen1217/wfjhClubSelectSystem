@@ -174,6 +174,8 @@ function OnHashchangeListener() {
             $('#SM-display_result').prop("checked", true);
         else
             $('#SM-display_result').prop("checked", false);
+
+        stepCheck();
     }
     if (hash == '#ClubManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_ClubManage').show();
@@ -211,7 +213,6 @@ function OnHashchangeListener() {
             }
         }
     }
-
     if (hash == '#UserManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_User_manage').show();
         $("#title_bar").hide();
@@ -1335,6 +1336,33 @@ function ButtonOnClickListener() {
             });
         }
     });
+    $('#btn_checkNotSelected').click(function () {
+        checkNotSelected(true);
+    });
+    $('#btn_definite_distribute').click(function () {
+        definite_distribute();
+    });
+    $('#btn_selects_draw').click(function () {
+
+    });
+    $('#btn_second_show').click(function () {
+
+    });
+    $('#btn_second_submit').click(function () {
+
+    });
+    $('#btn_make_result').click(function () {
+
+    });
+    $('#btn_dl_result_class').click(function () {
+
+    });
+    $('#btn_dl_result_club').click(function () {
+
+    });
+    $('#btn_reset').click(function () {
+
+    });
 }
 
 function getAllClub() {
@@ -1436,7 +1464,7 @@ function CSsetting(target) {
         setSystem("display_result",$('#SM-display_result').prop("checked").toString(),true);
 }
 
-function checkNotSelected() {
+function checkNotSelected(alert) {
     $.ajax({
         url: "../backend/db.php",
         data: "mode=checkNotSelected" +
@@ -1448,17 +1476,30 @@ function checkNotSelected() {
             console.log(msg);
             if(msg!='no_data'){
                 var jsonA = JSON.parse(msg);
-                var content_stuList='';
-                for(var i=0;i<jsonA.length;i++)
-                    content_stuList+=jsonA[i]['sid']+" "+jsonA[i]['name']+"<br>";
-                $.alert({
-                    title: '未選社學生',
-                    content: content_stuList,
-                    type: 'red',
-                    typeAnimated: true
-                });
+                if(alert){
+                    var content_stuList='';
+                    for(var i=0;i<jsonA.length;i++)
+                        content_stuList+=jsonA[i]['sid']+" "+jsonA[i]['name']+"<br>";
+                    $.alert({
+                        title: '未選社學生',
+                        content: content_stuList,
+                        type: 'red',
+                        typeAnimated: true
+                    });
+                }
+                $('#btn_definite_distribute').prop('disabled',true);
+                return false;
             }else{
-                alert('next');
+                if(alert){
+                    $.alert({
+                        title: '未選社學生',
+                        content: '全部完成',
+                        type: 'blue',
+                        typeAnimated: true
+                    });
+                }
+                $('#btn_definite_distribute').prop('disabled',false);
+                return true;
             }
         },
         error: function (xhr) {
@@ -1471,4 +1512,13 @@ function checkNotSelected() {
             });
         }
     });
+}
+
+function stepCheck() {
+    if(checkNotSelected())
+        $('#btn_definite_distribute').prop('disabled',false);
+}
+
+function definite_distribute() {
+
 }
