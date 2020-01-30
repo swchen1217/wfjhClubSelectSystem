@@ -276,7 +276,7 @@ if($mode=="getSystem"){
 }
 
 function createSystemSetting(PDO $mDB){
-    $setting=[['display_result','false'],['CSenable','false'],['maxGCPN',30]];
+    $setting=[['display_result','false'],['CSenable','false'],['maxGCPN',30],['definite_distributed','false']];
     for($i=0;$i<count($setting);$i++){
         $sql = "SELECT * FROM `system` WHERE `id`=".$setting[$i][0];
         $rs = $mDB->prepare($sql);
@@ -303,6 +303,16 @@ if($mode=="checkNotSelected"){
             }
             echo json_encode($ToJson);
         }
+    }
+}
+
+if($mode=="definite_distribute"){
+    if (UserCheck($acc, $pw, true, $db)) {
+        //INSERT INTO result (sid, cid) SELECT sid,definite FROM selects WHERE selects.definite!="0"
+        $sql = "INSERT INTO result (sid, cid) SELECT sid,definite FROM selects WHERE selects.definite!='0'";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        echo 'ok';
     }
 }
 
