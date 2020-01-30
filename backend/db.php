@@ -346,9 +346,9 @@ if ($mode == "selects_draw") {
         }
         $rs = null;
 
-        foreach ($club_list as $value)
+        /*foreach ($club_list as $value)
             echo $value . ',';
-        echo '<br>';
+        echo '<br>';*/
 
         //maxGCPN-確定中選人數
         for ($i = 0; $i < count($club_list); $i++) {
@@ -374,7 +374,7 @@ if ($mode == "selects_draw") {
 
             //中選or抽籤
             if ($A1_num <= $club_rest_num[$i]) {
-                echo 'cp,' . $A1_num . ',' . $club_rest_num[$i] . ',';
+                //echo 'cp,' . $A1_num . ',' . $club_rest_num[$i] . ',';
                 //複製
                 $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate1 FROM selects WHERE selects.alternate1='" . $club_list[$i] . "'";
                 $rs = $db->prepare($sql);
@@ -382,7 +382,7 @@ if ($mode == "selects_draw") {
                 $rs = null;
                 $club_rest_num[$i] -= $A1_num;
             } else {
-                echo 'draw,' . $A1_num . ',' . $club_rest_num[$i] . ',';
+                //echo 'draw,' . $A1_num . ',' . $club_rest_num[$i] . ',';
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
                     $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
@@ -400,7 +400,7 @@ if ($mode == "selects_draw") {
             }
         }
 
-        echo '<br>';
+        //echo '<br>';
 
         //A2
         for ($i = 0; $i < count($club_list); $i++) {
@@ -417,7 +417,7 @@ if ($mode == "selects_draw") {
 
             //中選or抽籤
             if ($A2_num <= $club_rest_num[$i]) {
-                echo 'cp,' . $A2_num . ',' . $club_rest_num[$i] . ',';
+                //echo 'cp,' . $A2_num . ',' . $club_rest_num[$i] . ',';
                 //複製
                 $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate2 FROM selects WHERE selects.alternate2='" . $club_list[$i] . "'";
                 $rs = $db->prepare($sql);
@@ -425,7 +425,7 @@ if ($mode == "selects_draw") {
                 $rs = null;
                 $club_rest_num[$i] -= $A2_num;
             } else {
-                echo 'draw,' . $A2_num . ',' . $club_rest_num[$i] . ',';
+                //echo 'draw,' . $A2_num . ',' . $club_rest_num[$i] . ',';
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
                     $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
@@ -443,7 +443,7 @@ if ($mode == "selects_draw") {
             }
         }
 
-        echo '<br>';
+        //echo '<br>';
 
         //A3
         for ($i = 0; $i < count($club_list); $i++) {
@@ -460,7 +460,7 @@ if ($mode == "selects_draw") {
 
             //中選or抽籤
             if ($A3_num <= $club_rest_num[$i]) {
-                echo 'cp,' . $A3_num . ',' . $club_rest_num[$i] . ',';
+                //echo 'cp,' . $A3_num . ',' . $club_rest_num[$i] . ',';
                 //複製
                 $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate3 FROM selects WHERE selects.alternate3='" . $club_list[$i] . "'";
                 $rs = $db->prepare($sql);
@@ -468,7 +468,7 @@ if ($mode == "selects_draw") {
                 $rs = null;
                 $club_rest_num[$i] -= $A3_num;
             } else {
-                echo 'draw,' . $A3_num . ',' . $club_rest_num[$i] . ',';
+                //echo 'draw,' . $A3_num . ',' . $club_rest_num[$i] . ',';
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
                     $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
@@ -486,10 +486,12 @@ if ($mode == "selects_draw") {
             }
         }
 
-        echo '<br>';
+        /*echo '<br>';
 
         foreach ($club_rest_num as $value)
-            echo $value . ',';
+            echo $value . ',';*/
+
+        echo 'ok';
     }
 }
 
