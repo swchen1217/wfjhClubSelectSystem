@@ -31,7 +31,7 @@ body {
     margin: 10px auto;
 }
 
-#CS_grade_select li .active, #SM_second_show_grade_select li .active {
+#CS_grade_select li .active, #SM_second_submit_grade_select li .active {
     background-color: #f07e22;
 }
 
