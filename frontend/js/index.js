@@ -1466,10 +1466,6 @@ function ButtonOnClickListener() {
             }
         });
     });
-    $('#btn_second_show').click(function () {
-        changeGradeClass_SM_SShow();
-        $('#modal-second_show').modal('show');
-    });
     $('#btn_second_submit').click(function () {
         changeGradeClass_SM_SSubmit();
         $('#modal-second_submit').modal('show');
@@ -1807,26 +1803,13 @@ function stepCheck() {
     }
     if (getSystem('selects_drew') != 'false') {
         $('#btn_selects_draw').prop('disabled', true);
-        $('#btn_second_show').prop('disabled', false);
         $('#btn_second_submit').prop('disabled', false);
         $('#btn_maxGCPN').prop('disabled', true);
         $('#icon-maxGCPN-lock').show();
     }
 }
 
-function changeGradeClass_SM_SShow() {
-    setTimeout(function () {
-        var grade = $('#SM_second_show_grade_select li .active').text();
-        var gc=-1;
-        if (grade == "一年級")
-            gc = 1;
-        else if (grade == "二年級")
-            gc = 2;
-        $('#table_second_students').bootstrapTable('load', getSecondStudents(gc));
-        $('#table_second_clubs').bootstrapTable('load', getSecondClubs(gc));
-    }, 100);
-}
-
+var selectChecknd;
 function getSecondStudents(grade) {
     var data = "";
     $.ajax({
@@ -1855,6 +1838,9 @@ function getSecondStudents(grade) {
             });
         }
     });
+    selectChecknd = [data.length];
+    for (var i = 0; i < data.length; i++)
+        selectChecknd[i] = false;
     return data;
 }
 
@@ -1894,7 +1880,7 @@ function formatterCid(value, row, index) {
 }
 
 function formatterIsOkNd(value, row, index) {
-    return '<a id="iconSelectIsOk_' + index + '"><i class="fas fa-times" style="color: #b21f2d"/></a>';
+    return '<a id="iconSelectIsOknd_' + index + '"><i class="fas fa-times" style="color: #b21f2d"/></a>';
 }
 
 function changeGradeClass_SM_SSubmit() {
@@ -1905,43 +1891,31 @@ function changeGradeClass_SM_SSubmit() {
             gc = 1;
         else if (grade == "二年級")
             gc = 2;
-        //$('#table_second_students').bootstrapTable('load', getSecondStudents(gc));
+        $('#tablb_second_submit').bootstrapTable('load', getSecondStudents(gc));
+        $('#table_second_clubs').bootstrapTable('load', getSecondClubs(gc));
     }, 100);
 }
 
 function checkCSnd(row) {
-    var inputD = $('#inputDefinite_' + row);
-    var inputA1 = $('#inputAlternate1_' + row);
-    var inputA2 = $('#inputAlternate2_' + row);
-    var inputA3 = $('#inputAlternate3_' + row);
+    var inputCid = $('#inputCid_' + row);
 
-    if (inputD.val() != "") {
-        inputA1.prop("disabled", true);
-        inputA2.prop("disabled", true);
-        inputA3.prop("disabled", true);
+    if (inputCid.val().length == 4) {
+        $('#iconSelectIsOknd_' + row).html('<i class="fas fa-check" style="color: #1e7e34"/>');
+        selectChecknd[row] = true;
     } else {
-        inputA1.prop("disabled", false);
-        inputA2.prop("disabled", false);
-        inputA3.prop("disabled", false);
-    }
-    if (inputA1.val() != "" || inputA2.val() != "" || inputA3.val() != "") {
-        inputD.prop("disabled", true);
-    } else {
-        inputD.prop("disabled", false);
+        $('#iconSelectIsOknd_' + row).html('<i class="fas fa-times" style="color: #b21f2d"/>');
+        selectChecknd[row] = false;
     }
 
-    if ((inputD.val().length == 4 || (inputA1.val().length == 4 && inputA2.val().length == 4 && inputA3.val().length == 4)) && !(inputD.val() == "" && (inputA1.val() == inputA2.val() || inputA2.val() == inputA3.val() || inputA1.val() == inputA3.val()))) {
-        $('#iconSelectIsOk_' + row).html('<i class="fas fa-check" style="color: #1e7e34"/>');
-        selectCheck[row] = true;
-    } else {
-        $('#iconSelectIsOk_' + row).html('<i class="fas fa-times" style="color: #b21f2d"/>');
-        selectCheck[row] = false;
-    }
     var canEnable = true;
-    for (var i = 0; i < selectCheck.length; i++) {
-        if (!selectCheck[i]) {
+    for (var i = 0; i < selectChecknd.length; i++) {
+        if (!selectChecknd[i]) {
             canEnable = false;
         }
     }
-    $('#btn_CS_submit').prop("disabled", !canEnable);
+    $('#btn_SM_SSubmit').prop("disabled", !canEnable);
+}
+
+function cecondVerify() {
+
 }
