@@ -1877,9 +1877,6 @@ function stepCheck() {
     if(getSystem('second') == 'false'){
         $('#btn_second_submit').prop('disabled', true);
     }
-    if(getSystem('madeResult') != 'false'){
-        $('#btn_re_second').prop('disabled', false);
-    }
     if(getSystem('makeResultEnable') == 'false'){
         $('#btn_make_result').prop('disabled', true);
         $('#btn_re_second').prop('disabled', true);
@@ -1887,10 +1884,11 @@ function stepCheck() {
         $('#btn_dl_result_club').prop('disabled', true);
     }
     if(getSystem('madeResult') != 'false'){
+        $('#btn_make_result').prop('disabled', true);
+        $('#btn_re_second').prop('disabled', false);
         $('#btn_dl_result_class').prop('disabled', false);
         $('#btn_dl_result_club').prop('disabled', false);
     }
-
 }
 
 var secondStudents;
