@@ -6,7 +6,7 @@ require("UserCheck.php");
 
 mb_internal_encoding('UTF-8');
 
-$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false'],['second','false']];
+$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false'], ['second', 'false'], ['second_count', '0'],['makeResultEnable','false'],['madeResult','false']];
 
 $mode = request("mode");
 $LastModified = request("LastModified");
@@ -495,6 +495,11 @@ if ($mode == "selects_draw") {
         foreach ($club_rest_num as $value)
             echo $value . ',';*/
 
+        $sql = "SELECT selects.sid FROM `selects` LEFT JOIN result ON selects.sid=result.sid WHERE result.sid IS NULL";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        setSystem('second_count', $rs->rowCount(), $db);
+
         setSystem('selects_drew', 'true', $db);
         echo 'ok';
     }
@@ -505,10 +510,17 @@ if ($mode == "reset_result") {
     if (UserCheck($acc, $pw, true, $db)) {
         $sql = "TRUNCATE TABLE `result`";
         $rs = $db->exec($sql);
-        $rs=null;
+        $rs = null;
+        $sql = "TRUNCATE TABLE `second`";
+        $rs = $db->exec($sql);
+        $rs = null;
         setSystem('CSenable', 'false', $db);
         setSystem('definite_distributed', 'false', $db);
         setSystem('selects_drew', 'false', $db);
+        setSystem('madeResult', 'false', $db);
+        setSystem('makeResultEnable', 'false', $db);
+        setSystem('second', 'true', $db);
+        setSystem('second_count', '0', $db);
         echo 'ok';
     }
     exit;
@@ -518,10 +530,10 @@ if ($mode == "reset_select") {
     if (UserCheck($acc, $pw, true, $db)) {
         $sql = "TRUNCATE TABLE `selects`";
         $rs = $db->exec($sql);
-        $rs=null;
+        $rs = null;
         $sql = "TRUNCATE TABLE `selected`";
         $rs = $db->exec($sql);
-        $rs=null;
+        $rs = null;
         setSystem('CSenable', 'false', $db);
         echo 'ok';
     }
@@ -560,15 +572,107 @@ if ($mode == "getSecondClubs") {
             $sql2 = "SELECT clubs.id,clubs.name FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.id='" . $row['id'] . "'";
             $rs2 = $db->prepare($sql2);
             $rs2->execute();
-            $rest=getSystem('maxGCPN', $db) - $rs2->rowCount();
-            if($rest>0){
-                $ToJson[] = array_merge($row,array('rest'=>$rest));
+            $rest = getSystem('maxGCPN', $db) - $rs2->rowCount();
+            if ($rest > 0) {
+                $ToJson[] = array_merge($row, array('rest' => $rest));
             }
         }
         echo json_encode($ToJson);
         $rs = null;
     } else {
         echo "user_error";
+    }
+    exit;
+}
+
+if ($mode == "uploadSecond") {
+    $data = json_decode($json_data, true);
+    $count = 0;
+    while ($data[$count] != null)
+        $count++;
+    if (UserCheck($acc, $pw, true, $db)) {
+        for ($i = 0; $i < $count; $i++) {
+            $sql = 'SELECT * FROM `second` WHERE sid=:sid';
+            $rs = $db->prepare($sql);
+            $rs->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
+            $rs->execute();
+            if ($rs->rowCount() == 0) {
+                $sql2 = 'INSERT INTO `second`(sid, cid) VALUES (:sid,:cid)';
+                $rs2 = $db->prepare($sql2);
+                $rs2->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
+                $rs2->bindValue(':cid', $data[$i]['cid'], PDO::PARAM_STR);
+                $rs2->execute();
+                $rs2 = null;
+            } else {
+                $sql2 = 'UPDATE `second` SET `cid`=:cid WHERE sid=:sid';
+                $rs2 = $db->prepare($sql2);
+                $rs2->bindValue(':sid', $data[$i]['sid'], PDO::PARAM_STR);
+                $rs2->bindValue(':cid', $data[$i]['cid'], PDO::PARAM_STR);
+                $rs2->execute();
+                $rs2 = null;
+            }
+        }
+        echo "ok";
+    } else {
+        echo "user_error";
+    }
+    exit;
+}
+
+if ($mode == "getSecendData") {
+    if (UserCheck($acc, $pw, false, $db)) {
+        $sql = 'SELECT second.sid,cid FROM `second` inner join students on second.sid = students.sid where grade=:grade';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':grade', $grade, PDO::PARAM_STR);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            echo "no_data";
+        } else {
+            $ToJson = array();
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $ToJson[] = $row;
+            }
+            echo json_encode($ToJson);
+        }
+    } else {
+        echo "user_error";
+    }
+    exit;
+}
+
+if ($mode == "checkSecondOk") {
+    if (UserCheck($acc, $pw, false, $db)) {
+        $sql = 'SELECT * FROM `second`';
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        if ($rs->rowCount() == getSystem('second_count', $db))
+            setSystem('makeResultEnable','true',$db);
+    } else
+        echo "user_error";
+    exit;
+}
+
+if ($mode == "makeResult") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = "INSERT INTO result (sid, cid) SELECT sid,cid FROM second WHERE 1=1";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        setSystem('madeResult', 'true', $db);
+        setSystem('second', 'false', $db);
+        echo 'ok';
+    }
+    exit;
+}
+
+if ($mode == "re_second") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = "delete result from result inner join second on result.sid=second.sid";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        setSystem('madeResult', 'false', $db);
+        setSystem('second', 'true', $db);
+        setSystem('makeResultEnable', 'false', $db);
+        echo 'ok';
     }
     exit;
 }
