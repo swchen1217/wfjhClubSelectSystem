@@ -410,18 +410,25 @@
                             <h3 class="card-title">選社操作</h3>
                         </div>
                         <div class="card-body">
-                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_checkNotSelected" onclick="checkNotSelected()">檢查未選社學生</button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" onclick="">確定中選社團分配</button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" onclick="">志願序抽籤</button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" onclick="">顯示需二次分配學生&社團餘額</button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" onclick="">二次分配結果登錄</button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" onclick="">產生選社結果</button>
+                            <div class="row" style="margin-bottom: 8px">
+                                <div class="col-8" style="padding-right: 2px">
+                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_checkNotSelected">檢查未選社學生</button>
+                                </div>
+                                <div class="col-4" style="padding-left: 2px">
+                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_reset">重設</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_definite_distribute" disabled>確定中選社團分配</button>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_selects_draw" onclick="" disabled>志願序抽籤</button>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_show" onclick="" disabled>顯示需二次分配學生&社團餘額</button>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_submit" onclick="" disabled>二次分配結果登錄</button>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_make_result" onclick="" disabled>產生選社結果</button>
                             <div class="row" style="margin-top: 8px">
                                 <div class="col" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" onclick="">下載選社結果(依班級)</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_dl_result_class" onclick="" disabled>下載選社結果(依班級)</button>
                                 </div>
                                 <div class="col" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" onclick="">下載選社結果(依社團)</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_dl_result_club" onclick="" disabled>下載選社結果(依社團)</button>
                                 </div>
                             </div>
                         </div>
