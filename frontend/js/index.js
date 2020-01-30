@@ -1340,7 +1340,35 @@ function ButtonOnClickListener() {
         checkNotSelected(true);
     });
     $('#btn_definite_distribute').click(function () {
-        definite_distribute();
+        $.ajax({
+            url: "../backend/db.php",
+            data: "mode=definite_distribute" +
+                "&acc=" + $.cookie("LoginInfoAcc") +
+                "&pw=" + $.cookie("LoginInfoPw"),
+            type: "POST",
+            async: false,
+            success: function (msg) {
+                console.log(msg);
+                if(msg=='ok'){
+                    $.alert({
+                        title: '確定中選社團分配',
+                        content: '分配完成',
+                        type: 'blue',
+                        typeAnimated: true
+                    });
+                    stepCheck();
+                }
+            },
+            error: function (xhr) {
+                console.log('ajax er');
+                $.alert({
+                    title: '錯誤',
+                    content: 'Ajax 發生錯誤',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }
+        });
     });
     $('#btn_selects_draw').click(function () {
 
@@ -1486,18 +1514,18 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                $('#btn_definite_distribute').prop('disabled',true);
+                stepCheck();
                 return false;
             }else{
                 if(alert){
                     $.alert({
-                        title: '未選社學生',
+                        title: '檢查未選社學生',
                         content: '全部完成',
                         type: 'blue',
                         typeAnimated: true
                     });
                 }
-                $('#btn_definite_distribute').prop('disabled',false);
+                stepCheck();
                 return true;
             }
         },
@@ -1516,10 +1544,9 @@ function checkNotSelected(alert) {
 function stepCheck() {
     if(checkNotSelected())
         $('#btn_definite_distribute').prop('disabled',false);
-    if(getSystem('definite_distributed')!='false')
+    if(getSystem('definite_distributed')!='false'){
         $('#btn_reset').prop('disabled',false);
-}
-
-function definite_distribute() {
-
+        $('#btn_definite_distribute').prop('disabled',true);
+        $('#btn_selects_draw').prop('disabled',false);
+    }
 }
