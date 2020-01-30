@@ -390,8 +390,8 @@ if ($mode == "selects_draw") {
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
                     $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
-                    foreach ($draw as $value)
-                        echo $sid_r[$value] . ',';
+                    /*foreach ($draw as $value)
+                        echo $sid_r[$value] . ',';*/
                     for ($k = 0; $k < count($draw); $k++) {
                         //寫入
                         $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('" . $sid_r[$k] . "','" . $club_list[$i] . "')";
@@ -433,8 +433,8 @@ if ($mode == "selects_draw") {
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
                     $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
-                    foreach ($draw as $value)
-                        echo $sid_r[$value] . ',';
+                    /*foreach ($draw as $value)
+                        echo $sid_r[$value] . ',';*/
                     for ($k = 0; $k < count($draw); $k++) {
                         //寫入
                         $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('" . $sid_r[$k] . "','" . $club_list[$i] . "')";
@@ -476,8 +476,8 @@ if ($mode == "selects_draw") {
                 //抽籤
                 if ($club_rest_num[$i] > 0) {
                     $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
-                    foreach ($draw as $value)
-                        echo $sid_r[$value] . ',';
+                    /*foreach ($draw as $value)
+                        echo $sid_r[$value] . ',';*/
                     for ($k = 0; $k < count($draw); $k++) {
                         //寫入
                         $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('" . $sid_r[$k] . "','" . $club_list[$i] . "')";
