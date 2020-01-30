@@ -148,7 +148,7 @@ function OnHashchangeListener() {
         if ($.cookie('LoginInfoAcc'))
             adminViewSwitch();
 
-        if(getSystem('CSenable')=='false')
+        if (getSystem('CSenable') == 'false')
             ShowAlart('alert-warning', '現在非選填時間', false, false);
 
     }
@@ -156,11 +156,10 @@ function OnHashchangeListener() {
         $('#Content_SelectResult').show();
         $("#title_bar").hide();
 
-        if(getSystem('display_result')=='false'){
+        if (getSystem('display_result') == 'false') {
             $('#SR').hide();
             ShowAlart('alert-warning', '選社結果尚未公佈', false, false);
-        }
-        else{
+        } else {
             $('#SR').show();
         }
     }
@@ -501,7 +500,7 @@ function checkCS(row) {
 }
 
 function selectVerify() {
-    if(getSystem('CSenable')=='false')
+    if (getSystem('CSenable') == 'false')
         location.reload();
     var codeErrorArray = [];
     var cantSpecialClub = [];
@@ -520,7 +519,6 @@ function selectVerify() {
                 hasClubCode[1] = true;
                 if (club_data[k]['isSpecial'] == '1') {
                     cantSpecialClub.push(i);
-                    break;
                 }
                 continue;
             }
@@ -528,7 +526,6 @@ function selectVerify() {
                 hasClubCode[2] = true;
                 if (club_data[k]['isSpecial'] == '1') {
                     cantSpecialClub.push(i);
-                    break;
                 }
                 continue;
             }
@@ -536,7 +533,6 @@ function selectVerify() {
                 hasClubCode[3] = true;
                 if (club_data[k]['isSpecial'] == '1') {
                     cantSpecialClub.push(i);
-                    break;
                 }
                 continue;
             }
@@ -704,13 +700,13 @@ function getSelectData(rq_class) {
                     }
                 }
             }
-            if(getSystem('CSenable')=='false'){
+            if (getSystem('CSenable') == 'false') {
                 $('#btn_CS_submit').prop("disabled", true);
-                for(var i=0;i<student_data.length;i++){
-                    $('#inputDefinite_' + i).prop("disabled",true);
-                    $('#inputAlternate1_' + i).prop("disabled",true);
-                    $('#inputAlternate2_' + i).prop("disabled",true);
-                    $('#inputAlternate3_' + i).prop("disabled",true);
+                for (var i = 0; i < student_data.length; i++) {
+                    $('#inputDefinite_' + i).prop("disabled", true);
+                    $('#inputAlternate1_' + i).prop("disabled", true);
+                    $('#inputAlternate2_' + i).prop("disabled", true);
+                    $('#inputAlternate3_' + i).prop("disabled", true);
                 }
             }
         },
@@ -1353,7 +1349,7 @@ function ButtonOnClickListener() {
             async: false,
             success: function (msg) {
                 console.log(msg);
-                if(msg=='ok'){
+                if (msg == 'ok') {
                     $.alert({
                         title: '確定中選社團分配',
                         content: '分配完成',
@@ -1454,7 +1450,7 @@ function getSystem(id) {
     return data;
 }
 
-function setSystem(id, value,alert=false) {
+function setSystem(id, value, alert = false) {
     $.ajax({
         url: "../backend/db.php",
         data: "mode=setSystem" +
@@ -1465,7 +1461,7 @@ function setSystem(id, value,alert=false) {
         type: "POST",
         async: false,
         success: function (msg) {
-            if(alert){
+            if (alert) {
                 $.alert({
                     title: '選社設定',
                     content: '設定成功',
@@ -1487,12 +1483,12 @@ function setSystem(id, value,alert=false) {
 }
 
 function CSsetting(target) {
-    if(target=='CSenable')
-        setSystem("CSenable",$('#SM-CSenable').prop("checked").toString(),true);
-    if(target=='maxGCPN')
-        setSystem('maxGCPN',$('#SM-maxGCPN').val(),true);
-    if(target=='display_result')
-        setSystem("display_result",$('#SM-display_result').prop("checked").toString(),true);
+    if (target == 'CSenable')
+        setSystem("CSenable", $('#SM-CSenable').prop("checked").toString(), true);
+    if (target == 'maxGCPN')
+        setSystem('maxGCPN', $('#SM-maxGCPN').val(), true);
+    if (target == 'display_result')
+        setSystem("display_result", $('#SM-display_result').prop("checked").toString(), true);
 }
 
 function checkNotSelected(alert) {
@@ -1505,12 +1501,12 @@ function checkNotSelected(alert) {
         async: false,
         success: function (msg) {
             console.log(msg);
-            if(msg!='no_data'){
+            if (msg != 'no_data') {
                 var jsonA = JSON.parse(msg);
-                if(alert){
-                    var content_stuList='';
-                    for(var i=0;i<jsonA.length;i++)
-                        content_stuList+=jsonA[i]['sid']+" "+jsonA[i]['name']+"<br>";
+                if (alert) {
+                    var content_stuList = '';
+                    for (var i = 0; i < jsonA.length; i++)
+                        content_stuList += jsonA[i]['sid'] + " " + jsonA[i]['name'] + "<br>";
                     $.alert({
                         title: '未選社學生',
                         content: content_stuList,
@@ -1518,9 +1514,11 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                return false;
-            }else{
-                if(alert){
+                if(getSystem('definite_distributed') == 'false'){
+                    $('#btn_definite_distribute').prop('disabled', true);
+                }
+            } else {
+                if (alert) {
                     $.alert({
                         title: '檢查未選社學生',
                         content: '全部完成',
@@ -1528,7 +1526,9 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                return true;
+                if(getSystem('definite_distributed') == 'false'){
+                    $('#btn_definite_distribute').prop('disabled', false);
+                }
             }
         },
         error: function (xhr) {
@@ -1544,11 +1544,16 @@ function checkNotSelected(alert) {
 }
 
 function stepCheck() {
-    if(getSystem('definite_distributed')=='false'){
-        $('#btn_definite_distribute').prop('disabled',false);
-    }else{
-        $('#btn_reset').prop('disabled',false);
-        $('#btn_definite_distribute').prop('disabled',true);
-        $('#btn_selects_draw').prop('disabled',false);
+    if (getSystem('definite_distributed') != 'false') {
+        $('#btn_reset').prop('disabled', false);
+        $('#btn_selects_draw').prop('disabled', false);
+        $('#SM-CSenable').prop("checked", false);
+        $('#SM-CSenable').prop("disabled", true);
+        $('#icon-CSenable-lock').show();
+    }
+    if (getSystem('selects_drew') != 'false') {
+        $('#btn_selects_draw').prop('disabled', true);
+        $('#btn_second_show').prop('disabled', false);
+        $('#icon-maxGCPN-lock').show();
     }
 }
