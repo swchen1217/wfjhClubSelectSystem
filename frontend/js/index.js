@@ -1469,9 +1469,73 @@ function ButtonOnClickListener() {
     $('#btn_second_submit').click(function () {
         changeGradeClass_SM_SSubmit();
         $('#modal-second_submit').modal('show');
+        $.ajax({
+            url: "../backend/db.php",
+            data: "mode=checkSecondOk" +
+                "&acc=" + $.cookie("LoginInfoAcc") +
+                "&pw=" + $.cookie("LoginInfoPw"),
+            type: "POST",
+            async: false,
+            success: function (msg) {
+                console.log(msg);
+                stepCheck();
+            },
+            error: function (xhr) {
+                console.log('ajax er');
+                $.alert({
+                    title: '錯誤',
+                    content: 'Ajax 發生錯誤',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }
+        });
     });
     $('#btn_make_result').click(function () {
-
+        $.ajax({
+            url: "../backend/db.php",
+            data: "mode=makeResult" +
+                "&acc=" + $.cookie("LoginInfoAcc") +
+                "&pw=" + $.cookie("LoginInfoPw"),
+            type: "POST",
+            async: false,
+            success: function (msg) {
+                console.log(msg);
+                stepCheck();
+            },
+            error: function (xhr) {
+                console.log('ajax er');
+                $.alert({
+                    title: '錯誤',
+                    content: 'Ajax 發生錯誤',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }
+        });
+    });
+    $('#btn_re_second').click(function () {
+        $.ajax({
+            url: "../backend/db.php",
+            data: "mode=re_second" +
+                "&acc=" + $.cookie("LoginInfoAcc") +
+                "&pw=" + $.cookie("LoginInfoPw"),
+            type: "POST",
+            async: false,
+            success: function (msg) {
+                console.log(msg);
+                stepCheck();
+            },
+            error: function (xhr) {
+                console.log('ajax er');
+                $.alert({
+                    title: '錯誤',
+                    content: 'Ajax 發生錯誤',
+                    type: 'red',
+                    typeAnimated: true
+                });
+            }
+        });
     });
     $('#btn_dl_result_class').click(function () {
 
@@ -1807,6 +1871,26 @@ function stepCheck() {
         $('#btn_maxGCPN').prop('disabled', true);
         $('#icon-maxGCPN-lock').show();
     }
+    if (getSystem('makeResultEnable') != 'false') {
+        $('#btn_make_result').prop('disabled', false);
+    }
+    if(getSystem('second') == 'false'){
+        $('#btn_second_submit').prop('disabled', true);
+    }
+    if(getSystem('madeResult') != 'false'){
+        $('#btn_re_second').prop('disabled', false);
+    }
+    if(getSystem('makeResultEnable') == 'false'){
+        $('#btn_make_result').prop('disabled', true);
+        $('#btn_re_second').prop('disabled', true);
+        $('#btn_dl_result_class').prop('disabled', true);
+        $('#btn_dl_result_club').prop('disabled', true);
+    }
+    if(getSystem('madeResult') != 'false'){
+        $('#btn_dl_result_class').prop('disabled', false);
+        $('#btn_dl_result_club').prop('disabled', false);
+    }
+
 }
 
 var secondStudents;
@@ -1899,6 +1983,7 @@ function changeGradeClass_SM_SSubmit() {
             gc = 2;
         $('#tablb_second_submit').bootstrapTable('load', getSecondStudents(gc));
         $('#table_second_clubs').bootstrapTable('load', getSecondClubs(gc));
+        getSelectDataNd(gc);
     }, 100);
 }
 
@@ -1922,49 +2007,23 @@ function checkCSnd(row) {
     $('#btn_SM_SSubmit').prop("disabled", !canEnable);
 }
 
-function cecondVerify() {
+function secondVerify() {
     var codeErrorArray = [];
-    var cantSpecialClub = [];
-    for (var i = 0; i < student_data.length; i++) {
-        var inputD = $('#inputDefinite_' + i);
-        var inputA1 = $('#inputAlternate1_' + i);
-        var inputA2 = $('#inputAlternate2_' + i);
-        var inputA3 = $('#inputAlternate3_' + i);
-        var hasClubCode = [false, false, false, false];
-        for (var k = 0; k < club_data.length; k++) {
-            if (inputD.val() == club_data[k]['id']) {
-                hasClubCode[0] = true;
-                continue;
-            }
-            if (inputA1.val() == club_data[k]['id']) {
-                hasClubCode[1] = true;
-                if (club_data[k]['isSpecial'] == '1') {
-                    cantSpecialClub.push(i);
-                }
-                continue;
-            }
-            if (inputA2.val() == club_data[k]['id']) {
-                hasClubCode[2] = true;
-                if (club_data[k]['isSpecial'] == '1') {
-                    cantSpecialClub.push(i);
-                }
-                continue;
-            }
-            if (inputA3.val() == club_data[k]['id']) {
-                hasClubCode[3] = true;
-                if (club_data[k]['isSpecial'] == '1') {
-                    cantSpecialClub.push(i);
-                }
-                continue;
+    for (var i = 0; i < secondStudents.length; i++) {
+        var inputCid = $('#inputCid_' + i);
+        var hasClubCode = false;
+        for (var k = 0; k < secondClubs.length; k++) {
+            if (inputCid.val() == secondClubs[k]['id']) {
+                hasClubCode = true;
             }
         }
-        if (!(hasClubCode[0] || (hasClubCode[1] && hasClubCode[2] && hasClubCode[3])))
+        if (!hasClubCode)
             codeErrorArray.push(i);
     }
     if (codeErrorArray.length != 0) {
         var content_cEA = '';
         for (var i = 0; i < codeErrorArray.length; i++) {
-            content_cEA += student_data[codeErrorArray[i]]['sid'] + " " + student_data[codeErrorArray[i]]['name'] + "<br>";
+            content_cEA += secondStudents[codeErrorArray[i]]['sid'] + " " + secondStudents[codeErrorArray[i]]['name'] + "<br>";
         }
         $.alert({
             title: '社團代碼錯誤',
@@ -1972,82 +2031,48 @@ function cecondVerify() {
             type: 'red',
             typeAnimated: true
         });
-    } else if (cantSpecialClub.length != 0) {
-        var content_cSC = '';
-        for (var i = 0; i < cantSpecialClub.length; i++) {
-            content_cSC += student_data[cantSpecialClub[i]]['sid'] + " " + student_data[cantSpecialClub[i]]['name'] + "<br>";
-        }
-        $.alert({
-            title: '志願不可為特殊社團',
-            content: content_cSC,
-            type: 'red',
-            typeAnimated: true
-        });
     } else {
-        var CSDcode = [student_data.length];
-        for (var i = 0; i < student_data.length; i++) {
-            var inputD = $('#inputDefinite_' + i);
-            CSDcode[i] = inputD.val();
-        }
-        var result = new Set();
-        var repeat = new Set();
-        CSDcode.forEach(item => {
-            result.has(item) ? repeat.add(item) : result.add(item);
-        });
-        repeat = Array.from(repeat);
-        for (var i = 0; i < club_data.length; i++) {
-            if (club_data[i]['isSpecial'] == 1) {
-                for (var k = 0; k < repeat.length; k++) {
-                    if (repeat[k] == club_data[i]['id']) {
-                        repeat.splice(k, 1);
-                        k--;
-                    }
+        var selected=new Array(secondClubs.length);
+        for(var i=0;i<selected.length;i++)
+            selected[i]=0;
+        for(var k=0;k<secondStudents.length;k++){
+            var inputCid = $('#inputCid_' + k);
+            for(var n=0;n<secondClubs.length;n++){
+                if(secondClubs[n]['id']==inputCid.val()){
+                    selected[n]++;
                 }
             }
         }
-        for (var k = 0; k < repeat.length; k++) {
-            if (repeat[k] == '') {
-                repeat.splice(k, 1);
-                k--;
+        for(var i=0;i<selected.length;i++)
+            console.log(selected[n]);
+        var content_over = '';
+        for(var i=0;i<secondClubs.length;i++){
+            if(selected[i]>secondClubs[i]['rest']){
+                content_over+=secondClubs[i]['id']+'('+secondClubs[i]['name']+') : ';
+                for(var k=0;k<secondStudents.length;k++){
+                    var inputCid = $('#inputCid_' + k);
+                    if(secondClubs[i]['id']==inputCid.val())
+                        content_over+=secondStudents[k]['sid']+' '+secondStudents[k]['name']+',';
+                }
+                content_over+='<br>';
             }
         }
-        if (repeat.length != 0) {
-            var context_repeat = '<em><b>確定中選</b>之社團,除<b>特殊社團</b>,其他社團每班限<b>一位同學</b><br><b>志願</b>則不再此限</em><br><br>';
-            for (var i = 0; i < club_data.length; i++) {
-                for (var k = 0; k < repeat.length; k++) {
-                    if (club_data[i]['id'] == repeat[k]) {
-                        context_repeat += '<b>' + club_data[i]['id'] + ' ' + club_data[i]['name'] + '</b> 重複於 ';
-                        for (var n = 0; n < student_data.length; n++) {
-                            var inputD = $('#inputDefinite_' + n);
-                            if (club_data[i]['id'] == inputD.val()) {
-                                context_repeat += student_data[n]['sid'] + ' ' + student_data[n]['name'] + ' , ';
-                            }
-                        }
-                        context_repeat += '<br>';
-                    }
-                }
-            }
+        if(content_over!=''){
             $.alert({
-                title: '社團重複',
-                content: context_repeat,
+                title: '社團餘額不足',
+                content: content_over,
                 type: 'red',
                 typeAnimated: true,
                 columnClass: 'm'
             });
-        } else {
+        }else{
             var jsonA = new Array();
-            for (var i = 0; i < student_data.length; i++) {
-                var inputD = $('#inputDefinite_' + i);
-                var inputA1 = $('#inputAlternate1_' + i);
-                var inputA2 = $('#inputAlternate2_' + i);
-                var inputA3 = $('#inputAlternate3_' + i);
+            for (var i = 0; i < secondStudents.length; i++) {
+                var inputCid = $('#inputCid_' + i);
 
                 var myObj = new Object();
-                myObj.sid = student_data[i]['sid'];
-                myObj.definite = inputD.val();
-                myObj.alternate1 = inputA1.val();
-                myObj.alternate2 = inputA2.val();
-                myObj.alternate3 = inputA3.val();
+                myObj.sid = secondStudents[i]['sid'];
+                myObj.cid = inputCid.val();
 
                 jsonA.push(myObj);
             }
@@ -2057,10 +2082,9 @@ function cecondVerify() {
 
             $.ajax({
                 url: "../backend/db.php",
-                data: "mode=uploadSelect" +
+                data: "mode=uploadSecond" +
                     "&acc=" + $.cookie("LoginInfoAcc") +
                     "&pw=" + $.cookie("LoginInfoPw") +
-                    "&class=" + class_code +
                     "&json_data=" + jsonStr,
                 type: "POST",
                 success: function (msg) {
@@ -2068,11 +2092,10 @@ function cecondVerify() {
                     if (msg.substr(-2, 2) == "ok") {
                         $.alert({
                             title: '上傳完成',
-                            content: '選填成功',
+                            content: '登錄成功',
                             typeAnimated: true
                         });
-                        $('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
-                        getSelectData(class_code);
+                        stepCheck();
                     }
                 },
                 error: function (xhr) {
@@ -2087,4 +2110,49 @@ function cecondVerify() {
             });
         }
     }
+}
+
+function getSelectDataNd(grade) {
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getSecendData" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&grade=" + grade,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                for (var i = 0; i < secondStudents.length; i++) {
+                    var sid = secondStudents[i]['sid'];
+                    var inputCid = $('#inputCid_' + i);
+
+                    for (var k = 0; k < jsonA.length; k++) {
+                        if (sid == jsonA[k]['sid']) {
+                            inputCid.val(jsonA[k]['cid'] == 0 ? "" : jsonA[k]['cid']);
+                            checkCSnd(i);
+                        }
+                    }
+                }
+            }
+            if (getSystem('second') == 'false') {
+                $('#btn_SM_SSubmit').prop("disabled", true);
+                for (var i = 0; i < secondStudents.length; i++) {
+                    $('#inputCid_' + i).prop("disabled", true);
+                }
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
 }
