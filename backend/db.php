@@ -363,7 +363,7 @@ if ($mode == "selects_draw") {
         for ($i = 0; $i < count($club_list); $i++) {
             $sid_r = array();
             //A1人數
-            $sql = "SELECT selects.sid FROM `selects` LEFT JOIN result ON selects.sid=result.sid WHERE result.sid IS NULL AND selects.alternate1='".$club_list[$i]."'";
+            $sql = "SELECT selects.sid FROM `selects` LEFT JOIN result ON selects.sid=result.sid WHERE result.sid IS NULL AND selects.alternate1='" . $club_list[$i] . "'";
             $rs = $db->prepare($sql);
             $rs->execute();
             $A1_num = $rs->rowCount();
@@ -374,28 +374,28 @@ if ($mode == "selects_draw") {
 
             //中選or抽籤
             if ($A1_num <= $club_rest_num[$i]) {
-                echo 'cp,'.$A1_num.',';
+                echo 'cp,' . $A1_num . ',' . $club_rest_num[$i] . ',';
                 //複製
                 $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate1 FROM selects WHERE selects.alternate1='" . $club_list[$i] . "'";
                 $rs = $db->prepare($sql);
                 $rs->execute();
                 $rs = null;
-                $club_rest_num[$i]-=$A1_num;
+                $club_rest_num[$i] -= $A1_num;
             } else {
-                echo 'draw,'.$club_rest_num[$i].',';
+                echo 'draw,' . $club_rest_num[$i] . ',';
                 //抽籤
-                if($club_rest_num[$i]>0){
-                    $draw=(array)array_rand($sid_r,$club_rest_num[$i]);
+                if ($club_rest_num[$i] > 0) {
+                    echo 'draw,' . $A1_num . ',' . $club_rest_num[$i] . ',';
                     foreach ($draw as $value)
-                        echo $sid_r[$value].',';
-                    for($k=0;$k<count($draw);$k++){
+                        echo $sid_r[$value] . ',';
+                    for ($k = 0; $k < count($draw); $k++) {
                         //寫入
-                        $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('".$sid_r[$k]."','".$club_list[$i]."')";
+                        $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('" . $sid_r[$k] . "','" . $club_list[$i] . "')";
                         $rs = $db->prepare($sql);
                         $rs->execute();
                         $rs = null;
                     }
-                    $club_rest_num[$i]-=count($draw);
+                    $club_rest_num[$i] -= count($draw);
                 }
             }
         }
@@ -406,7 +406,7 @@ if ($mode == "selects_draw") {
         for ($i = 0; $i < count($club_list); $i++) {
             $sid_r = array();
             //A2人數
-            $sql = "SELECT selects.sid FROM `selects` LEFT JOIN result ON selects.sid=result.sid WHERE result.sid IS NULL AND selects.alternate2='".$club_list[$i]."'";
+            $sql = "SELECT selects.sid FROM `selects` LEFT JOIN result ON selects.sid=result.sid WHERE result.sid IS NULL AND selects.alternate2='" . $club_list[$i] . "'";
             $rs = $db->prepare($sql);
             $rs->execute();
             $A2_num = $rs->rowCount();
@@ -417,32 +417,31 @@ if ($mode == "selects_draw") {
 
             //中選or抽籤
             if ($A2_num <= $club_rest_num[$i]) {
-                echo 'cp,'.$A2_num.',';
+                echo 'cp,' . $A2_num . ',' . $club_rest_num[$i] . ',';
                 //複製
                 $sql = "INSERT INTO result (sid, cid) SELECT sid,selects.alternate2 FROM selects WHERE selects.alternate2='" . $club_list[$i] . "'";
                 $rs = $db->prepare($sql);
                 $rs->execute();
                 $rs = null;
-                $club_rest_num[$i]-=$A2_num;
+                $club_rest_num[$i] -= $A2_num;
             } else {
-                echo 'draw,'.$club_rest_num[$i].',';
+                echo 'draw,' . $A2_num . ',' . $club_rest_num[$i] . ',';
                 //抽籤
-                if($club_rest_num[$i]>0){
-                    $draw=(array)array_rand($sid_r,$club_rest_num[$i]);
+                if ($club_rest_num[$i] > 0) {
+                    $draw = (array)array_rand($sid_r, $club_rest_num[$i]);
                     foreach ($draw as $value)
-                        echo $sid_r[$value].',';
-                    for($k=0;$k<count($draw);$k++){
+                        echo $sid_r[$value] . ',';
+                    for ($k = 0; $k < count($draw); $k++) {
                         //寫入
-                        $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('".$sid_r[$k]."','".$club_list[$i]."')";
+                        $sql = "INSERT INTO `result`(`sid`, `cid`) VALUES ('" . $sid_r[$k] . "','" . $club_list[$i] . "')";
                         $rs = $db->prepare($sql);
                         $rs->execute();
                         $rs = null;
                     }
-                    $club_rest_num[$i]-=count($draw);
+                    $club_rest_num[$i] -= count($draw);
                 }
             }
         }
-
 
 
     }
