@@ -259,6 +259,7 @@ if ($mode == "getSystem") {
     if (UserCheck($acc, $pw, false, $db)) {
         echo getSystem($id, $db);
     }
+    exit;
 }
 
 if ($mode == "setSystem") {
@@ -266,6 +267,7 @@ if ($mode == "setSystem") {
         setSystem($id, $value, $db);
         echo 'ok';
     }
+    exit;
 }
 
 function getSystem($mId, PDO $mDB)
@@ -319,6 +321,7 @@ if ($mode == "checkNotSelected") {
             echo json_encode($ToJson);
         }
     }
+    exit;
 }
 
 if ($mode == "definite_distribute") {
@@ -331,6 +334,7 @@ if ($mode == "definite_distribute") {
         setSystem('CSenable', 'false', $db);
         echo 'ok';
     }
+    exit;
 }
 
 if ($mode == "selects_draw") {
@@ -491,8 +495,9 @@ if ($mode == "selects_draw") {
         foreach ($club_rest_num as $value)
             echo $value . ',';*/
 
+        setSystem('selects_drew', 'true', $db);
         echo 'ok';
     }
+    exit;
 }
-
 ?>
