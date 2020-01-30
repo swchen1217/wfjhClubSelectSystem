@@ -320,6 +320,7 @@ if($mode=="definite_distribute"){
         $sql = "INSERT INTO result (sid, cid) SELECT sid,definite FROM selects WHERE selects.definite!='0'";
         $rs = $db->prepare($sql);
         $rs->execute();
+        setSystem('definite_distributed','true',$db);
         echo 'ok';
     }
 }
