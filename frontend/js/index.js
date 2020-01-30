@@ -1514,7 +1514,6 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                stepCheck();
                 return false;
             }else{
                 if(alert){
@@ -1525,7 +1524,6 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                stepCheck();
                 return true;
             }
         },
@@ -1542,9 +1540,9 @@ function checkNotSelected(alert) {
 }
 
 function stepCheck() {
-    if(checkNotSelected())
+    if(getSystem('definite_distributed')=='false'){
         $('#btn_definite_distribute').prop('disabled',false);
-    if(getSystem('definite_distributed')!='false'){
+    }else{
         $('#btn_reset').prop('disabled',false);
         $('#btn_definite_distribute').prop('disabled',true);
         $('#btn_selects_draw').prop('disabled',false);
