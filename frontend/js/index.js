@@ -1514,7 +1514,7 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                if(getSystem('definite_distributed') == 'false'){
+                if (getSystem('definite_distributed') == 'false') {
                     $('#btn_definite_distribute').prop('disabled', true);
                 }
             } else {
@@ -1526,7 +1526,7 @@ function checkNotSelected(alert) {
                         typeAnimated: true
                     });
                 }
-                if(getSystem('definite_distributed') == 'false'){
+                if (getSystem('definite_distributed') == 'false') {
                     $('#btn_definite_distribute').prop('disabled', false);
                 }
             }
