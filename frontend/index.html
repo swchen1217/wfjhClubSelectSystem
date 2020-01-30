@@ -747,8 +747,6 @@
     $(document).ready(function () {
         init();
         OnHashchangeListener();
-        if ($.cookie('LoginInfoAcc'))
-            adminViewSwitch();
         $("#mNav .nav a").on("click", function () {
             $("#mNav .nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
