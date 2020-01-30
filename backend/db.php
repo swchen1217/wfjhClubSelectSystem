@@ -251,28 +251,36 @@ function getSortId(PDO $mDB){
     return $new_num;
 }
 
+if($mode=="getSystem"){
+    if (UserCheck($acc, $pw, false, $db)){
+        echo getSystem($id,$db);
+    }
+}
+
 if($mode=="setSystem"){
     if (UserCheck($acc, $pw, true, $db)) {
-        createSystemSetting($db);
-        $sql = "UPDATE `system` SET `value`=:value WHERE id=:id";
-        $rs = $db->prepare($sql);
-        $rs->bindValue(':value', $value, PDO::PARAM_STR);
-        $rs->bindValue(':id', $id, PDO::PARAM_STR);
-        $rs->execute();
+        setSystem($id,$value,$db);
         echo 'ok';
     }
 }
 
-if($mode=="getSystem"){
-    if (UserCheck($acc, $pw, false, $db)){
-        createSystemSetting($db);
-        $sql = "SELECT value FROM `system` WHERE `id`=:id";
-        $rs = $db->prepare($sql);
-        $rs->bindValue(':id', $id, PDO::PARAM_STR);
-        $rs->execute();
-        list($r)=$rs->fetch(PDO::FETCH_NUM);
-        echo $r;
-    }
+function getSystem($mId,PDO $mDB){
+    createSystemSetting($mDB);
+    $sql = "SELECT value FROM `system` WHERE `id`=:id";
+    $rs = $mDB->prepare($sql);
+    $rs->bindValue(':id', $mId, PDO::PARAM_STR);
+    $rs->execute();
+    list($r)=$rs->fetch(PDO::FETCH_NUM);
+    return $r;
+}
+
+function setSystem($mId,$mValue,PDO $mDB){
+    createSystemSetting($mDB);
+    $sql = "UPDATE `system` SET `value`=:value WHERE id=:id";
+    $rs = $mDB->prepare($sql);
+    $rs->bindValue(':value', $mValue, PDO::PARAM_STR);
+    $rs->bindValue(':id', $mId, PDO::PARAM_STR);
+    $rs->execute();
 }
 
 function createSystemSetting(PDO $mDB){
