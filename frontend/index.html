@@ -369,7 +369,7 @@
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">需二次分配學生&社團餘額</h5>
+                            <h5 class="modal-title">需二次分配學生&社團餘額</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -378,7 +378,7 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <ul class="nav nav-pills" id="SM_second_show_grade_select"
-                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px" onclick="changeGradeClass_SM_SS();">
+                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px" onclick="changeGradeClass_SM_SShow();">
                                         <li class="nav-item">
                                             <a class="nav-link active" data-toggle="pill" href>一年級</a>
                                         </li>
@@ -394,7 +394,36 @@
                                     <div class="col-4">
                                         <table id="table_second_clubs"></table>
                                     </div>
-
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal-second_submit">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">二次分配結果登錄</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <ul class="nav nav-pills" id="SM_second_submit_grade_select"
+                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px" onclick="changeGradeClass_SM_SSubmit();">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="pill" href>一年級</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="pill" href>二年級</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <table id="tablb_second_submit"></table>
                                 </div>
                             </div>
                         </div>
