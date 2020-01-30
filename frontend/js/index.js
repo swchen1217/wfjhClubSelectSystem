@@ -1407,7 +1407,6 @@ function getSystem(id) {
         type: "POST",
         async: false,
         success: function (msg) {
-            console.log(msg);
             data = msg;
         },
         error: function (xhr) {
@@ -1517,6 +1516,8 @@ function checkNotSelected(alert) {
 function stepCheck() {
     if(checkNotSelected())
         $('#btn_definite_distribute').prop('disabled',false);
+    if(getSystem('definite_distributed')!='false')
+        $('#btn_reset').prop('disabled',false);
 }
 
 function definite_distribute() {
