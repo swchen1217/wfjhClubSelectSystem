@@ -365,6 +365,42 @@
             </div>
         </div>
         <div id="Content_SelectManage">
+            <div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal-second_show">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">需二次分配學生&社團餘額</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <ul class="nav nav-pills" id="SM_second_show_grade_select"
+                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px" onclick="">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="pill" href>一年級</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="pill" href>二年級</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <table id="table_second_students"></table>
+                                    </div>
+                                    <div class="col-4">
+                                        <table id="table_second_clubs"></table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card" id="card-SM-setting">
@@ -415,10 +451,17 @@
                                     <button type="button" class="btn btn-default btn-primary btn-block" id="btn_checkNotSelected">檢查未選社學生</button>
                                 </div>
                                 <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_reset" disabled>重設</button>
+                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_reset_select">重設選填資料</button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_definite_distribute" disabled>確定中選社團分配</button>
+                            <div class="row" style="margin-bottom: 8px">
+                                <div class="col-8" style="padding-right: 2px">
+                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_definite_distribute" disabled>確定中選社團分配</button>
+                                </div>
+                                <div class="col-4" style="padding-left: 2px">
+                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_reset_result" disabled>重設選社結果</button>
+                                </div>
+                            </div>
                             <button type="button" class="btn btn-default btn-primary btn-block" id="btn_selects_draw" onclick="" disabled>志願序抽籤</button>
                             <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_show" onclick="" disabled>顯示需二次分配學生&社團餘額</button>
                             <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_submit" onclick="" disabled>二次分配結果登錄</button>
