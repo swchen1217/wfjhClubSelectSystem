@@ -500,4 +500,31 @@ if ($mode == "selects_draw") {
     }
     exit;
 }
+
+if ($mode == "reset_result") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = "TRUNCATE TABLE `result`";
+        $rs = $db->exec($sql);
+        $rs=null;
+        setSystem('CSenable', 'false', $db);
+        setSystem('definite_distributed', 'false', $db);
+        setSystem('selects_drew', 'false', $db);
+        echo 'ok';
+    }
+    exit;
+}
+
+if ($mode == "reset_select") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = "TRUNCATE TABLE `selects`";
+        $rs = $db->exec($sql);
+        $rs=null;
+        $sql = "TRUNCATE TABLE `selected`";
+        $rs = $db->exec($sql);
+        $rs=null;
+        setSystem('CSenable', 'false', $db);
+        echo 'ok';
+    }
+    exit;
+}
 ?>
