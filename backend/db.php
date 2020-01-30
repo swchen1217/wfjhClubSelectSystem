@@ -6,7 +6,7 @@ require("UserCheck.php");
 
 mb_internal_encoding('UTF-8');
 
-$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false']];
+$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false'],['second','false']];
 
 $mode = request("mode");
 $LastModified = request("LastModified");
