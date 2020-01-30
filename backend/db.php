@@ -527,4 +527,25 @@ if ($mode == "reset_select") {
     }
     exit;
 }
+
+if ($mode == "getSecondStudents") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'SELECT students.sid,students.class,students.number,students.name FROM students LEFT JOIN result ON students.sid=result.sid WHERE result.sid IS NULL and students.grade=:grade';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':grade', $grade, PDO::PARAM_STR);
+        $rs->execute();
+        if ($rs->rowCount() == 0) {
+            echo "no_data";
+        } else {
+            $ToJson = array();
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $ToJson[] = $row;
+            }
+            echo json_encode($ToJson);
+        }
+    } else {
+        echo "user_error";
+    }
+    exit;
+}
 ?>
