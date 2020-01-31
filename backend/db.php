@@ -848,7 +848,7 @@ if ($mode == "delAn") {
 
 if ($mode == "newAn") {
     if (UserCheck($acc, $pw, true, $db)) {
-        $sql = 'INSERT INTO `announcement` (title, content, hyperlink, posttime) VALUES (:title, :content, :hyperlink'.date('Y-m-d H:i:s').')';
+        $sql = "INSERT INTO `announcement` (title, content, hyperlink, posttime) VALUES (:title, :content, :hyperlink,'".date('Y-m-d H:i:s')."')";
         $rs = $db->prepare($sql);
         $rs->bindValue(':title', $title, PDO::PARAM_STR);
         $rs->bindValue(':content', $content, PDO::PARAM_STR);
