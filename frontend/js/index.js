@@ -237,6 +237,7 @@ function OnHashchangeListener() {
 
     if (hash == '' && login_check()) {
         $('#Content_Announcement').show();
+        
     }
     if (hash == '#ClubSelect' && login_check() && PermissionCheck(false, true)) {
         $('#Content_ClubSelect').show();
@@ -2411,9 +2412,7 @@ function getAnData() {
     var data = "";
     $.ajax({
         url: "../backend/db.php",
-        data: "mode=getAnData" +
-            "&acc=" + $.cookie("LoginInfoAcc") +
-            "&pw=" + $.cookie("LoginInfoPw"),
+        data: "mode=getAnData",
         type: "POST",
         async: false,
         success: function (msg) {
