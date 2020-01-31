@@ -829,4 +829,17 @@ if ($mode == "getAnData") {
     }
     exit;
 }
+
+if ($mode == "delAn") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'DELETE FROM `announcement` WHERE `id`=:id';
+        $rs = $db->prepare($sql);
+        $rs->bindValue(':id', $id, PDO::PARAM_STR);
+        $rs->execute();
+        echo "ok";
+    } else {
+        echo "error";
+    }
+    exit;
+}
 ?>
