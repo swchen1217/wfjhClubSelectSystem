@@ -237,7 +237,32 @@ function OnHashchangeListener() {
 
     if (hash == '' && login_check()) {
         $('#Content_Announcement').show();
+        var an = getAnData();
+        if (an != '') {
+            for (var i = 0; i < an.length; i++) {
+                var card = document.createElement("div");
+                card.className = "card";
+                var header = document.createElement("h5");
+                header.className = "card-header";
+                var body = document.createElement("div");
+                body.className = "card-body";
+                var text = document.createElement("p");
+                text.className = "card-text";
+                var time = document.createElement("p");
+                time.style.textAlign = "right";
 
+                header.innerText=an[i]['title'];
+                text.innerHTML=an[i]['content'];
+                time.innerText='張貼時間:'+an[i]['posttime'];
+
+                body.appendChild(text);
+                body.appendChild(time);
+                card.appendChild(header);
+                card.appendChild(body);
+                var Announcement = document.getElementById("Content_Announcement");
+                Announcement.appendChild(card);
+            }
+        }
     }
     if (hash == '#ClubSelect' && login_check() && PermissionCheck(false, true)) {
         $('#Content_ClubSelect').show();
@@ -1315,7 +1340,7 @@ function FormSubmitListener() {
                                     "&pw=" + $.cookie("LoginInfoPw") +
                                     "&title=" + title +
                                     "&content=" + content +
-                                    "&hyperlink=" + hyperlink ,
+                                    "&hyperlink=" + hyperlink,
                                 type: "POST",
                                 success: function (msg) {
                                     console.log(msg);
@@ -2430,7 +2455,7 @@ function getAnData() {
                     }
                 }
                 data = jsonA;
-            }else{
+            } else {
                 $('#table_An_manage').bootstrapTable("removeAll");
             }
         },
