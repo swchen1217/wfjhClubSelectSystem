@@ -643,6 +643,45 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal-newAn">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">新公告</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" class="form-my" id="form-newAn">
+                            <div class="form-group">
+                                <label for="newAn-InputTitle">標題</label>
+                                <input type="text" class="form-control" id="newAn-InputTitle" placeholder="輸入標題"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newAn-InputContent">內容</label>
+                                <textarea type="text" class="form-control" id="newAn-InputContent" placeholder="輸入內容"
+                                       required style="height: 200px"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="newAn-InputHyperlink">連結(若有多個連結，請用','隔開)</label>
+                                <input type="text" class="form-control" id="newAn-InputHyperlink" placeholder="輸入連結">
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="col-1">
+                                    <button type="submit" class="btn btn-default btn-primary btn-block"
+                                            style="margin-top: 8px">
+                                        送出
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="card" id="card-SM-setting">
@@ -760,7 +799,7 @@
                             <div class="col-4">
                                 <h3 class="card-title">公告管理</h3>
                             </div>
-                            <div class="col-2">
+                            <div class="col-1">
                                 <button type="button" class="btn btn-default btn-primary btn-block"
                                         id="btn_An_new" onclick="" >New
                                 </button>
