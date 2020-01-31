@@ -31,7 +31,7 @@ body {
     margin: 10px auto;
 }
 
-#CS_grade_select li .active, #SM_second_submit_grade_select li .active,#SR_grade_select li .active {
+#CS_grade_select li .active, #SM_second_submit_grade_select li .active, #SR_grade_select li .active {
     background-color: #f07e22;
 }
 
@@ -109,4 +109,13 @@ input:checked + .slider:before {
 .form-check-input {
     width: 25px;
     height: 25px;
+}
+
+footer{
+    text-align: center;
+    margin-top: 20px;
+    background-color: #303030;
+    color: #FFFFFF;
+    height: 50px;
+    line-height: 50px;
 }
