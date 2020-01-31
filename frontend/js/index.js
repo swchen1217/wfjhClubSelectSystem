@@ -219,7 +219,7 @@ function init() {
             field: 'del',
             title: '刪除',
             width: 70,
-            formatter: '<button class="btn btn-danger">刪除</button>',
+            formatter: '<button id="btn_del_an" class="btn btn-danger">刪除</button>',
             events: operateEvents
         }]
     });
@@ -374,12 +374,11 @@ function PermissionCheck(needAdmin, isAlert) {
 }
 
 window.operateEvents = {
-    'click #table_An_manage': function (e, value, row, index) {
+    'click #btn_del_an': function (e, value, row, index) {
         // e      Event
         // value  undefined
         // row    rowdata
         // index  row
-        alert('click');
         console.log(e);
         console.log(value);
         console.log(row);
