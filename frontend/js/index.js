@@ -2184,12 +2184,50 @@ function changeSRShowMode() {
         if (mode == "依班級") {
             SRShowMode = 'class';
             $('#SR_grade_select').show();
-            $('#classSwitch').show();
+            $('#SR_classSwitch').show();
             //TODO get grade-class and show table
+            changeSRGrade();
         } else if (mode == "依社團") {
             SRShowMode = 'club';
             $('#SR_clubSwitch').show();
             //TODO get club and show table
+            changeSRclub();
         }
     }, 100);
+}
+
+function changeSRGrade() {
+    setTimeout(function () {
+        var grade = $('#SR_grade_select li .active').text();
+        var grade_num=-1;
+        console.log(grade);
+        if (grade == "一年級") {
+            grade_num=1;
+            $('#SR_class_selectG1').show();
+            $('#SR_class_selectG2').hide();
+        } else if (grade == "二年級") {
+            grade_num=2;
+            $('#SR_class_selectG2').show();
+            $('#SR_class_selectG1').hide();
+        }
+        changeSRClass(grade_num);
+    }, 100);
+}
+
+function changeSRClass(grade) {
+    setTimeout(function () {
+        var class_num=-1;
+        if (grade == 1) {
+            class_num = parseInt($('#CS_class_selectG1 li .active').text(), 10);
+        } else if (grade == 2) {
+            class_num = parseInt($('#CS_class_selectG2 li .active').text(), 10);
+        }
+        console.log(class_num);
+        //TODO get SR table with class
+        //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+    }, 100);
+}
+
+function changeSRclub() {
+
 }
