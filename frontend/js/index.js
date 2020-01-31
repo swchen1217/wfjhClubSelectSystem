@@ -126,26 +126,6 @@ function init() {
             title: '特殊社團'
         }]
     });
-    $('#table_second_students').bootstrapTable({
-        dataType: "json",
-        classes: "table table-bordered table-striped table-sm",
-        striped: true,
-        uniqueId: 'sid',
-        sortName: 'sid',
-        columns: [{
-            field: 'sid',
-            title: '學號'
-        }, {
-            field: 'class',
-            title: '班級'
-        }, {
-            field: 'number',
-            title: '座號'
-        }, {
-            field: 'name',
-            title: '姓名'
-        }]
-    });
     $('#table_second_clubs').bootstrapTable({
         dataType: "json",
         classes: "table table-bordered table-striped table-sm",
@@ -189,6 +169,32 @@ function init() {
         }, {
             field: 'isOk',
             formatter: formatterIsOkNd,
+        }]
+    });
+    $('#table_SR').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'sid',
+        sortName: 'sid',
+        columns: [{
+            field: 'sid',
+            title: '學號'
+        }, {
+            field: 'class',
+            title: '班級'
+        }, {
+            field: 'number',
+            title: '座號'
+        }, {
+            field: 'name',
+            title: '姓名'
+        }, {
+            field: 'cid',
+            title: '社團代碼'
+        }, {
+            field: 'cname',
+            title: '社團名稱'
         }]
     });
 }
@@ -2168,9 +2174,7 @@ function SRAdminViewSwitch() {
         var grade = mClass.substring(0, 1);
         $('#SR-mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
         //TODO show table
-        //mode->class
-        //class
-        //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+        //$('#table_SR').bootstrapTable('load', getStudentsData(class_code));
     }
 }
 
@@ -2222,7 +2226,7 @@ function changeSRClass(grade) {
         }
         console.log(class_num);
         //TODO get SR table with class
-        //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+        //$('#table_SR').bootstrapTable('load', getStudentsData(class_code));
     }, 100);
 }
 
@@ -2238,6 +2242,40 @@ function selectSRclub() {
     var selected = $('#select_SR_club').val();
     console.log(selected);
     //TODO get SR table with club
-    //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+    //$('#table_SR').bootstrapTable('load', getStudentsData(class_code));
+}
+
+function getSRData(mode, target) {
+    var data = "";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getSRData" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") +
+            "&SRmode=" + mode +
+            "&target=" + target,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                data = jsonA;
+            } else {
+                $('#table_SR').bootstrapTable("removeAll");
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
 }
 
