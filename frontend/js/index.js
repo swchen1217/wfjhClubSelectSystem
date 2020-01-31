@@ -227,6 +227,8 @@ function OnHashchangeListener() {
         $('#Content_SelectResult').show();
         $("#title_bar").hide();
 
+        initSRclub();
+
         if (getSystem('display_result') == 'false') {
             $('#SR').hide();
             ShowAlart('alert-warning', '選社結果尚未公佈', false, false);
@@ -2193,7 +2195,8 @@ function changeSRShowMode() {
         } else if (mode == "依社團") {
             SRShowMode = 'club';
             $('#SR_clubSwitch').show();
-            initSRclub();
+            $('#select_SR_club').val('-1');
+            $('#table_SR').bootstrapTable("removeAll");
         }
     }, 100);
 }
