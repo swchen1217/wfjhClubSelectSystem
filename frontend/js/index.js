@@ -2162,6 +2162,7 @@ function SRAdminViewSwitch() {
     $('#SR-admin_view').hide();
     if ($.cookie('LoginInfoAdmin') == '1') {
         $('#SR-admin_view').show();
+        changeSRShowMode();
         //TODO get mode-grade-class and show table
     } else {
         $('#SR-classShow').show();
@@ -2171,4 +2172,22 @@ function SRAdminViewSwitch() {
         //TODO show table
         //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
     }
+}
+
+function changeSRShowMode() {
+    setTimeout(function () {
+        var mode = $('#SR_show_mode_switch li .active').text();
+        console.log(mode);
+        /*if (grade == "一年級") {
+            grade_code = 1;
+            $('#CS_class_selectG1').show();
+            $('#CS_class_selectG2').hide();
+        } else if (grade == "二年級") {
+            grade_code = 2;
+            $('#CS_class_selectG2').show();
+            $('#CS_class_selectG1').hide();
+        }
+        $('#table_clubList').bootstrapTable('load', getClubList(grade_code));
+        changeClass();*/
+    }, 100);
 }
