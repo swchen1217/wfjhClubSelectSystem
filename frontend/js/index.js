@@ -251,9 +251,9 @@ function OnHashchangeListener() {
                 var time = document.createElement("p");
                 time.style.textAlign = "right";
 
-                header.innerText=an[i]['title'];
-                text.innerHTML=an[i]['content'];
-                time.innerText='張貼時間:'+an[i]['posttime'];
+                header.innerText = an[i]['title'];
+                text.innerHTML = an[i]['content'];
+                time.innerText = '張貼時間:' + an[i]['posttime'];
 
                 body.appendChild(text);
                 body.appendChild(time);
@@ -262,6 +262,14 @@ function OnHashchangeListener() {
                 var Announcement = document.getElementById("Content_Announcement");
                 Announcement.appendChild(card);
             }
+        } else {
+            var title = document.createElement("h1");
+            title.innerText = '目前沒有公告喔~~';
+            title.style.textAlign = 'center';
+            title.style.marginTop = '50px';
+            title.style.marginBottom = '200px';
+            var Announcement = document.getElementById("Content_Announcement");
+            Announcement.appendChild(title);
         }
     }
     if (hash == '#ClubSelect' && login_check() && PermissionCheck(false, true)) {
@@ -376,8 +384,6 @@ function OnHashchangeListener() {
 function login_check() {
     if ($.cookie('LoginInfoAcc')) {
         return true;
-    } else if (location.hash == '') {
-        ShowAlart('alert-info', "請先<a href='login.html' class='alert-link'>登入</a>", true, false);
     } else {
         ShowAlart('alert-danger', '尚未登入!!', false, false);
         return false;
