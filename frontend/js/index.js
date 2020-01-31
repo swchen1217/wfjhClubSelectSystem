@@ -235,7 +235,7 @@ function OnHashchangeListener() {
     $("#title_bar").show();
     HideAlert();
 
-    if (hash == '' && login_check()) {
+    if (hash == '') {
         $('#Content_Announcement').show();
         var an = getAnData();
         if (an != '') {
