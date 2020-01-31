@@ -2163,31 +2163,33 @@ function SRAdminViewSwitch() {
     if ($.cookie('LoginInfoAdmin') == '1') {
         $('#SR-admin_view').show();
         changeSRShowMode();
-        //TODO get mode-grade-class and show table
     } else {
         $('#SR-classShow').show();
         var mClass = $.cookie('LoginInfoClass');
         var grade = mClass.substring(0, 1);
         $('#SR-mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
         //TODO show table
+        //mode->class
+        //class
         //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
     }
 }
 
+var SRShowMode;
 function changeSRShowMode() {
     setTimeout(function () {
         var mode = $('#SR_show_mode_switch li .active').text();
         console.log(mode);
-        /*if (grade == "一年級") {
-            grade_code = 1;
-            $('#CS_class_selectG1').show();
-            $('#CS_class_selectG2').hide();
-        } else if (grade == "二年級") {
-            grade_code = 2;
-            $('#CS_class_selectG2').show();
-            $('#CS_class_selectG1').hide();
+        $('.SRNdView').hide();
+        if (mode == "依班級") {
+            SRShowMode = 'class';
+            $('#SR_grade_select').show();
+            $('#classSwitch').show();
+            //TODO get grade-class and show table
+        } else if (mode == "依社團") {
+            SRShowMode = 'club';
+            $('#SR_clubSwitch').show();
+            //TODO get club and show table
         }
-        $('#table_clubList').bootstrapTable('load', getClubList(grade_code));
-        changeClass();*/
     }, 100);
 }
