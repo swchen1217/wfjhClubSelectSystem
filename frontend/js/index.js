@@ -2175,8 +2175,7 @@ function SRAdminViewSwitch() {
         var mClass = $.cookie('LoginInfoClass');
         var grade = mClass.substring(0, 1);
         $('#SR-mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
-        //TODO show table
-        $('#table_SR').bootstrapTable('load', getSRData('class',mClass));
+        $('#table_SR').bootstrapTable('load', getSRData('class', mClass));
     }
 }
 
@@ -2228,8 +2227,7 @@ function changeSRClass(grade) {
             class_num = parseInt($('#SR_class_selectG2 li .active').text(), 10);
         }
         console.log(class_num);
-        //TODO get SR table with class
-        $('#table_SR').bootstrapTable('load', getSRData('class',class_num));
+        $('#table_SR').bootstrapTable('load', getSRData('class', class_num));
     }, 100);
 }
 
@@ -2244,8 +2242,7 @@ function initSRclub() {
 function selectSRclub() {
     var selected = $('#select_SR_club').val();
     console.log(selected);
-    //TODO get SR table with club
-    $('#table_SR').bootstrapTable('load', getSRData('club',selected));
+    $('#table_SR').bootstrapTable('load', getSRData('club', selected));
 }
 
 function getSRData(mode, target) {
