@@ -392,13 +392,13 @@
                         </ul>
                         <div class="row SRNdView" id="SR_clubSwitch"
                              style="margin-left: 0px;padding: 5px;border-radius: 10px;background-color: #b4efb9;">
-                            <select class="form-control" id="select-SR_club">
+                            <select class="form-control" id="select_SR_club" onchange="selectSRclub()">
                                 <option value="-1" selected disabled>請選擇社團...</option>
                             </select>
                         </div>
                     </div>
                     <div class="row SRNdView" id="SR_classSwitch">
-                        <ul class="nav nav-pills" id="SR_class_selectG1" onclick=""
+                        <ul class="nav nav-pills" id="SR_class_selectG1" onclick="changeSRClass(1)"
                             style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="pill" href>101</a>
@@ -485,7 +485,7 @@
                                 <a class="nav-link" data-toggle="pill" href>128</a>
                             </li>
                         </ul>
-                        <ul class="nav nav-pills" id="SR_class_selectG2" onclick=""
+                        <ul class="nav nav-pills" id="SR_class_selectG2" onclick="changeSRClass(2)"
                             style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="pill" href>201</a>
