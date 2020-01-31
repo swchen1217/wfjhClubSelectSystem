@@ -1548,10 +1548,10 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_dl_result_class').click(function () {
-
+        window.open("../backend/db.php?mode=exportResult&acc="+$.cookie("LoginInfoAcc")+"&pw="+$.cookie("LoginInfoPw")+"&SRmode=class");
     });
     $('#btn_dl_result_club').click(function () {
-
+        window.open("../backend/db.php?mode=exportResult&acc="+$.cookie("LoginInfoAcc")+"&pw="+$.cookie("LoginInfoPw")+"&SRmode=club");
     });
     $('#btn_reset_select').click(function () {
         $.confirm({
@@ -2278,4 +2278,3 @@ function getSRData(mode, target) {
     });
     return data;
 }
-
