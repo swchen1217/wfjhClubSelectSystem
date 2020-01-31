@@ -225,6 +225,8 @@ function OnHashchangeListener() {
             $('#SR').hide();
             ShowAlart('alert-warning', '選社結果尚未公佈', false, false);
         } else {
+            if ($.cookie('LoginInfoAcc'))
+                SRAdminViewSwitch();
             $('#SR').show();
         }
     }
@@ -2153,4 +2155,20 @@ function getSelectDataNd(grade) {
             });
         }
     });
+}
+
+function SRAdminViewSwitch() {
+    $('#SR-classShow').hide();
+    $('#SR-admin_view').hide();
+    if ($.cookie('LoginInfoAdmin') == '1') {
+        $('#SR-admin_view').show();
+        //TODO get mode-grade-class and show table
+    } else {
+        $('#SR-classShow').show();
+        var mClass = $.cookie('LoginInfoClass');
+        var grade = mClass.substring(0, 1);
+        $('#SR-mClass').text((grade == '1' ? "一年級" : "二年級") + '-' + mClass);
+        //TODO show table
+        //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+    }
 }
