@@ -206,7 +206,7 @@ function init() {
         columns: [{
             field: 'id',
             title: 'ID'
-        },{
+        }, {
             field: 'title',
             title: '標題'
         }, {
@@ -1291,6 +1291,70 @@ function FormSubmitListener() {
         }
         return false;
     });
+    $('#form-newAn').submit(function () {
+        var title = $('#newAn-InputTitle').val();
+        var content = $('#newAn-InputContent').val();
+        var hyperlink = $('#newAn-InputHyperlink').val();
+
+        if (title != '' && content != '') {
+            $.confirm({
+                title: '張貼公告!!',
+                content: '確認張貼此公告??',
+                buttons: {
+                    confirm: {
+                        text: '確認',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            $.ajax({
+                                url: "../backend/db.php",
+                                data: "mode=newAn" +
+                                    "&acc=" + $.cookie("LoginInfoAcc") +
+                                    "&pw=" + $.cookie("LoginInfoPw") +
+                                    "&title=" + title +
+                                    "&content=" + content +
+                                    "&hyperlink=" + hyperlink ,
+                                type: "POST",
+                                success: function (msg) {
+                                    console.log(msg);
+                                    if (msg == "ok") {
+                                        $.alert({
+                                            title: '成功',
+                                            content: '張貼成功!!',
+                                            type: 'blue',
+                                            typeAnimated: true
+                                        });
+                                        $('#modal-newAn').modal('hide');
+                                        $('#table_An_manage').bootstrapTable('load', getAnData());
+                                    } else
+                                        ShowAlart('alert-danger', '錯誤!!', false, false);
+                                },
+                                error: function (xhr) {
+                                    console.log('ajax er');
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: 'Ajax 發生錯誤',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: '取消'
+                    }
+                }
+            });
+        } else {
+            $.alert({
+                title: '錯誤',
+                content: '輸入未完整!!',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+        return false;
+    });
 }
 
 function ButtonOnClickListener() {
@@ -1605,10 +1669,10 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_dl_result_class').click(function () {
-        window.open("../backend/db.php?mode=exportResult&acc="+$.cookie("LoginInfoAcc")+"&pw="+$.cookie("LoginInfoPw")+"&SRmode=class");
+        window.open("../backend/db.php?mode=exportResult&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw") + "&SRmode=class");
     });
     $('#btn_dl_result_club').click(function () {
-        window.open("../backend/db.php?mode=exportResult&acc="+$.cookie("LoginInfoAcc")+"&pw="+$.cookie("LoginInfoPw")+"&SRmode=club");
+        window.open("../backend/db.php?mode=exportResult&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw") + "&SRmode=club");
     });
     $('#btn_reset_select').click(function () {
         $.confirm({
@@ -1773,7 +1837,7 @@ function ButtonOnClickListener() {
         });
     });
     $('#btn_An_new').click(function () {
-
+        $('#modal-newAn').modal('show');
     });
 }
 
@@ -2345,7 +2409,7 @@ function getAnData() {
         url: "../backend/db.php",
         data: "mode=getAnData" +
             "&acc=" + $.cookie("LoginInfoAcc") +
-            "&pw=" + $.cookie("LoginInfoPw") ,
+            "&pw=" + $.cookie("LoginInfoPw"),
         type: "POST",
         async: false,
         success: function (msg) {
@@ -2353,13 +2417,13 @@ function getAnData() {
             if (msg != "no_data") {
                 var jsonA = JSON.parse(msg);
                 console.log(jsonA);
-                for(var i=0;i<jsonA.length;i++){
-                    if(jsonA[i]['hyperlink']!=''){
-                        var hyperlink='<br><b>連結</b>:';
-                        var tmp=jsonA[i]['hyperlink'].split(',');
-                        for(var k=0;k<tmp.length;k++)
-                            hyperlink+='<br><a href="'+tmp[k]+'">'+tmp[k]+'</a>';
-                        jsonA[i]['content']+=hyperlink;
+                for (var i = 0; i < jsonA.length; i++) {
+                    if (jsonA[i]['hyperlink'] != '') {
+                        var hyperlink = '<br><b>連結</b>:';
+                        var tmp = jsonA[i]['hyperlink'].split(',');
+                        for (var k = 0; k < tmp.length; k++)
+                            hyperlink += '<br><a href="' + tmp[k] + '">' + tmp[k] + '</a>';
+                        jsonA[i]['content'] += hyperlink;
                     }
                 }
                 data = jsonA;
