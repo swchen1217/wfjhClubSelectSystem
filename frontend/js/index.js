@@ -197,6 +197,32 @@ function init() {
             title: '社團名稱'
         }]
     });
+    $('#table_An_manage').bootstrapTable({
+        dataType: "json",
+        classes: "table table-bordered table-striped table-sm",
+        striped: true,
+        uniqueId: 'sid',
+        sortName: 'sid',
+        columns: [{
+            field: 'id',
+            title: 'ID'
+        },{
+            field: 'title',
+            title: '標題'
+        }, {
+            field: 'content',
+            title: '內容'
+        }, {
+            field: 'posttime',
+            title: '發布時間'
+        }, {
+            field: 'del',
+            title: '刪除',
+            width: 70,
+            formatter: '<button class="btn btn-danger">刪除</button>',
+            events: operateEvents
+        }]
+    });
 }
 
 function OnHashchangeListener() {
@@ -241,6 +267,8 @@ function OnHashchangeListener() {
     if (hash == '#SelectManage' && login_check() && PermissionCheck(true, true)) {
         $('#Content_SelectManage').show();
         $("#title_bar").hide();
+
+        $('#table_An_manage').bootstrapTable('load', getAnData());
 
         if (getSystem('CSenable') == 'true')
             $('#SM-CSenable').prop("checked", true);
@@ -346,29 +374,17 @@ function PermissionCheck(needAdmin, isAlert) {
 }
 
 window.operateEvents = {
-    'click #device_table_update': function (e, value, row, index) {
+    'click #table_An_manage': function (e, value, row, index) {
         // e      Event
         // value  undefined
         // row    rowdata
         // index  row
-        var DID = row['DID'];
-        console.log(DID);
-        location.href = '?DID=' + DID + '#UpdateStatus';
-    },
-    'click #device_table_manage': function (e, value, row, index) {
-        var DID = row['DID'];
-        console.log(DID);
-        location.href = '?DID=' + DID + '#DeviceManage';
-    },
-    'click #device_table_mkqr': function (e, value, row, index) {
-        var DID = row['DID'];
-        console.log(DID);
-        document.getElementById("QRModalTitle").innerText = DID;
-        document.getElementById("QRModalContext1").innerHTML = "<img src='../ntuh_yl_RT_mdms_api/make_qrcode.php?DID=" + DID + "'/>";
-        document.getElementById("QRModalContext2").innerHTML = "<a href='../ntuh_yl_RT_mdms_api/make_qrcode.php?DID=" + DID + "' download>下載QRCode<br>(87x87)</a>";
-
-        $('#QRModal').modal('show');
-    },
+        alert('click');
+        console.log(e);
+        console.log(value);
+        console.log(row);
+        console.log(index);
+    }
 };
 
 function LinkFormatterUM(value, row, index) {
@@ -2264,6 +2280,45 @@ function getSRData(mode, target) {
                 data = jsonA;
             } else {
                 $('#table_SR').bootstrapTable("removeAll");
+            }
+        },
+        error: function (xhr) {
+            console.log('ajax er');
+            $.alert({
+                title: '錯誤',
+                content: 'Ajax 發生錯誤',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    });
+    return data;
+}
+
+function getAnData() {
+    var data = "";
+    $.ajax({
+        url: "../backend/db.php",
+        data: "mode=getAnData" +
+            "&acc=" + $.cookie("LoginInfoAcc") +
+            "&pw=" + $.cookie("LoginInfoPw") ,
+        type: "POST",
+        async: false,
+        success: function (msg) {
+            console.log(msg);
+            if (msg != "no_data") {
+                var jsonA = JSON.parse(msg);
+                console.log(jsonA);
+                for(var i=0;i<jsonA.length;i++){
+                    if(jsonA[i]['hyperlink']!=''){
+                        var hyperlink='<br><b>連結</b>:';
+                        var tmp=jsonA[i]['hyperlink'].split(',');
+                        for(var k=0;k<tmp.length;k++)
+                            hyperlink+='<br><a href="'+tmp[k]+'">'+tmp[k]+'</a>';
+                        jsonA[i]['content']+=hyperlink;
+                    }
+                }
+                data = jsonA;
             }
         },
         error: function (xhr) {
