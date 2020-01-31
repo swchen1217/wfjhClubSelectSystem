@@ -15,6 +15,7 @@ $operate_acc = request("operate_acc");
 $new_name = request("new_name");
 $new_isAdmin = request("new_isAdmin", true);
 $new_create_time = request("new_create_time");
+$new_create_time = request("new_create_time");
 $new_class = request("new_class");
 
 if ($mode == "login_check") {
