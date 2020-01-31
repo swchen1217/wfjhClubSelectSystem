@@ -1772,6 +1772,9 @@ function ButtonOnClickListener() {
             }
         });
     });
+    $('#btn_An_new').click(function () {
+
+    });
 }
 
 function getAllClub() {
