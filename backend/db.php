@@ -6,7 +6,7 @@ require("UserCheck.php");
 
 mb_internal_encoding('UTF-8');
 
-$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false'], ['second', 'false'], ['second_count', '0'],['makeResultEnable','false'],['madeResult','false']];
+$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false'], ['second', 'false'], ['second_count', '0'], ['makeResultEnable', 'false'], ['madeResult', 'false']];
 
 $mode = request("mode");
 $LastModified = request("LastModified");
@@ -646,7 +646,7 @@ if ($mode == "checkSecondOk") {
         $rs = $db->prepare($sql);
         $rs->execute();
         if ($rs->rowCount() == getSystem('second_count', $db))
-            setSystem('makeResultEnable','true',$db);
+            setSystem('makeResultEnable', 'true', $db);
     } else
         echo "user_error";
     exit;
