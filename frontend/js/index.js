@@ -1719,7 +1719,6 @@ function getAllClub() {
         type: "POST",
         async: false,
         success: function (msg) {
-            console.log(msg);
             if (msg != "no_data") {
                 var jsonA = JSON.parse(msg);
                 for (var i = 0; i < jsonA.length; i++)
@@ -1876,16 +1875,16 @@ function stepCheck() {
     if (getSystem('makeResultEnable') != 'false') {
         $('#btn_make_result').prop('disabled', false);
     }
-    if(getSystem('second') == 'false'){
+    if (getSystem('second') == 'false') {
         $('#btn_second_submit').prop('disabled', true);
     }
-    if(getSystem('makeResultEnable') == 'false'){
+    if (getSystem('makeResultEnable') == 'false') {
         $('#btn_make_result').prop('disabled', true);
         $('#btn_re_second').prop('disabled', true);
         $('#btn_dl_result_class').prop('disabled', true);
         $('#btn_dl_result_club').prop('disabled', true);
     }
-    if(getSystem('madeResult') != 'false'){
+    if (getSystem('madeResult') != 'false') {
         $('#btn_make_result').prop('disabled', true);
         $('#btn_re_second').prop('disabled', false);
         $('#btn_dl_result_class').prop('disabled', false);
@@ -2032,32 +2031,32 @@ function secondVerify() {
             typeAnimated: true
         });
     } else {
-        var selected=new Array(secondClubs.length);
-        for(var i=0;i<selected.length;i++)
-            selected[i]=0;
-        for(var k=0;k<secondStudents.length;k++){
+        var selected = new Array(secondClubs.length);
+        for (var i = 0; i < selected.length; i++)
+            selected[i] = 0;
+        for (var k = 0; k < secondStudents.length; k++) {
             var inputCid = $('#inputCid_' + k);
-            for(var n=0;n<secondClubs.length;n++){
-                if(secondClubs[n]['id']==inputCid.val()){
+            for (var n = 0; n < secondClubs.length; n++) {
+                if (secondClubs[n]['id'] == inputCid.val()) {
                     selected[n]++;
                 }
             }
         }
-        for(var i=0;i<selected.length;i++)
+        for (var i = 0; i < selected.length; i++)
             console.log(selected[n]);
         var content_over = '';
-        for(var i=0;i<secondClubs.length;i++){
-            if(selected[i]>secondClubs[i]['rest']){
-                content_over+=secondClubs[i]['id']+'('+secondClubs[i]['name']+') : ';
-                for(var k=0;k<secondStudents.length;k++){
+        for (var i = 0; i < secondClubs.length; i++) {
+            if (selected[i] > secondClubs[i]['rest']) {
+                content_over += secondClubs[i]['id'] + '(' + secondClubs[i]['name'] + ') : ';
+                for (var k = 0; k < secondStudents.length; k++) {
                     var inputCid = $('#inputCid_' + k);
-                    if(secondClubs[i]['id']==inputCid.val())
-                        content_over+=secondStudents[k]['sid']+' '+secondStudents[k]['name']+',';
+                    if (secondClubs[i]['id'] == inputCid.val())
+                        content_over += secondStudents[k]['sid'] + ' ' + secondStudents[k]['name'] + ',';
                 }
-                content_over+='<br>';
+                content_over += '<br>';
             }
         }
-        if(content_over!=''){
+        if (content_over != '') {
             $.alert({
                 title: '社團餘額不足',
                 content: content_over,
@@ -2065,7 +2064,7 @@ function secondVerify() {
                 typeAnimated: true,
                 columnClass: 'm'
             });
-        }else{
+        } else {
             var jsonA = new Array();
             for (var i = 0; i < secondStudents.length; i++) {
                 var inputCid = $('#inputCid_' + i);
@@ -2176,6 +2175,7 @@ function SRAdminViewSwitch() {
 }
 
 var SRShowMode;
+
 function changeSRShowMode() {
     setTimeout(function () {
         var mode = $('#SR_show_mode_switch li .active').text();
@@ -2185,13 +2185,11 @@ function changeSRShowMode() {
             SRShowMode = 'class';
             $('#SR_grade_select').show();
             $('#SR_classSwitch').show();
-            //TODO get grade-class and show table
             changeSRGrade();
         } else if (mode == "依社團") {
             SRShowMode = 'club';
             $('#SR_clubSwitch').show();
-            //TODO get club and show table
-            changeSRclub();
+            initSRclub();
         }
     }, 100);
 }
@@ -2199,14 +2197,14 @@ function changeSRShowMode() {
 function changeSRGrade() {
     setTimeout(function () {
         var grade = $('#SR_grade_select li .active').text();
-        var grade_num=-1;
+        var grade_num = -1;
         console.log(grade);
         if (grade == "一年級") {
-            grade_num=1;
+            grade_num = 1;
             $('#SR_class_selectG1').show();
             $('#SR_class_selectG2').hide();
         } else if (grade == "二年級") {
-            grade_num=2;
+            grade_num = 2;
             $('#SR_class_selectG2').show();
             $('#SR_class_selectG1').hide();
         }
@@ -2216,11 +2214,11 @@ function changeSRGrade() {
 
 function changeSRClass(grade) {
     setTimeout(function () {
-        var class_num=-1;
+        var class_num = -1;
         if (grade == 1) {
-            class_num = parseInt($('#CS_class_selectG1 li .active').text(), 10);
+            class_num = parseInt($('#SR_class_selectG1 li .active').text(), 10);
         } else if (grade == 2) {
-            class_num = parseInt($('#CS_class_selectG2 li .active').text(), 10);
+            class_num = parseInt($('#SR_class_selectG2 li .active').text(), 10);
         }
         console.log(class_num);
         //TODO get SR table with class
@@ -2228,6 +2226,18 @@ function changeSRClass(grade) {
     }, 100);
 }
 
-function changeSRclub() {
-
+function initSRclub() {
+    var allClub = getAllClub();
+    for (var i = 0; i < allClub.length; i++) {
+        var opt_tmp = "<option value='" + allClub[i]['id'] + "'>" + allClub[i]['id'] + ' (' + allClub[i]['name'] + ")</option>";
+        $('#select_SR_club').append(opt_tmp);
+    }
 }
+
+function selectSRclub() {
+    var selected = $('#select_SR_club').val();
+    console.log(selected);
+    //TODO get SR table with club
+    //$('#table_clubSelect').bootstrapTable('load', getStudentsData(class_code));
+}
+
