@@ -813,23 +813,19 @@ if ($mode == "exportResult") {
 }
 
 if ($mode == "getAnData") {
-    if (UserCheck($acc, $pw, true, $db)) {
-        $sql = "SELECT * FROM `announcement` WHERE 1=1";
-        $rs = $db->prepare($sql);
-        $rs->execute();
-        if ($rs->rowCount() == 0) {
-            echo "no_data";
-        } else {
-            $ToJson = array();
-            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
-                $ToJson[] = $row;
-            }
-            echo json_encode($ToJson);
-        }
-        $rs = null;
+    $sql = "SELECT * FROM `announcement` WHERE 1=1";
+    $rs = $db->prepare($sql);
+    $rs->execute();
+    if ($rs->rowCount() == 0) {
+        echo "no_data";
     } else {
-        echo "user_error";
+        $ToJson = array();
+        while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+            $ToJson[] = $row;
+        }
+        echo json_encode($ToJson);
     }
+    $rs = null;
     exit;
 }
 
