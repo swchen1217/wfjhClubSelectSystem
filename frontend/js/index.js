@@ -374,15 +374,57 @@ function PermissionCheck(needAdmin, isAlert) {
 }
 
 window.operateEvents = {
+    // e      Event
+    // value  undefined
+    // row    rowdata
+    // index  row
     'click #btn_del_an': function (e, value, row, index) {
-        // e      Event
-        // value  undefined
-        // row    rowdata
-        // index  row
-        console.log(e);
-        console.log(value);
-        console.log(row);
-        console.log(index);
+        console.log(row['id']);
+        $.confirm({
+            title: '確認刪除!!',
+            content: '即將刪除公告',
+            type: 'red',
+            autoClose: 'cancel|10000',
+            buttons: {
+                confirm: {
+                    text: '刪除',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        $.ajax({
+                            url: "../backend/db.php",
+                            data: "mode=delAn" +
+                                "&acc=" + $.cookie("LoginInfoAcc") +
+                                "&pw=" + $.cookie("LoginInfoPw") +
+                                "&id=" + row['id']
+                            ,
+                            type: "POST",
+                            success: function (msg) {
+                                if (msg == "ok") {
+                                    ShowAlart('alert-success', '刪除成功', false, true);
+                                    $('#table_An_manage').bootstrapTable('load', getAnData());
+                                } else {
+                                    ShowAlart('alert-danger', '錯誤!!', false, false);
+                                }
+                            },
+                            error: function (xhr) {
+                                console.log('ajax er');
+                                $.alert({
+                                    title: '錯誤',
+                                    content: 'Ajax 發生錯誤',
+                                    type: 'red',
+                                    typeAnimated: true
+                                });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                },
+            }
+        });
+
+
     }
 };
 
