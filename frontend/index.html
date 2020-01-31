@@ -372,7 +372,8 @@
                 <div id="SR-admin_view">
                     <div class="row">
                         <ul class="nav nav-pills" id="SR_show_mode_switch"
-                            style="padding: 5px;border-radius: 10px;background-color: #94d9f3;" onclick="changeSRShowMode()">
+                            style="padding: 5px;border-radius: 10px;background-color: #94d9f3;"
+                            onclick="changeSRShowMode()">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="pill" href>依班級</a>
                             </li>
@@ -380,7 +381,7 @@
                                 <a class="nav-link" data-toggle="pill" href>依社團</a>
                             </li>
                         </ul>
-                        <ul class="nav nav-pills" id="SR_grade_select"
+                        <ul class="nav nav-pills SRNdView" id="SR_grade_select"
                             style="padding: 5px;border-radius: 10px;background-color: #b4efb9;" onclick="">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="pill" href>一年級</a>
@@ -389,12 +390,14 @@
                                 <a class="nav-link" data-toggle="pill" href>二年級</a>
                             </li>
                         </ul>
-                        <div class="row" id="SR-clubSwitch" style="margin-left: 0px;padding: 5px;border-radius: 10px;background-color: #b4efb9;"">
+                        <div class="row SRNdView" id="SR_clubSwitch"
+                             style="margin-left: 0px;padding: 5px;border-radius: 10px;background-color: #b4efb9;">
                             <select class="form-control" id="select-SR_club">
                                 <option value="-1" selected disabled>請選擇社團...</option>
                             </select>
+                        </div>
                     </div>
-                    <div class="row" id="SR-classSwitch">
+                    <div class="row SRNdView" id="SR-classSwitch">
                         <ul class="nav nav-pills" id="SR_class_selectG1" onclick=""
                             style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
                             <li class="nav-item">
@@ -592,7 +595,8 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <ul class="nav nav-pills" id="SM_second_submit_grade_select"
-                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px" onclick="changeGradeClass_SM_SSubmit();">
+                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px"
+                                        onclick="changeGradeClass_SM_SSubmit();">
                                         <li class="nav-item">
                                             <a class="nav-link active" data-toggle="pill" href>一年級</a>
                                         </li>
@@ -603,8 +607,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-8">
-                                        <table id="tablb_second_submit"></table><br>
-                                        <button type="button" class="btn btn-primary" style="float: right;margin-top: 5px"
+                                        <table id="tablb_second_submit"></table>
+                                        <br>
+                                        <button type="button" class="btn btn-primary"
+                                                style="float: right;margin-top: 5px"
                                                 onclick="secondVerify()" id="btn_SM_SSubmit" disabled>送出
                                         </button>
                                     </div>
@@ -625,7 +631,8 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <h4>開放選填<i class="fas fa-lock" id="icon-CSenable-lock" style="margin-left: 5px;display: none"></i></h4>
+                                <h4>開放選填<i class="fas fa-lock" id="icon-CSenable-lock"
+                                           style="margin-left: 5px;display: none"></i></h4>
                                 <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
                                 <label class="switch" style="vertical-align: top">
                                     <input type="checkbox" id="SM-CSenable" onchange="CSsetting('CSenable')">
@@ -634,13 +641,17 @@
                                 <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
                             </div>
                             <div class="form-group">
-                                <h4>每社最多人數(一般)<i class="fas fa-lock" id="icon-maxGCPN-lock" style="margin-left: 5px;display: none"></i></h4>
+                                <h4>每社最多人數(一般)<i class="fas fa-lock" id="icon-maxGCPN-lock"
+                                                 style="margin-left: 5px;display: none"></i></h4>
                                 <div class="row">
                                     <div class="col-8">
-                                        <input type="text" class="form-control" id="SM-maxGCPN" placeholder="最高人數" style="margin-left: 50px;max-width: 12em">
+                                        <input type="text" class="form-control" id="SM-maxGCPN" placeholder="最高人數"
+                                               style="margin-left: 50px;max-width: 12em">
                                     </div>
                                     <div class="col-4">
-                                        <button type="button" class="btn btn-default btn-primary btn-block" id="btn_maxGCPN" onclick="CSsetting('maxGCPN')">設定</button>
+                                        <button type="button" class="btn btn-default btn-primary btn-block"
+                                                id="btn_maxGCPN" onclick="CSsetting('maxGCPN')">設定
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -648,7 +659,8 @@
                                 <h4>結果顯示</h4>
                                 <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
                                 <label class="switch" style="vertical-align: top">
-                                    <input type="checkbox" id="SM-display_result" onchange="CSsetting('display_result')">
+                                    <input type="checkbox" id="SM-display_result"
+                                           onchange="CSsetting('display_result')">
                                     <span class="slider round"></span>
                                 </label>
                                 <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
@@ -664,36 +676,56 @@
                         <div class="card-body">
                             <div class="row" style="margin-bottom: 8px">
                                 <div class="col-8" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_checkNotSelected">檢查未選社學生</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_checkNotSelected">檢查未選社學生
+                                    </button>
                                 </div>
                                 <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_reset_select">重設選填資料</button>
+                                    <button type="button" class="btn btn-default btn-danger btn-block"
+                                            id="btn_reset_select">重設選填資料
+                                    </button>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 8px">
                                 <div class="col-8" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_definite_distribute" disabled>確定中選社團分配</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_definite_distribute" disabled>確定中選社團分配
+                                    </button>
                                 </div>
                                 <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_reset_result" disabled>重設選社結果</button>
+                                    <button type="button" class="btn btn-default btn-danger btn-block"
+                                            id="btn_reset_result" disabled>重設選社結果
+                                    </button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_selects_draw" onclick="" disabled>志願序抽籤</button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_submit" onclick="" disabled>二次分配結果登錄</button>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_selects_draw"
+                                    onclick="" disabled>志願序抽籤
+                            </button>
+                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_submit"
+                                    onclick="" disabled>二次分配結果登錄
+                            </button>
                             <div class="row" style="margin-top: 8px">
                                 <div class="col-8" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_make_result" onclick="" disabled>產生選社結果</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_make_result" onclick="" disabled>產生選社結果
+                                    </button>
                                 </div>
                                 <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block" id="btn_re_second" disabled>返回二次分配</button>
+                                    <button type="button" class="btn btn-default btn-danger btn-block"
+                                            id="btn_re_second" disabled>返回二次分配
+                                    </button>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 8px">
                                 <div class="col" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_dl_result_class" onclick="" disabled>下載選社結果(依班級)</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_dl_result_class" onclick="" disabled>下載選社結果(依班級)
+                                    </button>
                                 </div>
                                 <div class="col" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block" id="btn_dl_result_club" onclick="" disabled>下載選社結果(依社團)</button>
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_dl_result_club" onclick="" disabled>下載選社結果(依社團)
+                                    </button>
                                 </div>
                             </div>
                         </div>
