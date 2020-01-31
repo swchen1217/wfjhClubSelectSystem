@@ -22,6 +22,8 @@ $new_name = request("new_name");
 $new_teacher = request("new_teacher");
 $new_grade = request("new_grade");
 $new_isSpecial = request("new_isSpecial", true);
+$SRmode = request("SRmode");
+$target = request("target");
 
 if ($mode == "getClubList") {
     if (UserCheck($acc, $pw, false, $db)) {
@@ -675,5 +677,74 @@ if ($mode == "re_second") {
         echo 'ok';
     }
     exit;
+}
+
+if ($mode == "getSRData") {
+    if (UserCheck($acc, $pw, false, $db)) {
+        if ($SRmode == "class") {
+            $sql = "SELECT students.sid,students.class,students.number,students.name,clubs.id,clubs.name 
+                    FROM (result INNER JOIN students
+                        ON result.sid = students.sid)
+                        INNER JOIN clubs
+                            ON result.cid = clubs.id
+                    WHERE students.class=:class
+                    ORDER BY students.sid";
+            $rs = $db->prepare($sql);
+            $rs->bindValue(':class', $target, PDO::PARAM_STR);
+            $rs->execute();
+            if ($rs->rowCount() == 0) {
+                echo "no_data";
+            } else {
+                $ToJson = array();
+                while ($row = $rs->fetch(PDO::FETCH_NUM)) {
+                    $ToJson[] = array('sid' => $row[0], 'class' => $row[1], 'number' => $row[2], 'name' => $row[3], 'cid' => $row[4], 'cname' => $row[5]);
+                }
+                echo json_encode($ToJson);
+            }
+            $rs = null;
+        } else if ($SRmode == "club") {
+            $sql = "SELECT students.sid,students.class,students.number,students.name,clubs.id,clubs.name 
+                    FROM (result INNER JOIN students
+                        ON result.sid = students.sid)
+                        INNER JOIN clubs
+                            ON result.cid = clubs.id
+                    WHERE clubs.id=:cid
+                    ORDER BY students.sid";
+            $rs = $db->prepare($sql);
+            $rs->bindValue(':cid', $target, PDO::PARAM_STR);
+            $rs->execute();
+            if ($rs->rowCount() == 0) {
+                echo "no_data";
+            } else {
+                $ToJson = array();
+                while ($row = $rs->fetch(PDO::FETCH_NUM)) {
+                    $ToJson[] = array('sid' => $row[0], 'class' => $row[1], 'number' => $row[2], 'name' => $row[3], 'cid' => $row[4], 'cname' => $row[5]);
+                }
+                echo json_encode($ToJson);
+            }
+            $rs = null;
+        }
+    } else {
+        echo "user_error";
+    }
+    exit;
+
+    //SELECT students.sid,students.class,students.number,students.name,clubs.id,clubs.name
+    //FROM (result
+    //INNER JOIN students
+    //ON result.sid = students.sid)
+    //INNER JOIN clubs
+    //ON result.cid = clubs.id
+    //WHERE students.class=''
+    //ORDER BY students.sid
+
+    //SELECT students.sid,students.class,students.number,students.name,clubs.id,clubs.name
+    //FROM (result
+    //INNER JOIN students
+    //ON result.sid = students.sid)
+    //INNER JOIN clubs
+    //ON result.cid = clubs.id
+    //WHERE clubs.id=''
+    //ORDER BY students.sid
 }
 ?>
