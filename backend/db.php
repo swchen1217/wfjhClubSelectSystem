@@ -795,12 +795,12 @@ if ($mode == "getSRData") {
 
 if ($mode == "exportResult") {
     if (UserCheck($acc, $pw, true, $db)) {
-        $fileList=glob('./export/wfcss_class_*.csv');
+        $fileList=glob('./export/wfcss_'.$SRmode.'_*.csv');
         foreach ($fileList as $key=>$value)
-            $fileList[$key]=substr($value,21,12);
+            $fileList[$key]=substr($value,-16,12);
         rsort($fileList);
         $filename='./export/wfcss_'.$SRmode.'_'.$fileList[0].'.csv';
-        header('content-disposition:attachment;filename='.$filename);	//告訴瀏覽器通過何種方式處理檔案
+        header('content-disposition:attachment;filename='.substr($filename,9));	//告訴瀏覽器通過何種方式處理檔案
         header('content-length:'.filesize($filename));	//下載檔案的大小
         readfile($filename);
     } else {
