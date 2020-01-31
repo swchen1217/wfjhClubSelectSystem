@@ -78,966 +78,995 @@
         </ul>
     </div>
 </nav>
-<div id="middle">
-    <div class="container">
-        <div id="alert">
-            <div class="alert alert-primary" role="alert" style="display: none;margin-top: 16px"
-                 id="alert-primary"></div>
-            <div class="alert alert-success" role="alert" style="display: none;margin-top: 16px" id="alert-success">
-                <div class="row">
-                    <div class="col-0">
-                        <div class="row" style="margin: 0px">
-                            <i class="fa fa-check fa-2x" style="margin:0px 5px"></i><strong>成功：</strong>
-                        </div>
-                    </div>
-                    <div class="col" style="padding-left: 0px">
-                        <div id="alert-success-in"></div>
+<div class="container">
+    <div id="alert">
+        <div class="alert alert-primary" role="alert" style="display: none;margin-top: 16px"
+             id="alert-primary"></div>
+        <div class="alert alert-success" role="alert" style="display: none;margin-top: 16px" id="alert-success">
+            <div class="row">
+                <div class="col-0">
+                    <div class="row" style="margin: 0px">
+                        <i class="fa fa-check fa-2x" style="margin:0px 5px"></i><strong>成功：</strong>
                     </div>
                 </div>
-            </div>
-            <div class="alert alert-danger" role="alert" style="display: none;margin-top: 16px" id="alert-danger">
-                <div class="row">
-                    <div class="col-0">
-                        <div class="row" style="margin: 0px">
-                            <i class="fa fa-times fa-2x" style="padding:0px 5px;margin:0px 5px"></i><strong>錯誤：</strong>
-                        </div>
-                    </div>
-                    <div class="col" style="padding-left: 0px">
-                        <div id="alert-danger-in"></div>
-                    </div>
+                <div class="col" style="padding-left: 0px">
+                    <div id="alert-success-in"></div>
                 </div>
             </div>
-            <div class="alert alert-warning" role="alert" style="display: none;margin-top: 16px" id="alert-warning">
-                <div class="row">
-                    <div class="col-0">
-                        <div class="row" style="margin: 0px">
-                            <i class="fa fa-exclamation-circle fa-2x" style="margin:0px 5px"></i><strong>警告：</strong>
-                        </div>
-                    </div>
-                    <div class="col" style="padding-left: 0px">
-                        <div id="alert-warning-in"></div>
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none;margin-top: 16px" id="alert-danger">
+            <div class="row">
+                <div class="col-0">
+                    <div class="row" style="margin: 0px">
+                        <i class="fa fa-times fa-2x" style="padding:0px 5px;margin:0px 5px"></i><strong>錯誤：</strong>
                     </div>
                 </div>
+                <div class="col" style="padding-left: 0px">
+                    <div id="alert-danger-in"></div>
+                </div>
             </div>
-            <div class="alert alert-info" role="alert" style="display: none;margin-top: 16px" id="alert-info">
-                <div class="row">
-                    <div class="col-0">
-                        <div class="row" style="margin: 0px">
-                            <i class="fa fa-info fa-2x" style="padding:0px 10px;margin:0px 5px"></i><strong>資訊：</strong>
-                        </div>
+        </div>
+        <div class="alert alert-warning" role="alert" style="display: none;margin-top: 16px" id="alert-warning">
+            <div class="row">
+                <div class="col-0">
+                    <div class="row" style="margin: 0px">
+                        <i class="fa fa-exclamation-circle fa-2x" style="margin:0px 5px"></i><strong>警告：</strong>
                     </div>
-                    <div class="col" style="padding-left: 0px">
-                        <div id="alert-info-in"></div>
+                </div>
+                <div class="col" style="padding-left: 0px">
+                    <div id="alert-warning-in"></div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info" role="alert" style="display: none;margin-top: 16px" id="alert-info">
+            <div class="row">
+                <div class="col-0">
+                    <div class="row" style="margin: 0px">
+                        <i class="fa fa-info fa-2x" style="padding:0px 10px;margin:0px 5px"></i><strong>資訊：</strong>
+                    </div>
+                </div>
+                <div class="col" style="padding-left: 0px">
+                    <div id="alert-info-in"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog_ProgressBar_Sync" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title ">
+                        資料同步中...
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                             style="width: 100%"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="dialog_ProgressBar_Sync" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true"
-             data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-title ">
-                            資料同步中...
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                 style="width: 100%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
 
-        <div id="Content_Announcement">H</div>
-        <div id="Content_ClubSelect">
-            <div class="row" id="classShow">
-                <ul class="nav nav-pills" id="CS_class"
+    <div id="Content_Announcement">
+        <div class="card">
+            <h5 class="card-header">Featured</h5>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Featured</h5>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Featured</h5>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+        </div>
+    </div>
+    <div id="Content_ClubSelect">
+        <div class="row" id="classShow">
+            <ul class="nav nav-pills" id="CS_class"
+                style="padding: 5px;border-radius: 10px;background-color: #86ded9;margin-left: 30px">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href id="mClass"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="row" id="classSwitch">
+            <ul class="nav nav-pills" id="CS_grade_select"
+                style="padding: 5px;border-radius: 10px;background-color: #b4efb9;" onclick="changeGradeClass()">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href>一年級</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>二年級</a>
+                </li>
+            </ul>
+            <ul class="nav nav-pills" id="CS_class_selectG1" onclick="changeClass()"
+                style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href>101</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>102</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>103</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>104</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>105</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>106</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>107</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>108</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>109</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>110</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>111</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>112</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>113</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>114</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>115</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>116</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>117</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>118</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>119</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>120</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>121</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>122</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>123</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>124</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>125</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>126</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>127</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>128</a>
+                </li>
+            </ul>
+            <ul class="nav nav-pills" id="CS_class_selectG2" onclick="changeClass()"
+                style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href>201</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>202</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>203</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>204</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>205</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>206</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>207</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>208</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>209</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>210</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>211</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>212</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>213</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>214</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>215</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>216</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>217</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>218</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>219</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>220</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>221</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>222</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>223</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>224</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>225</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>226</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>227</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href>228</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <table id="table_clubSelect"></table>
+                <button type="button" class="btn btn-primary" style="float: right;margin-top: 5px"
+                        onclick="selectVerify()" id="btn_CS_submit" disabled>送出
+                </button>
+            </div>
+            <div class="col-4">
+                <table id="table_clubList"></table>
+            </div>
+        </div>
+    </div>
+    <div id="Content_SelectResult">
+        <div id="SR" style="display: none">
+            <div class="row" id="SR-classShow">
+                <ul class="nav nav-pills" id="SR-CS_class"
                     style="padding: 5px;border-radius: 10px;background-color: #86ded9;margin-left: 30px">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href id="mClass"></a>
+                        <a class="nav-link active" data-toggle="pill" href id="SR-mClass"></a>
                     </li>
                 </ul>
             </div>
-            <div class="row" id="classSwitch">
-                <ul class="nav nav-pills" id="CS_grade_select"
-                    style="padding: 5px;border-radius: 10px;background-color: #b4efb9;" onclick="changeGradeClass()">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href>一年級</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>二年級</a>
-                    </li>
-                </ul>
-                <ul class="nav nav-pills" id="CS_class_selectG1" onclick="changeClass()"
-                    style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href>101</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>102</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>103</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>104</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>105</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>106</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>107</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>108</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>109</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>110</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>111</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>112</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>113</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>114</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>115</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>116</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>117</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>118</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>119</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>120</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>121</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>122</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>123</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>124</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>125</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>126</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>127</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>128</a>
-                    </li>
-                </ul>
-                <ul class="nav nav-pills" id="CS_class_selectG2" onclick="changeClass()"
-                    style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href>201</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>202</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>203</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>204</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>205</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>206</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>207</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>208</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>209</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>210</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>211</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>212</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>213</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>214</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>215</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>216</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>217</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>218</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>219</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>220</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>221</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>222</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>223</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>224</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>225</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>226</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>227</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href>228</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-8">
-                    <table id="table_clubSelect"></table>
-                    <button type="button" class="btn btn-primary" style="float: right;margin-top: 5px"
-                            onclick="selectVerify()" id="btn_CS_submit" disabled>送出
-                    </button>
-                </div>
-                <div class="col-4">
-                    <table id="table_clubList"></table>
-                </div>
-            </div>
-        </div>
-        <div id="Content_SelectResult">
-            <div id="SR" style="display: none">
-                <div class="row" id="SR-classShow">
-                    <ul class="nav nav-pills" id="SR-CS_class"
-                        style="padding: 5px;border-radius: 10px;background-color: #86ded9;margin-left: 30px">
+            <div id="SR-admin_view">
+                <div class="row">
+                    <ul class="nav nav-pills" id="SR_show_mode_switch"
+                        style="padding: 5px;border-radius: 10px;background-color: #94d9f3;"
+                        onclick="changeSRShowMode()">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href id="SR-mClass"></a>
+                            <a class="nav-link active" data-toggle="pill" href>依班級</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>依社團</a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills SRNdView" id="SR_grade_select"
+                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;" onclick="changeSRGrade();">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href>一年級</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>二年級</a>
+                        </li>
+                    </ul>
+                    <div class="row SRNdView" id="SR_clubSwitch"
+                         style="margin-left: 0px;padding: 5px;border-radius: 10px;background-color: #b4efb9;">
+                        <select class="form-control" id="select_SR_club" onchange="selectSRclub()">
+                            <option value="-1" selected disabled>請選擇社團...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row SRNdView" id="SR_classSwitch">
+                    <ul class="nav nav-pills" id="SR_class_selectG1" onclick="changeSRClass(1)"
+                        style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href>101</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>102</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>103</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>104</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>105</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>106</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>107</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>108</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>109</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>110</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>111</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>112</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>113</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>114</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>115</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>116</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>117</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>118</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>119</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>120</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>121</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>122</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>123</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>124</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>125</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>126</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>127</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>128</a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills" id="SR_class_selectG2" onclick="changeSRClass(2)"
+                        style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href>201</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>202</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>203</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>204</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>205</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>206</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>207</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>208</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>209</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>210</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>211</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>212</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>213</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>214</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>215</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>216</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>217</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>218</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>219</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>220</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>221</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>222</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>223</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>224</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>225</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>226</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>227</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href>228</a>
                         </li>
                     </ul>
                 </div>
-                <div id="SR-admin_view">
-                    <div class="row">
-                        <ul class="nav nav-pills" id="SR_show_mode_switch"
-                            style="padding: 5px;border-radius: 10px;background-color: #94d9f3;"
-                            onclick="changeSRShowMode()">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href>依班級</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>依社團</a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-pills SRNdView" id="SR_grade_select"
-                            style="padding: 5px;border-radius: 10px;background-color: #b4efb9;" onclick="changeSRGrade();">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href>一年級</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>二年級</a>
-                            </li>
-                        </ul>
-                        <div class="row SRNdView" id="SR_clubSwitch"
-                             style="margin-left: 0px;padding: 5px;border-radius: 10px;background-color: #b4efb9;">
-                            <select class="form-control" id="select_SR_club" onchange="selectSRclub()">
-                                <option value="-1" selected disabled>請選擇社團...</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row SRNdView" id="SR_classSwitch">
-                        <ul class="nav nav-pills" id="SR_class_selectG1" onclick="changeSRClass(1)"
-                            style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href>101</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>102</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>103</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>104</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>105</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>106</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>107</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>108</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>109</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>110</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>111</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>112</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>113</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>114</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>115</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>116</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>117</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>118</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>119</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>120</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>121</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>122</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>123</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>124</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>125</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>126</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>127</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>128</a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-pills" id="SR_class_selectG2" onclick="changeSRClass(2)"
-                            style="padding: 5px;border-radius: 10px;background-color: #ffe5b7;">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href>201</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>202</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>203</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>204</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>205</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>206</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>207</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>208</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>209</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>210</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>211</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>212</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>213</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>214</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>215</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>216</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>217</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>218</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>219</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>220</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>221</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>222</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>223</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>224</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>225</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>226</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>227</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href>228</a>
-                            </li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <table id="table_SR"></table>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <table id="table_SR"></table>
+            </div>
+        </div>
+    </div>
+    <div id="Content_SelectManage">
+        <div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal-second_submit">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">二次分配結果登錄</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <ul class="nav nav-pills" id="SM_second_submit_grade_select"
+                                    style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px"
+                                    onclick="changeGradeClass_SM_SSubmit();">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="pill" href>一年級</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="pill" href>二年級</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <table id="tablb_second_submit"></table>
+                                    <br>
+                                    <button type="button" class="btn btn-primary"
+                                            style="float: right;margin-top: 5px"
+                                            onclick="secondVerify()" id="btn_SM_SSubmit" disabled>送出
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <table id="table_second_clubs"></table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="Content_SelectManage">
-            <div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal-second_submit">
-                <div class="modal-dialog modal-xl modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">二次分配結果登錄</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" id="card-SM-setting">
+                    <div class="card-header">
+                        <h3 class="card-title">選社設定</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <h4>開放選填<i class="fas fa-lock" id="icon-CSenable-lock"
+                                       style="margin-left: 5px;display: none"></i></h4>
+                            <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
+                            <label class="switch" style="vertical-align: top">
+                                <input type="checkbox" id="SM-CSenable" onchange="CSsetting('CSenable')">
+                                <span class="slider round"></span>
+                            </label>
+                            <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
                         </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <ul class="nav nav-pills" id="SM_second_submit_grade_select"
-                                        style="padding: 5px;border-radius: 10px;background-color: #b4efb9;margin-left: 20px;margin-bottom: 10px"
-                                        onclick="changeGradeClass_SM_SSubmit();">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="pill" href>一年級</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href>二年級</a>
-                                        </li>
-                                    </ul>
+                        <div class="form-group">
+                            <h4>每社最多人數(一般)<i class="fas fa-lock" id="icon-maxGCPN-lock"
+                                             style="margin-left: 5px;display: none"></i></h4>
+                            <div class="row">
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="SM-maxGCPN" placeholder="最高人數"
+                                           style="margin-left: 50px;max-width: 12em">
                                 </div>
-                                <div class="row">
-                                    <div class="col-8">
-                                        <table id="tablb_second_submit"></table>
-                                        <br>
-                                        <button type="button" class="btn btn-primary"
-                                                style="float: right;margin-top: 5px"
-                                                onclick="secondVerify()" id="btn_SM_SSubmit" disabled>送出
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <table id="table_second_clubs"></table>
-                                    </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_maxGCPN" onclick="CSsetting('maxGCPN')">設定
+                                    </button>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4>結果顯示</h4>
+                            <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
+                            <label class="switch" style="vertical-align: top">
+                                <input type="checkbox" id="SM-display_result"
+                                       onchange="CSsetting('display_result')">
+                                <span class="slider round"></span>
+                            </label>
+                            <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-SM-operate">
+                    <div class="card-header">
+                        <h3 class="card-title">選社操作</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" style="margin-bottom: 8px">
+                            <div class="col-8" style="padding-right: 2px">
+                                <button type="button" class="btn btn-default btn-primary btn-block"
+                                        id="btn_checkNotSelected">檢查未選社學生
+                                </button>
+                            </div>
+                            <div class="col-4" style="padding-left: 2px">
+                                <button type="button" class="btn btn-default btn-danger btn-block"
+                                        id="btn_reset_select">重設選填資料
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 8px">
+                            <div class="col-8" style="padding-right: 2px">
+                                <button type="button" class="btn btn-default btn-primary btn-block"
+                                        id="btn_definite_distribute" disabled>確定中選社團分配
+                                </button>
+                            </div>
+                            <div class="col-4" style="padding-left: 2px">
+                                <button type="button" class="btn btn-default btn-danger btn-block"
+                                        id="btn_reset_result" disabled>重設選社結果
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-default btn-primary btn-block" id="btn_selects_draw"
+                                onclick="" disabled>志願序抽籤
+                        </button>
+                        <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_submit"
+                                onclick="" disabled>二次分配結果登錄
+                        </button>
+                        <div class="row" style="margin-top: 8px">
+                            <div class="col-8" style="padding-right: 2px">
+                                <button type="button" class="btn btn-default btn-primary btn-block"
+                                        id="btn_make_result" onclick="" disabled>產生選社結果
+                                </button>
+                            </div>
+                            <div class="col-4" style="padding-left: 2px">
+                                <button type="button" class="btn btn-default btn-danger btn-block"
+                                        id="btn_re_second" disabled>返回二次分配
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 8px">
+                            <div class="col" style="padding-right: 2px">
+                                <button type="button" class="btn btn-default btn-primary btn-block"
+                                        id="btn_dl_result_class" onclick="" disabled>下載選社結果(依班級)
+                                </button>
+                            </div>
+                            <div class="col" style="padding-left: 2px">
+                                <button type="button" class="btn btn-default btn-primary btn-block"
+                                        id="btn_dl_result_club" onclick="" disabled>下載選社結果(依社團)
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card" id="card-SM-setting">
-                        <div class="card-header">
-                            <h3 class="card-title">選社設定</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <h4>開放選填<i class="fas fa-lock" id="icon-CSenable-lock"
-                                           style="margin-left: 5px;display: none"></i></h4>
-                                <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
-                                <label class="switch" style="vertical-align: top">
-                                    <input type="checkbox" id="SM-CSenable" onchange="CSsetting('CSenable')">
-                                    <span class="slider round"></span>
-                                </label>
-                                <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
-                            </div>
-                            <div class="form-group">
-                                <h4>每社最多人數(一般)<i class="fas fa-lock" id="icon-maxGCPN-lock"
-                                                 style="margin-left: 5px;display: none"></i></h4>
-                                <div class="row">
-                                    <div class="col-8">
-                                        <input type="text" class="form-control" id="SM-maxGCPN" placeholder="最高人數"
-                                               style="margin-left: 50px;max-width: 12em">
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="button" class="btn btn-default btn-primary btn-block"
-                                                id="btn_maxGCPN" onclick="CSsetting('maxGCPN')">設定
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <h4>結果顯示</h4>
-                                <span style="font-size: 1.2em;line-height: 32px;margin-left: 50px">否&nbsp;</span>
-                                <label class="switch" style="vertical-align: top">
-                                    <input type="checkbox" id="SM-display_result"
-                                           onchange="CSsetting('display_result')">
-                                    <span class="slider round"></span>
-                                </label>
-                                <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
-                            </div>
-                        </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="card" id="card-AM">
+                    <div class="card-header">
+                        <h3 class="card-title">公告管理</h3>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card" id="card-SM-operate">
-                        <div class="card-header">
-                            <h3 class="card-title">選社操作</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row" style="margin-bottom: 8px">
-                                <div class="col-8" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block"
-                                            id="btn_checkNotSelected">檢查未選社學生
-                                    </button>
-                                </div>
-                                <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block"
-                                            id="btn_reset_select">重設選填資料
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-bottom: 8px">
-                                <div class="col-8" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block"
-                                            id="btn_definite_distribute" disabled>確定中選社團分配
-                                    </button>
-                                </div>
-                                <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block"
-                                            id="btn_reset_result" disabled>重設選社結果
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_selects_draw"
-                                    onclick="" disabled>志願序抽籤
-                            </button>
-                            <button type="button" class="btn btn-default btn-primary btn-block" id="btn_second_submit"
-                                    onclick="" disabled>二次分配結果登錄
-                            </button>
-                            <div class="row" style="margin-top: 8px">
-                                <div class="col-8" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block"
-                                            id="btn_make_result" onclick="" disabled>產生選社結果
-                                    </button>
-                                </div>
-                                <div class="col-4" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-danger btn-block"
-                                            id="btn_re_second" disabled>返回二次分配
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 8px">
-                                <div class="col" style="padding-right: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block"
-                                            id="btn_dl_result_class" onclick="" disabled>下載選社結果(依班級)
-                                    </button>
-                                </div>
-                                <div class="col" style="padding-left: 2px">
-                                    <button type="button" class="btn btn-default btn-primary btn-block"
-                                            id="btn_dl_result_club" onclick="" disabled>下載選社結果(依社團)
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="container">
-                    <div class="card" id="card-AM">
-                        <div class="card-header">
-                            <h3 class="card-title">公告管理</h3>
-                        </div>
-                        <div class="card-body">
+                    <div class="card-body">
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="Content_ClubManage">
-            <div class="row" id="row-club-list">
-                <div class="container">
-                    <table id="table_club"></table>
-                </div>
+    </div>
+    <div id="Content_ClubManage">
+        <div class="row" id="row-club-list">
+            <div class="container">
+                <table id="table_club"></table>
             </div>
-            <div class="row" id="row-club-operate">
-                <div class="col-md-6">
-                    <div class="card" id="card-club-change">
-                        <div class="card-header">
-                            <h3 class="card-title">修改社團</h3>
-                        </div>
-                        <div class="card-body">
-                            <form role="form" class="form-my" id="form-chgclub">
-                                <div class="form-group">
-                                    <label for="chgclub-ShowId">編號</label>
-                                    <input type="text" class="form-control-plaintext" id="chgclub-ShowId" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chgclub-ShowName">名稱</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chgclub-ShowName" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chgclub-InputName"
-                                                   placeholder="修改名稱">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chgclub-ShowTeacher">教師</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chgclub-ShowTeacher" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chgclub-InputTeacher"
-                                                   placeholder="修改教師">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chgclub-ShowGrade">年級</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chgclub-ShowGrade" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="radio_chg"
-                                                       id="btnR_clubChgInputGrade1" value="1">
-                                                <label class="form-check-label" for="btnR_clubChgInputGrade1">國一</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="radio_chg"
-                                                       id="btnR_clubChgInputGrade2" value="2">
-                                                <label class="form-check-label" for="btnR_clubChgInputGrade2">國二</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chgclub-ShowIsSpecial">特殊社團</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chgclub-ShowIsSpecial" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <span style="font-size: 1.2em;line-height: 32px">否</span>
-                                            <label class="switch" style="vertical-align: top">
-                                                <input type="checkbox" id="chgclub-InputIsSpecial">
-                                                <span class="slider round"></span>
-                                            </label>
-                                            <span style="font-size: 1.2em;line-height: 32px">是</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-between">
-                                    <div class="col-4">
-                                        <button id="btn_chgclub-del" type="button"
-                                                class="btn btn-default btn-danger btn-block" style="margin-top: 8px">
-                                            刪除
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-default btn-primary btn-block"
-                                                style="margin-top: 8px">
-                                            送出
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+        </div>
+        <div class="row" id="row-club-operate">
+            <div class="col-md-6">
+                <div class="card" id="card-club-change">
+                    <div class="card-header">
+                        <h3 class="card-title">修改社團</h3>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card" id="card-club-new">
-                        <div class="card-header">
-                            <h3 class="card-title">新增社團</h3>
-                        </div>
-                        <div class="card-body">
-                            <form role="form" class="form-my" id="form-newclub">
-                                <div class="form-group">
-                                    <label for="newclub-InputName">名稱</label>
-                                    <input type="text" class="form-control" id="newclub-InputName" placeholder="輸入名稱"
-                                           required>
+                    <div class="card-body">
+                        <form role="form" class="form-my" id="form-chgclub">
+                            <div class="form-group">
+                                <label for="chgclub-ShowId">編號</label>
+                                <input type="text" class="form-control-plaintext" id="chgclub-ShowId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="chgclub-ShowName">名稱</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chgclub-ShowName" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chgclub-InputName"
+                                               placeholder="修改名稱">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="newclub-InputTeacher">教師</label>
-                                    <input type="text" class="form-control" id="newclub-InputTeacher" placeholder="輸入教師"
-                                           required>
+                            </div>
+                            <div class="form-group">
+                                <label for="chgclub-ShowTeacher">教師</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chgclub-ShowTeacher" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chgclub-InputTeacher"
+                                               placeholder="修改教師">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>年級</label>
-                                    <div class="form-row">
+                            </div>
+                            <div class="form-group">
+                                <label for="chgclub-ShowGrade">年級</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chgclub-ShowGrade" readonly>
+                                    </div>
+                                    <div class="col">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="radio_new"
-                                                   id="btnR_clubNewInputGrade1" value="1" checked>
-                                            <label class="form-check-label" for="btnR_clubNewInputGrade1">國一</label>
+                                            <input class="form-check-input" type="radio" name="radio_chg"
+                                                   id="btnR_clubChgInputGrade1" value="1">
+                                            <label class="form-check-label" for="btnR_clubChgInputGrade1">國一</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="radio_new"
-                                                   id="btnR_clubNewInputGrade2" value="2">
-                                            <label class="form-check-label" for="btnR_clubNewInputGrade2">國二</label>
+                                            <input class="form-check-input" type="radio" name="radio_chg"
+                                                   id="btnR_clubChgInputGrade2" value="2">
+                                            <label class="form-check-label" for="btnR_clubChgInputGrade2">國二</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="newclub-InputIsSpecial">特殊社團</label>
-                                    <div class="form-row">
-                                        <span style="font-size: 1.2em;line-height: 32px">否&nbsp;</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="chgclub-ShowIsSpecial">特殊社團</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chgclub-ShowIsSpecial" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <span style="font-size: 1.2em;line-height: 32px">否</span>
                                         <label class="switch" style="vertical-align: top">
-                                            <input type="checkbox" id="newclub-InputIsSpecial">
+                                            <input type="checkbox" id="chgclub-InputIsSpecial">
                                             <span class="slider round"></span>
                                         </label>
-                                        <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                                        <span style="font-size: 1.2em;line-height: 32px">是</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="col-4">
+                                    <button id="btn_chgclub-del" type="button"
+                                            class="btn btn-default btn-danger btn-block" style="margin-top: 8px">
+                                        刪除
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-default btn-primary btn-block"
+                                            style="margin-top: 8px">
+                                        送出
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-club-new">
+                    <div class="card-header">
+                        <h3 class="card-title">新增社團</h3>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" class="form-my" id="form-newclub">
+                            <div class="form-group">
+                                <label for="newclub-InputName">名稱</label>
+                                <input type="text" class="form-control" id="newclub-InputName" placeholder="輸入名稱"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newclub-InputTeacher">教師</label>
+                                <input type="text" class="form-control" id="newclub-InputTeacher" placeholder="輸入教師"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label>年級</label>
+                                <div class="form-row">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radio_new"
+                                               id="btnR_clubNewInputGrade1" value="1" checked>
+                                        <label class="form-check-label" for="btnR_clubNewInputGrade1">國一</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="radio_new"
+                                               id="btnR_clubNewInputGrade2" value="2">
+                                        <label class="form-check-label" for="btnR_clubNewInputGrade2">國二</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="newclub-InputIsSpecial">特殊社團</label>
+                                <div class="form-row">
+                                    <span style="font-size: 1.2em;line-height: 32px">否&nbsp;</span>
+                                    <label class="switch" style="vertical-align: top">
+                                        <input type="checkbox" id="newclub-InputIsSpecial">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                                </div>
+                            </div>
 
-                                <div class="row justify-content-end">
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-default btn-primary btn-block"
-                                                style="margin-top: 8px">
-                                            送出
-                                        </button>
-                                    </div>
+                            <div class="row justify-content-end">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-default btn-primary btn-block"
+                                            style="margin-top: 8px">
+                                        送出
+                                    </button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="Content_User_manage">
-            <div class="row" id="row-user-list">
-                <div class="container">
-                    <table id="table_user"></table>
-                </div>
+    </div>
+    <div id="Content_User_manage">
+        <div class="row" id="row-user-list">
+            <div class="container">
+                <table id="table_user"></table>
             </div>
-            <div class="row" id="row-user-operate">
-                <div class="col-md-6">
-                    <div class="card" id="card-user-change">
-                        <div class="card-header">
-                            <h3 class="card-title">修改使用者</h3>
-                        </div>
-                        <div class="card-body">
-                            <form role="form" class="form-my" id="form-chguser">
-                                <div class="form-group">
-                                    <label for="chguser-ShowAcc">帳號(員工編號)</label>
-                                    <input type="text" class="form-control-plaintext" id="chguser-ShowAcc" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chguser-ShowName">名稱</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chguser-ShowName" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chguser-InputName"
-                                                   placeholder="修改名稱">
-                                        </div>
+        </div>
+        <div class="row" id="row-user-operate">
+            <div class="col-md-6">
+                <div class="card" id="card-user-change">
+                    <div class="card-header">
+                        <h3 class="card-title">修改使用者</h3>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" class="form-my" id="form-chguser">
+                            <div class="form-group">
+                                <label for="chguser-ShowAcc">帳號(員工編號)</label>
+                                <input type="text" class="form-control-plaintext" id="chguser-ShowAcc" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="chguser-ShowName">名稱</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chguser-ShowName" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chguser-InputName"
+                                               placeholder="修改名稱">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="chguser-ShowPermission">權限</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <select class="custom-select" id="chguser-ShowPermission" disabled>
-                                                <option value="0">0(班級使用者)</option>
-                                                <option value="1">1(管理員)</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <select class="custom-select" id="chguser-InputPermission"
-                                                    onchange="setClassCheck()">
-                                                <option value="-1" selected>修改權限</option>
-                                                <option value="0">0(班級使用者)</option>
-                                                <option value="1">1(管理員)</option>
-                                            </select>
-                                        </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chguser-ShowPermission">權限</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <select class="custom-select" id="chguser-ShowPermission" disabled>
+                                            <option value="0">0(班級使用者)</option>
+                                            <option value="1">1(管理員)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="custom-select" id="chguser-InputPermission"
+                                                onchange="setClassCheck()">
+                                            <option value="-1" selected>修改權限</option>
+                                            <option value="0">0(班級使用者)</option>
+                                            <option value="1">1(管理員)</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="chguser-ShowClass">班級</label>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chguser-ShowClass" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="chguser-InputClass"
-                                                   placeholder="修改班級">
-                                        </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chguser-ShowClass">班級</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chguser-ShowClass" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="chguser-InputClass"
+                                               placeholder="修改班級">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="chguser-InputPw">密碼</label>
-                                    <input type="password" class="form-control" id="chguser-InputPw" placeholder="修改密碼">
-                                    <input type="password" class="form-control" id="chguser-InputPwRe"
-                                           placeholder="確認新密碼">
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chguser-InputPw">密碼</label>
+                                <input type="password" class="form-control" id="chguser-InputPw" placeholder="修改密碼">
+                                <input type="password" class="form-control" id="chguser-InputPwRe"
+                                       placeholder="確認新密碼">
+                            </div>
 
-                                <div class="row justify-content-between">
-                                    <div class="col-4">
-                                        <button id="btn_chguser-del" type="button"
-                                                class="btn btn-default btn-danger btn-block" style="margin-top: 8px">
-                                            刪除
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-default btn-primary btn-block"
-                                                style="margin-top: 8px">
-                                            送出
-                                        </button>
-                                    </div>
+                            <div class="row justify-content-between">
+                                <div class="col-4">
+                                    <button id="btn_chguser-del" type="button"
+                                            class="btn btn-default btn-danger btn-block" style="margin-top: 8px">
+                                        刪除
+                                    </button>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-default btn-primary btn-block"
+                                            style="margin-top: 8px">
+                                        送出
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card" id="card-user-new">
-                        <div class="card-header">
-                            <h3 class="card-title">新增使用者</h3>
-                        </div>
-                        <div class="card-body">
-                            <form role="form" class="form-my" id="form-newuser">
-                                <div class="form-group">
-                                    <label for="newuser-InputAcc">帳號</label>
-                                    <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newuser-InputName">名稱</label>
-                                    <input type="text" class="form-control" id="newuser-InputName" placeholder="輸入名稱"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newuser-InputPermission">權限</label>
-                                    <select class="custom-select" id="newuser-InputPermission" required
-                                            onchange="setClassCheck()">
-                                        <option value="-1" selected disabled>設定權限</option>
-                                        <option value="0">0(班級使用者)</option>
-                                        <option value="1">1(管理員)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newuser-InputClass">班級</label>
-                                    <input type="text" class="form-control" id="newuser-InputClass" placeholder="輸入班級"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newuser-InputPw">密碼</label>
-                                    <input type="password" class="form-control" id="newuser-InputPw" placeholder="設定密碼">
-                                    <input type="password" class="form-control" id="newuser-InputPwRe"
-                                           placeholder="確認新密碼">
-                                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" id="card-user-new">
+                    <div class="card-header">
+                        <h3 class="card-title">新增使用者</h3>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" class="form-my" id="form-newuser">
+                            <div class="form-group">
+                                <label for="newuser-InputAcc">帳號</label>
+                                <input type="text" class="form-control" id="newuser-InputAcc" placeholder="輸入帳號"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newuser-InputName">名稱</label>
+                                <input type="text" class="form-control" id="newuser-InputName" placeholder="輸入名稱"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newuser-InputPermission">權限</label>
+                                <select class="custom-select" id="newuser-InputPermission" required
+                                        onchange="setClassCheck()">
+                                    <option value="-1" selected disabled>設定權限</option>
+                                    <option value="0">0(班級使用者)</option>
+                                    <option value="1">1(管理員)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="newuser-InputClass">班級</label>
+                                <input type="text" class="form-control" id="newuser-InputClass" placeholder="輸入班級"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newuser-InputPw">密碼</label>
+                                <input type="password" class="form-control" id="newuser-InputPw" placeholder="設定密碼">
+                                <input type="password" class="form-control" id="newuser-InputPwRe"
+                                       placeholder="確認新密碼">
+                            </div>
 
-                                <div class="row justify-content-end">
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-default btn-primary btn-block"
-                                                style="margin-top: 8px">
-                                            送出
-                                        </button>
-                                    </div>
+                            <div class="row justify-content-end">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-default btn-primary btn-block"
+                                            style="margin-top: 8px">
+                                        送出
+                                    </button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<footer>
+    Copyright © 2019 Sz-Wei Chen(陳思惟)
+    &nbsp;&nbsp;&nbsp;
+    Develop By swchen1217
+    &nbsp;
+    <a href="https://github.com/swchen1217" style="color: #FFFFFF"><img src="github-512.png" width="25px"> Github</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="https://github.com/swchen1217/wfjhClubSelectSystem" style="color: #FFFFFF">Open Source</a>
+</footer>
 </body>
 <script>
     $(document).ready(function () {
