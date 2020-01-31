@@ -237,7 +237,7 @@ function OnHashchangeListener() {
 
     if (hash == '' && login_check()) {
         $('#Content_Announcement').show();
-        
+
     }
     if (hash == '#ClubSelect' && login_check() && PermissionCheck(false, true)) {
         $('#Content_ClubSelect').show();
@@ -2422,7 +2422,7 @@ function getAnData() {
                 console.log(jsonA);
                 for (var i = 0; i < jsonA.length; i++) {
                     if (jsonA[i]['hyperlink'] != '') {
-                        var hyperlink = '<br><b>連結</b>:';
+                        var hyperlink = '<br><br><b>連結</b>:';
                         var tmp = jsonA[i]['hyperlink'].split(',');
                         for (var k = 0; k < tmp.length; k++)
                             hyperlink += '<br><a href="' + tmp[k] + '">' + tmp[k] + '</a>';
