@@ -401,7 +401,9 @@ window.operateEvents = {
                             success: function (msg) {
                                 if (msg == "ok") {
                                     ShowAlart('alert-success', '刪除成功', false, true);
-                                    $('#table_An_manage').bootstrapTable('load', getAnData());
+                                    setTimeout(function () {
+                                        $('#table_An_manage').bootstrapTable('load', getAnData());
+                                    }, 500);
                                 } else {
                                     ShowAlart('alert-danger', '錯誤!!', false, false);
                                 }
@@ -1324,7 +1326,9 @@ function FormSubmitListener() {
                                             typeAnimated: true
                                         });
                                         $('#modal-newAn').modal('hide');
-                                        $('#table_An_manage').bootstrapTable('load', getAnData());
+                                        setTimeout(function () {
+                                            $('#table_An_manage').bootstrapTable('load', getAnData());
+                                        }, 500);
                                     } else
                                         ShowAlart('alert-danger', '錯誤!!', false, false);
                                 },
@@ -2427,6 +2431,8 @@ function getAnData() {
                     }
                 }
                 data = jsonA;
+            }else{
+                $('#table_An_manage').bootstrapTable("removeAll");
             }
         },
         error: function (xhr) {
