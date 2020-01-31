@@ -659,8 +659,53 @@ if ($mode == "makeResult") {
         $sql = "INSERT INTO result (sid, cid) SELECT sid,cid FROM second WHERE 1=1";
         $rs = $db->prepare($sql);
         $rs->execute();
+        $rs=null;
         setSystem('madeResult', 'true', $db);
         setSystem('second', 'false', $db);
+
+        $sql = "SELECT students.sid,students.class,students.number,students.name,clubs.id,clubs.name 
+                    FROM (result INNER JOIN students
+                        ON result.sid = students.sid)
+                        INNER JOIN clubs
+                            ON result.cid = clubs.id
+                    ORDER BY students.sid";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+
+        $time=date('YmdHi');
+        if (!is_dir("./export"))
+            mkdir('./export');
+
+        if ($rs->rowCount() != 0) {
+            $fp = fopen('./export/wfcss_class_'.$time.'.csv', 'w');
+            while ($row = $rs->fetch(PDO::FETCH_NUM)) {
+                $row[3]=iconv('utf-8','Big5',$row[3]);
+                $row[5]=iconv('utf-8','Big5',$row[5]);
+                fputcsv($fp, $row);
+            }
+            fclose($fp);
+        }
+        $rs = null;
+
+        $sql = "SELECT students.sid,students.class,students.number,students.name,clubs.id,clubs.name 
+                    FROM (result INNER JOIN students
+                        ON result.sid = students.sid)
+                        INNER JOIN clubs
+                            ON result.cid = clubs.id
+                    ORDER BY clubs.id,students.sid";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        if ($rs->rowCount() != 0) {
+            $fp = fopen('./export/wfcss_club_'.$time.'.csv', 'w');
+            while ($row = $rs->fetch(PDO::FETCH_NUM)) {
+                $row[3]=iconv('utf-8','Big5',$row[3]);
+                $row[5]=iconv('utf-8','Big5',$row[5]);
+                fputcsv($fp, $row);
+            }
+            fclose($fp);
+        }
+        $rs = null;
+
         echo 'ok';
     }
     exit;
@@ -746,5 +791,21 @@ if ($mode == "getSRData") {
     //ON result.cid = clubs.id
     //WHERE clubs.id=''
     //ORDER BY students.sid
+}
+
+if ($mode == "exportResult") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $fileList=glob('./export/wfcss_class_*.csv');
+        foreach ($fileList as $key=>$value)
+            $fileList[$key]=substr($value,21,12);
+        rsort($fileList);
+        $filename='./export/wfcss_'.$SRmode.'_'.$fileList[0].'.csv';
+        header('content-disposition:attachment;filename='.$filename);	//告訴瀏覽器通過何種方式處理檔案
+        header('content-length:'.filesize($filename));	//下載檔案的大小
+        readfile($filename);
+    } else {
+        echo "user_error";
+    }
+    exit;
 }
 ?>
