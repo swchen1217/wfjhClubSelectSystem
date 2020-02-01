@@ -2455,8 +2455,11 @@ function getAnData() {
                     if (jsonA[i]['hyperlink'] != '') {
                         var hyperlink = '<br><br><b>連結</b>:';
                         var tmp = jsonA[i]['hyperlink'].split(',');
-                        for (var k = 0; k < tmp.length; k++)
+                        for (var k = 0; k < tmp.length; k++){
+                            if(tmp[k].substr(0,4)!='http')
+                                tmp[k]='http://'+tmp[k];
                             hyperlink += '<br><a href="' + tmp[k] + '">' + tmp[k] + '</a>';
+                        }
                         jsonA[i]['content'] += hyperlink;
                     }
                 }
