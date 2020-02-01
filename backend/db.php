@@ -813,7 +813,7 @@ if ($mode == "exportResult") {
 }
 
 if ($mode == "getAnData") {
-    $sql = "SELECT * FROM `announcement` WHERE 1=1";
+    $sql = "SELECT * FROM `announcement` WHERE 1=1 ORDER BY id DESC";
     $rs = $db->prepare($sql);
     $rs->execute();
     if ($rs->rowCount() == 0) {
