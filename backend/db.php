@@ -887,4 +887,14 @@ if ($mode == "exportSMStu") {
         readfile("./export/tmp_SM_stu.csv");
     }
 }
+
+if ($mode == "del_stu") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = "TRUNCATE TABLE `students`";
+        $rs = $db->exec($sql);
+        $rs = null;
+        echo 'ok';
+    }
+    exit;
+}
 ?>
