@@ -909,14 +909,13 @@ if ($mode == "stu_import") {
             if(is_file("./import/tmp_stu_import.csv"))
                 unlink('./import/tmp_stu_import.csv');
             move_uploaded_file($file["tmp_name"],"./import/tmp_stu_import.csv");
-            $path=__DIR__.'/import/tmp_stu_import.csv';
-            $sql = "LOAD DATA LOCAL INFILE  '".$path."'
-                    INTO TABLE students
-                    CHARACTER SET Big5
-                    FIELDS TERMINATED BY ',' 
-                    ENCLOSED BY '\"'
-                    LINES TERMINATED BY 'n'
-                    IGNORE 1 ROWS;";
+            $path=str_replace('\\','/',__DIR__).'/import/tmp_stu_import.csv';
+            $sql = "LOAD DATA INFILE '".$path."'
+            INTO TABLE students
+            CHARACTER SET Big5
+            FIELDS TERMINATED BY ',' 
+            ENCLOSED BY '\"'
+            LINES TERMINATED BY '\r\n'";
             $rs = $db->exec($sql);
             $rs = null;
             echo 'ok';
