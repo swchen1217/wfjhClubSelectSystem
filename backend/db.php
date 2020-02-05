@@ -900,8 +900,21 @@ if ($mode == "del_stu") {
 
 if ($mode == "stu_import") {
     if (UserCheck($acc, $pw, true, $db)) {
-        
-        echo 'ok';
+        $file=$_FILES['file'];
+        if($file!=null && $file['type']=='text/csv'){
+            if (!is_dir("./import"))
+                mkdir('./import');
+            if(is_file("./import/tmp_stu_import.csv"))
+                unlink('./import/tmp_stu_import.csv');
+            move_uploaded_file($file["tmp_name"],"./import/tmp_stu_import.csv");
+
+
+
+
+
+            echo 'ok';
+        }
+        echo 'A';
     }
     exit;
 }
