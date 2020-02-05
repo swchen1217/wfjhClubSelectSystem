@@ -1980,13 +1980,91 @@ function ButtonOnClickListener() {
         $('#modal-newAn').modal('show');
     });
     $('#btn_SM_dlStu').click(function () {
-        
+        window.open("../backend/db.php?mode=exportSMStu&acc=" + $.cookie("LoginInfoAcc") + "&pw=" + $.cookie("LoginInfoPw"));
     });
     $('#btn_stu_import').click(function () {
-
+        $('#modal-import').modal('show');
     });
     $('#btn_stu_del').click(function () {
-
+        $.confirm({
+            title: '確認刪除所有學生資料??',
+            content:
+                '將會刪除所有學生資料' +
+                '<label>請再次輸入你的密碼確認刪除資料</label>' +
+                '<input type="password" placeholder="輸入密碼" class="pw form-control" required/>'
+            ,
+            type: 'red',
+            autoClose: 'cancel|10000',
+            buttons: {
+                confirm: {
+                    text: '重設',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        var pw = this.$content.find('.pw').val();
+                        if (pw != '') {
+                            $.ajax({
+                                url: "../backend/user.php",
+                                data: "mode=get_create_time" +
+                                    "&acc=" + $.cookie("LoginInfoAcc"),
+                                type: "POST",
+                                success: function (msg) {
+                                    if (msg != 'no_acc') {
+                                        mMd5 = md5(msg + pw);
+                                        if (mMd5 == $.cookie("LoginInfoPw")) {
+                                            $.ajax({
+                                                url: "../backend/db.php",
+                                                data: "mode=del_stu" +
+                                                    "&acc=" + $.cookie("LoginInfoAcc") +
+                                                    "&pw=" + $.cookie("LoginInfoPw"),
+                                                type: "POST",
+                                                success: function (msg) {
+                                                    if (msg == "ok") {
+                                                        ShowAlart('alert-success', '刪除成功', false, true);
+                                                        setTimeout(function () {
+                                                            location.reload();
+                                                        }, 1500);
+                                                    } else {
+                                                        ShowAlart('alert-danger', '錯誤!!', false, false);
+                                                    }
+                                                },
+                                                error: function (xhr) {
+                                                    console.log('ajax er');
+                                                    $.alert({
+                                                        title: '錯誤',
+                                                        content: 'Ajax 發生錯誤',
+                                                        type: 'red',
+                                                        typeAnimated: true
+                                                    });
+                                                }
+                                            });
+                                        } else {
+                                            $.alert('密碼錯誤');
+                                        }
+                                    } else {
+                                        $.alert('錯誤');
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log('ajax er');
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: 'Ajax 發生錯誤',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            });
+                        } else {
+                            $.alert('未輸入密碼');
+                            return false;
+                        }
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                },
+            }
+        });
     });
 }
 
