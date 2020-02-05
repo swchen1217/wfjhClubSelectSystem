@@ -1163,6 +1163,7 @@ function FormSubmitListener() {
         var n_teacher = $('#chgclub-InputTeacher').val();
         var n_grade = $("[name='radio_chg']:checked").val();
         var n_isSpecial = $('#chgclub-InputIsSpecial').prop("checked");
+        var n_maxP = $('#chgclub-InputMaxP').val();
 
         if (id == null) {
             $.alert({
@@ -1184,7 +1185,8 @@ function FormSubmitListener() {
             var old_teacher = clubinfo['teacher'];
             var old_grade = clubinfo['grade'];
             var old_isSpecial = clubinfo['isSpecial'];
-            if (n_name == '' && n_teacher == '' && n_grade == old_grade && n_isSpecial == (old_isSpecial == '是')) {
+            var old_maxP = clubinfo['maxPeople'];
+            if (n_name == '' && n_teacher == '' && n_grade == old_grade && n_isSpecial == (old_isSpecial == '是') && n_maxP=='') {
                 $.alert({
                     title: '錯誤',
                     content: '無任何欲修改之資料',
@@ -1211,6 +1213,10 @@ function FormSubmitListener() {
                 if (n_isSpecial != (old_isSpecial == '是')) {
                     chguserParams += "&new_isSpecial=" + n_isSpecial;
                     ConfrimContent += "特殊社團: <var>" + old_isSpecial + "&nbsp;</var>更改為 <var>" + (n_isSpecial ? '是' : '否') + "</var><br>";
+                }
+                if (n_maxP != '') {
+                    chguserParams += "&new_maxP=" + n_maxP;
+                    ConfrimContent += "人數限制: <var>" + old_maxP + "</var> 更改為 <var>" + n_maxP + "</var><br>";
                 }
 
                 console.log(chguserParams);
@@ -1264,6 +1270,7 @@ function FormSubmitListener() {
         var n_teacher = $('#newclub-InputTeacher').val();
         var n_grade = $("[name='radio_new']:checked").val();
         var n_isSpecial = $('#newclub-InputIsSpecial').prop("checked");
+        var n_maxP = $('#newclub-InputMaxP').val();
 
         if (n_name != '' && n_teacher != '') {
             $.confirm({
@@ -1283,13 +1290,15 @@ function FormSubmitListener() {
                                     "&new_name=" + n_name +
                                     "&new_teacher=" + n_teacher +
                                     "&new_grade=" + n_grade +
-                                    "&new_isSpecial=" + n_isSpecial
+                                    "&new_isSpecial=" + n_isSpecial+
+                                    "&new_maxP=" + n_maxP
                                 ,
                                 type: "POST",
                                 success: function (msg) {
                                     console.log(msg);
                                     $('#newclub-InputName').val('');
                                     $('#newclub-InputTeacher').val('');
+                                    $('#newclub-InputMaxP').val('');
                                     if (msg == "ok") {
                                         ShowAlart('alert-success', '新增成功', false, true);
                                         setTimeout(function () {
