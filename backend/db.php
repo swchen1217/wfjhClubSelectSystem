@@ -862,4 +862,29 @@ if ($mode == "newAn") {
         echo "error";
     exit;
 }
+
+if ($mode == "exportSMStu") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        $sql = 'SELECT students.sid,students.class,students.number,students.name FROM students LEFT JOIN result ON students.sid=result.sid WHERE result.sid IS NULL';
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        if ($rs->rowCount() != 0) {
+            $ToJson = array();
+            if (!is_dir("./export"))
+                mkdir('./export');
+            if(is_file("./export/tmp_SM_stu.csv"))
+                unlink('./export/tmp_SM_stu.csv');
+            $fp = fopen('./export/tmp_SM_stu.csv', 'w');
+            while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                $row['name'] = iconv('utf-8', 'Big5', $row['name']);
+                fputcsv($fp, $row);
+            }
+            fclose($fp);
+        }
+        $rs = null;
+        header('content-disposition:attachment;filename=tmp_SM_stu.csv');    //告訴瀏覽器通過何種方式處理檔案
+        header('content-length:' . filesize("./export/tmp_SM_stu.csv"));    //下載檔案的大小
+        readfile("./export/tmp_SM_stu.csv");
+    }
+}
 ?>
