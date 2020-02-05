@@ -1,5 +1,7 @@
 <?php
 
+//$db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_DBNAME.';charset=utf8', DB_USER, DB_PASS,array(PDO::MYSQL_ATTR_LOCAL_INFILE => true));
+
 require("config.php");
 require("request.php");
 require("UserCheck.php");
@@ -901,20 +903,24 @@ if ($mode == "del_stu") {
 if ($mode == "stu_import") {
     if (UserCheck($acc, $pw, true, $db)) {
         $file=$_FILES['file'];
-        if($file!=null && $file['type']=='text/csv'){
+        if($file!=null && ($file['type']=='text/csv' || $file['type']=='application/vnd.ms-excel')){
             if (!is_dir("./import"))
                 mkdir('./import');
             if(is_file("./import/tmp_stu_import.csv"))
                 unlink('./import/tmp_stu_import.csv');
             move_uploaded_file($file["tmp_name"],"./import/tmp_stu_import.csv");
-
-
-
-
-
+            $path=__DIR__.'/import/tmp_stu_import.csv';
+            $sql = "LOAD DATA LOCAL INFILE  '".$path."'
+                    INTO TABLE students
+                    CHARACTER SET Big5
+                    FIELDS TERMINATED BY ',' 
+                    ENCLOSED BY '\"'
+                    LINES TERMINATED BY 'n'
+                    IGNORE 1 ROWS;";
+            $rs = $db->exec($sql);
+            $rs = null;
             echo 'ok';
         }
-        echo 'A';
     }
     exit;
 }
