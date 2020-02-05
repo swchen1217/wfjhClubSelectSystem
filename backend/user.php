@@ -106,7 +106,7 @@ if ($mode == "newuser") {
     }
     exit;
 }
-if ($mode = "deluser") {
+if ($mode == "deluser") {
     if (UserCheck($acc, $pw, true, $db)) {
         $sql = 'DELETE FROM `users` WHERE `account`=:acc';
         $rs = $db->prepare($sql);
