@@ -118,4 +118,22 @@ if ($mode = "deluser") {
     }
     exit;
 }
+if ($mode == "chgpw") {
+    $sql = 'SELECT `password` FROM `users` WHERE `account`=:acc';
+    $rs = $db->prepare($sql);
+    $rs->bindValue(':acc', $acc, PDO::PARAM_STR);
+    $rs->execute();
+    list($pw_r) = $rs->fetch(PDO::FETCH_NUM);
+    if ($pw_r != $old_pw) {
+        echo "old_pw_error";
+    } else {
+        $sql2 = 'UPDATE `users` SET `password`=:npw WHERE `account`=:acc';
+        $rs2 = $db->prepare($sql2);
+        $rs2->bindValue(':npw', $new_pw, PDO::PARAM_STR);
+        $rs2->bindValue(':acc', $acc, PDO::PARAM_STR);
+        $rs2->execute();
+        echo "ok";
+    }
+    exit;
+}
 ?>
