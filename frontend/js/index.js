@@ -383,6 +383,9 @@ function OnHashchangeListener() {
             }
         }
     }
+    if (hash == '#ChangePw') {
+        $('#Content_Change_pw').show();
+    }
 }
 
 function login_check() {
