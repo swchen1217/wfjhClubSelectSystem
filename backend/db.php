@@ -897,4 +897,12 @@ if ($mode == "del_stu") {
     }
     exit;
 }
+
+if ($mode == "stu_import") {
+    if (UserCheck($acc, $pw, true, $db)) {
+        
+        echo 'ok';
+    }
+    exit;
+}
 ?>
