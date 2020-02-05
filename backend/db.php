@@ -27,6 +27,7 @@ $target = request("target");
 $title = request("title");
 $content = request("content");
 $hyperlink = request("hyperlink");
+$new_maxP = request("new_maxP");
 
 if ($mode == "getClubList") {
     if (UserCheck($acc, $pw, false, $db)) {
@@ -166,6 +167,8 @@ if ($mode == "chgclub") {
             $data .= "`name`=:name,";
         if ($new_teacher != "")
             $data .= "`teacher`=:teacher,";
+        if ($new_maxP != "")
+            $data .= "`maxPeople`=:maxPeople,";
         if ($new_grade != "") {
             $data .= "`grade`=:grade,";
             $id_c = true;
@@ -186,6 +189,8 @@ if ($mode == "chgclub") {
             $rs->bindValue(':name', $new_name, PDO::PARAM_STR);
         if ($new_teacher != "")
             $rs->bindValue(':teacher', $new_teacher, PDO::PARAM_STR);
+        if ($new_maxP != "")
+            $rs->bindValue(':maxPeople', $new_maxP, PDO::PARAM_STR);
         if ($new_grade != "")
             $rs->bindValue(':grade', $new_grade, PDO::PARAM_STR);
         if ($new_isSpecial != null)
@@ -204,11 +209,12 @@ if ($mode == "newclub") {
     if (UserCheck($acc, $pw, true, $db)) {
         $new_id = $new_grade . ($new_isSpecial == 'true' ? '1' : '2') . getId($new_grade, $db);
 
-        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial,sort_id) VALUES (:id, :name, :teacher, :grade, :isSpecial,' . getSortId($db) . ')';
+        $sql2 = 'INSERT INTO `clubs` (id, name, teacher, grade, isSpecial,sort_id,maxPeople) VALUES (:id, :name, :teacher, :grade, :isSpecial,' . getSortId($db) . ',:maxPeople)';
         $rs2 = $db->prepare($sql2);
         $rs2->bindValue(':id', $new_id, PDO::PARAM_STR);
         $rs2->bindValue(':name', $new_name, PDO::PARAM_STR);
         $rs2->bindValue(':teacher', $new_teacher, PDO::PARAM_STR);
+        $rs2->bindValue(':maxPeople', $new_maxP, PDO::PARAM_STR);
         $rs2->bindValue(':grade', $new_grade, PDO::PARAM_STR);
         $rs2->bindValue(':isSpecial', filter_var($new_isSpecial, FILTER_VALIDATE_BOOLEAN), PDO::PARAM_BOOL);
         $rs2->execute();
