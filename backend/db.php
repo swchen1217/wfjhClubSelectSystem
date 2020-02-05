@@ -141,7 +141,7 @@ if ($mode == "getSelectData") {
 
 if ($mode == "getAllClub") {
     if (UserCheck($acc, $pw, true, $db)) {
-        $sql = 'SELECT id, name, teacher, grade, isSpecial FROM `clubs` WHERE 1=1';
+        $sql = 'SELECT id, name, teacher, grade, isSpecial,maxPeople FROM `clubs` WHERE 1=1';
         $rs = $db->prepare($sql);
         $rs->execute();
         if ($rs->rowCount() == 0) {
