@@ -1460,6 +1460,9 @@ function FormSubmitListener() {
                                     ShowAlart('alert-danger', '舊密碼錯誤', false, false);
                                 }
                                 if (msg_nd == "ok") {
+                                    if (acc == $.cookie("LoginInfoAcc")) {
+                                        location.replace("./login.html")
+                                    }
                                     $('#InputAcc').val('');
                                     $('#InputOldPw').val('');
                                     $('#InputNewPw').val('');
