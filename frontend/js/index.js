@@ -2091,6 +2091,7 @@ function ButtonOnClickListener() {
                             data: form_data,
                             type: 'post',
                             success: function(msg){
+                                console.log(msg);
                                 if(msg=='ok'){
                                     $.alert({
                                         title: '成功',
