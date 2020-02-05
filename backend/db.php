@@ -356,9 +356,9 @@ if ($mode == "selects_draw") {
         $rs->execute();
         $club_list = array();
         $club_rest_num = array();
-        while (list($id_r,$maxP_r) = $rs->fetch(PDO::FETCH_NUM)) {
+        while (list($id_r, $maxP_r) = $rs->fetch(PDO::FETCH_NUM)) {
             $club_list[] = $id_r;
-            $club_rest_num[]=$maxP_r;
+            $club_rest_num[] = $maxP_r;
         }
         $rs = null;
 
@@ -371,7 +371,7 @@ if ($mode == "selects_draw") {
             $sql = "SELECT clubs.id FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.isSpecial=0 AND clubs.id='" . $club_list[$i] . "'";
             $rs = $db->prepare($sql);
             $rs->execute();
-            $club_rest_num[$i]-=$rs->rowCount();
+            $club_rest_num[$i] -= $rs->rowCount();
             $rs = null;
         }
 
@@ -855,7 +855,7 @@ if ($mode == "newAn") {
         $rs = $db->prepare($sql);
         $rs->bindValue(':title', $title, PDO::PARAM_STR);
         $rs->bindValue(':content', $content, PDO::PARAM_STR);
-        $rs->bindValue(':hyperlink', $hyperlink!=null?$hyperlink:'', PDO::PARAM_STR);
+        $rs->bindValue(':hyperlink', $hyperlink != null ? $hyperlink : '', PDO::PARAM_STR);
         $rs->execute();
         echo "ok";
     } else
