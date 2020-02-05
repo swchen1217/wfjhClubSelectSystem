@@ -6,7 +6,7 @@ require("UserCheck.php");
 
 mb_internal_encoding('UTF-8');
 
-$setting = [['display_result', 'false'], ['CSenable', 'false'], ['maxGCPN', 30], ['definite_distributed', 'false'], ['selects_drew', 'false'], ['second', 'false'], ['second_count', '0'], ['makeResultEnable', 'false'], ['madeResult', 'false']];
+$setting = [['display_result', 'false'], ['CSenable', 'false'], ['definite_distributed', 'false'], ['selects_drew', 'false'], ['second', 'false'], ['second_count', '0'], ['makeResultEnable', 'false'], ['madeResult', 'false']];
 
 $mode = request("mode");
 $LastModified = request("LastModified");
@@ -351,13 +351,14 @@ if ($mode == "definite_distribute") {
 if ($mode == "selects_draw") {
     if (UserCheck($acc, $pw, true, $db)) {
         //取得一般社團代碼
-        $sql = "SELECT id FROM `clubs` WHERE `isSpecial`=0";
+        $sql = "SELECT id,maxPeople FROM `clubs` WHERE `isSpecial`=0";
         $rs = $db->prepare($sql);
         $rs->execute();
         $club_list = array();
         $club_rest_num = array();
-        while (list($row) = $rs->fetch(PDO::FETCH_NUM)) {
-            $club_list[] = $row;
+        while (list($id_r,$maxP_r) = $rs->fetch(PDO::FETCH_NUM)) {
+            $club_list[] = $id_r;
+            $club_rest_num[]=$maxP_r;
         }
         $rs = null;
 
@@ -365,12 +366,12 @@ if ($mode == "selects_draw") {
             echo $value . ',';
         echo '<br>';*/
 
-        //maxGCPN-確定中選人數
+        //maxPeople-確定中選人數
         for ($i = 0; $i < count($club_list); $i++) {
             $sql = "SELECT clubs.id FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.isSpecial=0 AND clubs.id='" . $club_list[$i] . "'";
             $rs = $db->prepare($sql);
             $rs->execute();
-            $club_rest_num[$i] = getSystem('maxGCPN', $db) - $rs->rowCount();
+            $club_rest_num[$i]-=$rs->rowCount();
             $rs = null;
         }
 
@@ -575,7 +576,7 @@ if ($mode == "getSecondStudents") {
 if ($mode == "getSecondClubs") {
     if (UserCheck($acc, $pw, true, $db)) {
         $ToJson = array();
-        $sql = "SELECT id,name FROM `clubs` WHERE `isSpecial`=0 and grade=:grade";
+        $sql = "SELECT id,name,maxPeople FROM `clubs` WHERE `isSpecial`=0 and grade=:grade";
         $rs = $db->prepare($sql);
         $rs->bindValue(':grade', $grade, PDO::PARAM_STR);
         $rs->execute();
@@ -583,7 +584,7 @@ if ($mode == "getSecondClubs") {
             $sql2 = "SELECT clubs.id,clubs.name FROM `result` INNER JOIN clubs on result.cid=clubs.id WHERE clubs.id='" . $row['id'] . "'";
             $rs2 = $db->prepare($sql2);
             $rs2->execute();
-            $rest = getSystem('maxGCPN', $db) - $rs2->rowCount();
+            $rest = $row['maxPeople'] - $rs2->rowCount();
             if ($rest > 0) {
                 $ToJson[] = array_merge($row, array('rest' => $rest));
             }
