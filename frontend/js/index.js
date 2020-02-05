@@ -2066,6 +2066,66 @@ function ButtonOnClickListener() {
             }
         });
     });
+    $('#btn_stu_submit').click(function () {
+        $.confirm({
+            title: '檔案上傳',
+            content: '確認匯入學生資料??',
+            buttons: {
+                confirm: {
+                    text: '確認',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        HideAlert();
+                        var file_data = $('#customFile').prop('files')[0];
+                        var form_data = new FormData();
+                        form_data.append('file', file_data);
+                        form_data.append('mode', 'stu_import');
+                        form_data.append('acc', $.cookie("LoginInfoAcc"));
+                        form_data.append('pw', $.cookie("LoginInfoPw"));
+
+                        $.ajax({
+                            url: '../backend/db.php',
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: form_data,
+                            type: 'post',
+                            success: function(msg){
+                                if(msg=='ok'){
+                                    $.alert({
+                                        title: '成功',
+                                        content: '上傳成功!!',
+                                        type: 'blue',
+                                        typeAnimated: true
+                                    });
+                                    $('#modal-import').modal('hide');
+                                }else{
+                                    $.alert({
+                                        title: '錯誤',
+                                        content: '上傳失敗!!',
+                                        type: 'red',
+                                        typeAnimated: true
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                console.log('ajax er');
+                                $.alert({
+                                    title: '錯誤',
+                                    content: 'Ajax 發生錯誤',
+                                    type: 'red',
+                                    typeAnimated: true
+                                });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                }
+            }
+        });
+    });
 }
 
 function getAllClub() {
@@ -2670,4 +2730,11 @@ function getAnData() {
         }
     });
     return data;
+}
+
+function stuImportSubmitCheck() {
+    if($(".custom-file-input").val().split("\\").pop()!="")
+        $("#btn_stu_submit").prop('disabled',false);
+    else
+        $("#btn_stu_submit").prop('disabled',true);
 }
