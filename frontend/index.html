@@ -643,7 +643,7 @@
                             <div class="form-group">
                                 <label for="newAn-InputContent">內容 (可使用HTML語法)(提示:換行用<code>&lt;br&gt;</code>)</label>
                                 <textarea type="text" class="form-control" id="newAn-InputContent" placeholder="輸入內容"
-                                       required style="height: 200px"></textarea>
+                                          required style="height: 200px"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="newAn-InputHyperlink">連結 (若有多個連結，請用','隔開)</label>
@@ -704,6 +704,21 @@
                                 <span class="slider round"></span>
                             </label>
                             <span style="font-size: 1.2em;line-height: 32px">&nbsp;是</span>
+                        </div>
+                        <div class="form-group">
+                            <h4>學生管理</h4>
+                            <div class="row" style="margin-bottom: 8px">
+                                <div class="col-8" style="padding-right: 2px">
+                                    <button type="button" class="btn btn-default btn-primary btn-block"
+                                            id="btn_stu_import">學生資料匯入
+                                    </button>
+                                </div>
+                                <div class="col-4" style="padding-left: 2px">
+                                    <button type="button" class="btn btn-default btn-danger btn-block"
+                                            id="btn_stu_del">刪除所有學生
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -782,7 +797,7 @@
                             </div>
                             <div class="col-2">
                                 <button type="button" class="btn btn-default btn-primary btn-block"
-                                        id="btn_An_new" onclick="" >New
+                                        id="btn_An_new" onclick="">New
                                 </button>
                             </div>
                         </div>
@@ -1160,13 +1175,16 @@
 <footer>
     Copyright © 2019 Sz-Wei Chen(陳思惟)
     &nbsp;&nbsp;&nbsp;
-    Develop By <a href="http://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=swchen1217@gmail.com" style="color: #FFFFFF">swchen1217</a>
+    Develop By <a href="http://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=swchen1217@gmail.com"
+                  style="color: #FFFFFF">swchen1217</a>
     &nbsp;
-    <a href="https://github.com/swchen1217" style="color: #FFFFFF"><img src="github-512.png" width="25px" style="margin-bottom: 5px;"> Github</a>
+    <a href="https://github.com/swchen1217" style="color: #FFFFFF"><img src="github-512.png" width="25px"
+                                                                        style="margin-bottom: 5px;"> Github</a>
     &nbsp;&nbsp;&nbsp;
     <a href="https://github.com/swchen1217/wfjhClubSelectSystem" style="color: #FFFFFF">Open Source</a>
-	&nbsp;
-    <a href="https://github.com/swchen1217/wfjhClubSelectSystem/blob/master/LICENSE" style="color: #FFFFFF">Apache License 2.0</a>
+    &nbsp;
+    <a href="https://github.com/swchen1217/wfjhClubSelectSystem/blob/master/LICENSE" style="color: #FFFFFF">Apache
+        License 2.0</a>
 </footer>
 </body>
 <script>
