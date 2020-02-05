@@ -1407,6 +1407,91 @@ function FormSubmitListener() {
         }
         return false;
     });
+    $('#form-Chgpw').submit(function () {
+        HideAlert();
+        var acc = $('#InputAcc').val();
+        var oldpw = $('#InputOldPw').val();
+        var npw = $('#InputNewPw').val();
+        var npwr = $('#InputNewPwRe').val();
+        if (npw == "" || npwr == "" || acc == "" || oldpw == "") {
+            $.alert({
+                title: '錯誤',
+                content: '未輸入完整!!請再試一次',
+                type: 'red',
+                typeAnimated: true
+            });
+        } else if (npw != npwr) {
+            $('#InputNewPw').val('');
+            $('#InputNewPwRe').val('');
+            $.alert({
+                title: '錯誤',
+                content: '確認新密碼不符合!!請再試一次',
+                type: 'red',
+                typeAnimated: true
+            });
+        } else {
+            $.ajax({
+                url: "../backend/user.php",
+                data: "mode=get_create_time&acc=" + acc,
+                type: "POST",
+                success: function (msg_st) {
+                    console.log(msg_st);
+                    if (msg_st == 'no_acc') {
+                        console.log('no_acc');
+                        $('#InputAcc').val('');
+                        $('#InputOldPw').val('');
+                        $('#InputNewPw').val('');
+                        $('#InputNewPwRe').val('');
+                        ShowAlart('alert-danger', '帳號錯誤!!,此帳號尚未註冊', false, true);
+                    } else {
+                        var oldpwMd5 = md5(msg_st + oldpw);
+                        var newpwMd5 = md5(msg_st + npw);
+                        /*console.log(msg_st+oldpw);
+                        console.log(msg_st+npw);
+                        console.log(oldpwMd5);
+                        console.log(newpwMd5);*/
+                        $.ajax({
+                            url: "../backend/user.php",
+                            data: "mode=chgpw&old_pw=" + oldpwMd5 + "&new_pw=" + newpwMd5 + "&acc=" + acc,
+                            type: "POST",
+                            success: function (msg_nd) {
+                                console.log(msg_nd);
+                                if (msg_nd == "old_pw_error") {
+                                    ShowAlart('alert-danger', '舊密碼錯誤', false, false);
+                                }
+                                if (msg_nd == "ok") {
+                                    $('#InputAcc').val('');
+                                    $('#InputOldPw').val('');
+                                    $('#InputNewPw').val('');
+                                    $('#InputNewPwRe').val('');
+                                    ShowAlart('alert-success', '更改成功!!!', false, true);
+                                }
+                            },
+                            error: function (xhr) {
+                                console.log('ajax er');
+                                $.alert({
+                                    title: '錯誤',
+                                    content: 'Ajax 發生錯誤',
+                                    type: 'red',
+                                    typeAnimated: true
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    console.log('ajax er');
+                    $.alert({
+                        title: '錯誤',
+                        content: 'Ajax 發生錯誤',
+                        type: 'red',
+                        typeAnimated: true
+                    });
+                }
+            });
+        }
+        return false;
+    });
 }
 
 function ButtonOnClickListener() {
