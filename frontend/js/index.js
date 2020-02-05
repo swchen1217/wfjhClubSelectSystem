@@ -1979,6 +1979,15 @@ function ButtonOnClickListener() {
     $('#btn_An_new').click(function () {
         $('#modal-newAn').modal('show');
     });
+    $('#btn_SM_dlStu').click(function () {
+        
+    });
+    $('#btn_stu_import').click(function () {
+
+    });
+    $('#btn_stu_del').click(function () {
+
+    });
 }
 
 function getAllClub() {
