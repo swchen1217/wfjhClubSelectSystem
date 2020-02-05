@@ -124,6 +124,9 @@ function init() {
         }, {
             field: 'isSpecial',
             title: '特殊社團'
+        }, {
+            field: 'maxPeople',
+            title: '人數限制'
         }]
     });
     $('#table_second_clubs').bootstrapTable({
