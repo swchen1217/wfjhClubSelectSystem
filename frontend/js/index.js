@@ -1193,7 +1193,7 @@ function FormSubmitListener() {
             var old_grade = clubinfo['grade'];
             var old_isSpecial = clubinfo['isSpecial'];
             var old_maxP = clubinfo['maxPeople'];
-            if (n_name == '' && n_teacher == '' && n_grade == old_grade && n_isSpecial == (old_isSpecial == '是') && n_maxP=='') {
+            if (n_name == '' && n_teacher == '' && n_grade == old_grade && n_isSpecial == (old_isSpecial == '是') && n_maxP == '') {
                 $.alert({
                     title: '錯誤',
                     content: '無任何欲修改之資料',
@@ -1297,7 +1297,7 @@ function FormSubmitListener() {
                                     "&new_name=" + n_name +
                                     "&new_teacher=" + n_teacher +
                                     "&new_grade=" + n_grade +
-                                    "&new_isSpecial=" + n_isSpecial+
+                                    "&new_isSpecial=" + n_isSpecial +
                                     "&new_maxP=" + n_maxP
                                 ,
                                 type: "POST",
@@ -2559,9 +2559,9 @@ function getAnData() {
                     if (jsonA[i]['hyperlink'] != '') {
                         var hyperlink = '<br><br><b>連結</b>:';
                         var tmp = jsonA[i]['hyperlink'].split(',');
-                        for (var k = 0; k < tmp.length; k++){
-                            if(tmp[k].substr(0,4)!='http')
-                                tmp[k]='http://'+tmp[k];
+                        for (var k = 0; k < tmp.length; k++) {
+                            if (tmp[k].substr(0, 4) != 'http')
+                                tmp[k] = 'http://' + tmp[k];
                             hyperlink += '<br><a href="' + tmp[k] + '">' + tmp[k] + '</a>';
                         }
                         jsonA[i]['content'] += hyperlink;
