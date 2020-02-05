@@ -681,8 +681,20 @@
                             <li>請將匯出後檔案欄位排序成 <code>學號</code>,<code>年級</code>,<code>班級</code>,<code>座號</code>,<code>姓名</code></li>
                             <li>若匯出後格式為<code>.xlsx</code>，請轉檔成<code>.csv</code> (教學參見:<a href="https://officeguide.cc/excel-export-csv-file-tutorial/">Excel 表格匯出為 CSV 檔案教學</a>)</li>
                             <li>若第一行有標題，請移除<br><img src="./img/exImport01.PNG" height="75px"></li>
-                            <li>Ac tristique libero volutpat at</li>
                         </ul>
+                        <div class="row justify-content-between">
+                            <div class="col-8">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" onchange="stuImportSubmitCheck()">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-default btn-primary btn-block"
+                                        id="btn_stu_submit" disabled>上傳
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1231,6 +1243,9 @@
         FormSubmitListener();
         ButtonOnClickListener();
 
+        $(".custom-file-input").change(function () {
+            $(this).next(".custom-file-label").html($(this).val().split("\\").pop());
+        });
     });
 </script>
 </html>
