@@ -308,7 +308,7 @@ function OnHashchangeListener() {
             $('#SM-CSenable').prop("checked", true);
         else
             $('#SM-CSenable').prop("checked", false);
-        $('#SM-maxGCPN').val(getSystem('maxGCPN'));
+        //$('#SM-maxGCPN').val(getSystem('maxGCPN'));
         if (getSystem('display_result') == 'true')
             $('#SM-display_result').prop("checked", true);
         else
