@@ -1981,8 +1981,8 @@ function setSystem(id, value, alert = false) {
 function CSsetting(target) {
     if (target == 'CSenable')
         setSystem("CSenable", $('#SM-CSenable').prop("checked").toString(), true);
-    if (target == 'maxGCPN')
-        setSystem('maxGCPN', $('#SM-maxGCPN').val(), true);
+    /*if (target == 'maxGCPN')
+        setSystem('maxGCPN', $('#SM-maxGCPN').val(), true);*/
     if (target == 'display_result')
         setSystem("display_result", $('#SM-display_result').prop("checked").toString(), true);
 }
@@ -2050,8 +2050,8 @@ function stepCheck() {
     if (getSystem('selects_drew') != 'false') {
         $('#btn_selects_draw').prop('disabled', true);
         $('#btn_second_submit').prop('disabled', false);
-        $('#btn_maxGCPN').prop('disabled', true);
-        $('#icon-maxGCPN-lock').show();
+        //$('#btn_maxGCPN').prop('disabled', true);
+        //$('#icon-maxGCPN-lock').show();
     }
     if (getSystem('makeResultEnable') != 'false') {
         $('#btn_make_result').prop('disabled', false);
