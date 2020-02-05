@@ -342,6 +342,7 @@ function OnHashchangeListener() {
                 $('#chgclub-ShowTeacher').val(clubinfo['teacher']);
                 $('#chgclub-ShowGrade').val(clubinfo['grade']);
                 $('#chgclub-ShowIsSpecial').val(clubinfo['isSpecial']);
+                $('#chgclub-ShowMaxP').val(clubinfo['maxPeople']);
 
                 if (clubinfo['grade'] == '1')
                     $('#btnR_clubChgInputGrade1').prop("checked", true);
